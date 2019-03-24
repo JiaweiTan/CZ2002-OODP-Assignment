@@ -1,0 +1,138 @@
+package rrpss;
+
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class MenuFunc extends MenuApp {
+	Scanner sc = new Scanner(System.in);
+		
+	public static void displayMenu()  {
+    	MenuFunc menuFunc = new MenuFunc();
+    	String filename = "outputMenu.txt" ;
+		try {
+			// read file containing Professor records.
+			ArrayList al = MenuFunc.getMenu(filename) ;
+			for (int i = 0 ; i < al.size() ; i++) {
+					Menu menuItems = (Menu)al.get(i);
+					System.out.print((i+1) +". ID:" + menuItems.getFoodID() );
+					System.out.print("  Dish:" + menuItems.getFoodName() );
+					System.out.print("  Type:" + menuItems.getFoodType() );
+					System.out.print("  Price:$" + menuItems.getFoodPrice() );
+					System.out.print("  Description:" + menuItems.getFoodDesc() );
+					System.out.print("  Quantity sold per day:" + menuItems.getFoodQuota() );
+					System.out.println("");
+			}
+		}catch (IOException e) {
+			System.out.println("IOException > " + e.getMessage());
+		}
+  }
+	
+	public static final String SEPARATOR = "|";
+	String filename = "outputMenu.txt";
+	
+    // getMenu()
+	public static ArrayList getMenu(String filename) throws IOException {
+		// read String from text file
+		ArrayList stringArray = (ArrayList)read(filename);
+		ArrayList alr = new ArrayList() ;// to store Professors data
+
+        for (int i = 0 ; i < stringArray.size() ; i++) {
+				String st = (String)stringArray.get(i);
+				
+				// get individual 'fields' of the string separated by SEPARATOR
+				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
+
+				//edit this part 
+				int foodID = Integer.parseInt(star.nextToken().trim());	// first token
+				String foodName = star.nextToken().trim();	// second token
+				String foodType = star.nextToken().trim();	// third token
+				int foodPrice = Integer.parseInt(star.nextToken().trim());	// fourth token
+				String foodDesc = star.nextToken().trim();	// fifth token
+				int foodQuota = Integer.parseInt(star.nextToken().trim());	// sixth token
+				
+				// create menu object from file data
+				Menu menuItems = new Menu(foodID, foodName,foodType, foodPrice, foodDesc, foodQuota);
+				
+				// add to Menu list
+				alr.add(menuItems) ;
+			}
+			return alr ;
+	}
+
+	 /** Read the contents of the given file. */
+	public static List read(String fileName) throws IOException {
+			List data = new ArrayList() ;
+		    Scanner scanner = new Scanner(new FileInputStream(fileName));
+		    try {
+		      while (scanner.hasNextLine()){
+		        data.add(scanner.nextLine());
+		      }
+		    }
+		    finally{
+		      scanner.close();
+		    }
+		    return data;
+		  }
+
+		public static void createMenu(int foodID) throws IOException {
+			
+			File file = new File("outputMenu.txt");
+			FileWriter writer = new FileWriter("outputMenu.txt",true);
+			BufferedWriter bwriter = new BufferedWriter(writer);
+			Scanner sc = new Scanner(System.in);
+			int cont;
+			
+			do {
+			System.out.print("Enter the name of the item: ");
+			String food_name = sc.nextLine();
+			
+			System.out.print("Enter the price of the item: ");
+			int food_price = sc.nextInt();
+			sc.nextLine(); //must do 
+			
+			System.out.print("Enter the type of the item: ");
+			String food_type = sc.nextLine();
+			
+			System.out.print("Enter the description of the item: ");
+			String food_desc = sc.nextLine();
+			
+			
+			System.out.print("Enter the quota of the item: ");
+			int food_quota = sc.nextInt();
+			sc.nextLine();
+			
+			System.out.println("\nThe following item has been created: \nItemID|Name|Type|Price|Desc|Quota\n" + foodID +"|"+ food_name +"|"+ food_price +"|"+ food_type +"|"+ food_desc +"|"+ food_quota+ "\n");
+			bwriter.write(foodID +"|"+ food_name +"|"+ food_type +"|"+ food_price +"|"+ food_desc +"|"+ food_quota);
+			bwriter.newLine();
+			//checks if another input is going to be required else breaks
+			
+			System.out.print("Do you want to write in more information? (Y-1/N-0): ");
+			cont = sc.nextInt();
+			sc.nextLine(); //must do 
+			
+			}while(cont != 0);
+			
+			System.out.print("--------- Main Menu --------\n");
+			bwriter.close();
+			writer.close();
+		}
+		
+		//2. updates an item
+		public void updateMenu() {
+			System.out.println("Enter the updated data for ");
+		}
+		
+		//3. deletes an item
+		public void deleteMenu(int foodID2) {
+			System.out.println("Enter the updated data for ");
+		}
+		
+}
