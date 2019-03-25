@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import javax.swing.JOptionPane;
+
 public class MenuFunc extends MenuApp {
 	Scanner sc = new Scanner(System.in);
 		
@@ -125,14 +127,132 @@ public class MenuFunc extends MenuApp {
 			writer.close();
 		}
 		
-		//2. updates an item
-		public void updateMenu() {
-			System.out.println("Enter the updated data for ");
-		}
-		
 		//3. deletes an item
 		public void deleteMenu(int foodID2) {
-			System.out.println("Enter the updated data for ");
+			String filepath = "outputMenu.txt";
+			String removeTerm = Integer.toString(foodID2);
+			
+			removeRecord(filepath, removeTerm);
 		}
 		
+		private static Scanner scan;
+		
+		public static void removeRecord(String filepath, String removeTerm) {
+			String tempFile = "temp.txt";
+			File oldFile = new File(filepath);
+			File newFile = new File(tempFile);
+			String ID = ""; String name = ""; String type =""; String price = ""; String desc = ""; String quota ="";
+			
+			try {
+				FileWriter fw = new FileWriter(tempFile,true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter pw = new PrintWriter(bw);
+				
+				scan = new Scanner(new File(filepath));//reads the file
+				scan.useDelimiter("[|\n]");
+				
+				while (scan.hasNext()) {
+					ID = scan.next();
+					name = scan.next();
+					type = scan.next();
+					price = scan.next();
+					desc = scan.next();
+					quota = scan.next();
+					
+					if (!ID.equals(removeTerm)) {
+						pw.println(ID+"|"+name+"|"+type+"|"+price+"|"+desc+"|"+quota);
+					}
+				}
+				
+				scan.close();
+				pw.flush();
+				pw.close();
+				oldFile.delete();
+				File dump = new File(filepath);
+				newFile.renameTo(dump);
+				
+				System.out.println("---- Item has been deleted! ----");
+			}
+			catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Error");
+			}
+		}
+		
+		//2. updates an item
+		public void updateMenu() {
+			
+			String filepath = "outputMenu.txt";
+			
+			System.out.println("Enter the ID of the items to be updated: ");
+			String editTerm = sc.nextLine();
+			
+			System.out.println("Enter the new ID: ");
+			String newID = sc.nextLine();
+			
+			System.out.println("Enter the Name: ");
+			String newName = sc.nextLine();
+			
+			System.out.println("Enter the Type: ");
+			String newType = sc.nextLine();
+			
+			System.out.println("Enter the Price");
+			String newPrice = sc.nextLine();
+			
+			System.out.println("Enter the Description: ");
+			String newDesc = sc.nextLine();
+			
+			System.out.println("Enter the Quota");
+			String newQuota = sc.nextLine();
+			
+			editRecord(filepath, editTerm, newID, newName, newType, newPrice, newDesc, newQuota);
+		}
+		
+		public void editRecord(String filepath,String editTerm,String newID,String newName,String newType,String newPrice, String newDesc, String newQuota) {
+			
+			String tempFile = "temp.txt";
+			File oldFile = new File(filepath);
+			File newFile = new File(tempFile);
+			String ID = ""; String name = ""; String type =""; String price = ""; String desc = ""; String quota ="";
+		
+			try
+			{
+				FileWriter fw = new FileWriter(tempFile,true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter pw = new PrintWriter(bw);
+				
+				scan = new Scanner(new File(filepath));//reads the file
+				scan.useDelimiter("[|\n]");
+				
+				while (scan.hasNext()) {
+					ID = scan.next();
+					name = scan.next();
+					type = scan.next();
+					price = scan.next();
+					desc = scan.next();
+					quota = scan.next();
+					
+					if (!ID.equals(editTerm)) {
+						
+						pw.println(ID+"|"+name+"|"+type+"|"+price+"|"+desc+"|"+quota);
+					}
+					else
+					{
+						pw.println(newID+"|"+newName+"|"+newType+"|"+newPrice+"|"+newDesc+"|"+newQuota);
+			
+					}
+				}
+				scan.close();
+				pw.flush();
+				pw.close();
+				oldFile.delete();
+				File dump = new File(filepath);
+				newFile.renameTo(dump);
+				
+				System.out.println("---- Item has been updated! ----");
+			}
+			catch(Exception e)
+			{
+				JOptionPane.showMessageDialog(null, "Error");
+			}
+		}
 }
