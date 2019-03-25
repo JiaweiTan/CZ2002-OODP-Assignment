@@ -5,4 +5,3 @@
 3001|Brownies w/ Ice cream|Dessert|7|Chocolaty brownies with vanilla ice cream|15
 3002|Cheesecake|Dessert|9|Rich cheese on graham crackers|20
 5432|ohnomama|Main Course|11|homecook|10
-9999|Serene|Main Course|98|best thing in the world|1
