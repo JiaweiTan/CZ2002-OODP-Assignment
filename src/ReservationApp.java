@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Menu {
+public class ReservationApp {
 	public static void main(String args[]) {
 		Table tb = new Table();
 		TableInfo tbInfo = new TableInfo();

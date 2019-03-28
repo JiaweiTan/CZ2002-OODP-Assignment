@@ -1,6 +1,9 @@
 import java.io.IOException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.util.Scanner;
@@ -236,6 +239,145 @@ public class DBManager {
 		write(filename, alw);
 	
 	}
+	
+	//READ orders file
+		public static ArrayList readOrders(String filename) throws IOException {
+			// read String from text file
+			ArrayList stringArray = (ArrayList)read(filename);
+			ArrayList alr = new ArrayList() ;// to store Professors data
+
+			for (int i = 0 ; i < stringArray.size() ; i++) {
+				String st = (String)stringArray.get(i);
+				// get individual 'fields' of the string separated by SEPARATOR
+				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
+				
+				int orderId = Integer.parseInt(star.nextToken().trim());
+				int staffId = Integer.parseInt(star.nextToken().trim());
+				
+				// split string using space as delimiter
+		        String[] itemStrArr = star.nextToken().trim().split(" ");
+		        List<Integer> itemId = new ArrayList<Integer>();
+		        if(itemStrArr != null) {
+		        	//itemId = new int[itemStrArr.length];
+			        for (int j = 0; j < itemStrArr.length; j++) 
+			        { 
+			            itemId.add(j, Integer.parseInt(itemStrArr[j]));
+			        }
+		        }
+		        
+				String[] promoSetStrArr = star.nextToken().trim().split(" ");
+				List<Integer> promoSetId = new ArrayList<Integer>();
+		        if(promoSetStrArr != null) {
+		        	//promoSetId = new int[promoSetStrArr.length];
+			        for (int j = 0; j < promoSetStrArr.length; j++) 
+			        { 
+			        	promoSetId.add(j, Integer.parseInt(promoSetStrArr[j]));
+			        }
+		        }
+
+				double price = Double.parseDouble(star.nextToken().trim());
+				String comment = star.nextToken().trim();
+				LocalDateTime dateTime = LocalDateTime.parse(star.nextToken().trim());
+				
+				// create Order object from file data
+				Order od = new Order(orderId, staffId, itemId, promoSetId, price, comment, dateTime);
+				// add to Orders list
+				alr.add(od) ;
+			}
+			return alr ;
+		}
+		
+		//SAVE to orders file
+		public static void saveOrders(String filename, List al) throws IOException {
+			List alw = new ArrayList() ;// to store Professors data
+
+		    for (int i = 0 ; i < al.size() ; i++) {
+				Order od = (Order)al.get(i);
+				StringBuilder st =  new StringBuilder();
+				st.append(od.getOrderId());
+				st.append(SEPARATOR);
+				st.append(od.getStaffId());
+				st.append(SEPARATOR);
+				List<Integer> itemLst = od.getItemId();
+				for (int var: itemLst)
+					st.append(var + " ");
+				st.append(SEPARATOR);
+				List<Integer> promoSetLst = od.getPromoSetId();
+				for (int var: promoSetLst)
+					st.append(var + " ");
+				st.append(SEPARATOR);
+				st.append(od.getPrice());
+				st.append(SEPARATOR);
+				String comm = od.getComment();
+				if(comm!=null)
+					st.append(od.getComment().trim());
+				else
+					st.append("NULL");
+				st.append(SEPARATOR);
+				st.append(od.getDateTime());
+				alw.add(st.toString()) ;
+			}
+			write(filename,alw);
+		}
+		
+		//READ items file
+		/*public static ArrayList readItems(String filename) throws IOException {
+			// read String from text file
+			ArrayList stringArray = (ArrayList)read(filename);
+			ArrayList alr = new ArrayList() ;// to store Professors data
+
+			for (int i = 0 ; i < stringArray.size() ; i++) {
+				String st = (String)stringArray.get(i);
+				// get individual 'fields' of the string separated by SEPARATOR
+				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
+				
+				int itemId = Integer.parseInt(star.nextToken().trim());
+				String name = star.nextToken().trim();
+				String type = star.nextToken().trim();
+				int price = Integer.parseInt(star.nextToken().trim());
+				String desc = star.nextToken().trim();
+				int quota = Integer.parseInt(star.nextToken().trim());
+				
+				// create Item object from file data
+				Menu mn = new Menu(itemId, name, type, price, desc, quota);
+				// add to Items list
+				alr.add(mn);
+			}
+			return alr;
+		}*/
+		
+		//READ PromoSets file
+			public static ArrayList readPromoSets(String filename) throws IOException {
+				// read String from text file
+				ArrayList stringArray = (ArrayList)read(filename);
+				ArrayList alr = new ArrayList() ;// to store Professors data
+
+				for (int i = 0 ; i < stringArray.size() ; i++) {
+					String st = (String)stringArray.get(i);
+					// get individual 'fields' of the string separated by SEPARATOR
+					StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
+					
+					int promoSetId = Integer.parseInt(star.nextToken().trim());
+					String name = star.nextToken().trim();
+					String[] itemStrArr = star.nextToken().trim().split(" ");
+			        int[] itemId = new int[itemStrArr.length];
+			        for (int j = 0; j < itemStrArr.length; j++) 
+			        { 
+			            itemId[j] = Integer.parseInt(itemStrArr[j]);
+			        }
+					double price = Double.parseDouble(star.nextToken().trim());
+					DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				    LocalDate startDate = LocalDate.parse(star.nextToken().trim(), DATEFORMATTER);
+				    LocalDate endDate = LocalDate.parse(star.nextToken().trim(), DATEFORMATTER);
+					int quota = Integer.parseInt(star.nextToken().trim());
+					
+					// create Item object from file data
+					PromoSet ps = new PromoSet(promoSetId, name, itemId, price, startDate, endDate, quota);
+					// add to Items list
+					alr.add(ps);
+				}
+				return alr;
+			}
 	
 	public static void main(String[] aArgs) {
 

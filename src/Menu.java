@@ -1,4 +1,4 @@
-package rrpss; //referenced from PlaneSeat 
+//package rrpss; //referenced from PlaneSeat 
 
 import java.util.List;
 import java.util.Scanner;

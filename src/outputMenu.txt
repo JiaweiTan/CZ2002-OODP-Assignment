@@ -1,0 +1,7 @@
+1001|Carbonara|Main Course|12|Creamy pasta served with basil|20
+1002|Bacon Pizza|Main Course|10|Crispy bacon and Mozzarella Cheese|20
+2001|Pepsi|Drinks|5|Thirst quenching soda beverage|100
+2002|Tea|Drinks|4|Freshly brewed Ceylon tea|100
+3001|Brownies w/ Ice cream|Dessert|7|Chocolaty brownies with vanilla ice cream|15
+3002|Cheesecake|Dessert|9|Rich cheese on graham crackers|20
+5432|ohnomama|Main Course|11|homecook|10
