@@ -252,6 +252,7 @@ public class DBManager {
 				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
 				
 				int orderId = Integer.parseInt(star.nextToken().trim());
+				int tableId = Integer.parseInt(star.nextToken().trim());
 				int staffId = Integer.parseInt(star.nextToken().trim());
 				
 				// split string using space as delimiter
@@ -280,7 +281,7 @@ public class DBManager {
 				LocalDateTime dateTime = LocalDateTime.parse(star.nextToken().trim());
 				
 				// create Order object from file data
-				Order od = new Order(orderId, staffId, itemId, promoSetId, price, comment, dateTime);
+				Order od = new Order(orderId, tableId, staffId, itemId, promoSetId, price, comment, dateTime);
 				// add to Orders list
 				alr.add(od) ;
 			}
@@ -295,6 +296,8 @@ public class DBManager {
 				Order od = (Order)al.get(i);
 				StringBuilder st =  new StringBuilder();
 				st.append(od.getOrderId());
+				st.append(SEPARATOR);
+				st.append(od.getTableId());
 				st.append(SEPARATOR);
 				st.append(od.getStaffId());
 				st.append(SEPARATOR);

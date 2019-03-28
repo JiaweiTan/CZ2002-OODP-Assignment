@@ -9,6 +9,7 @@ public class Order {
 	private static final String ITEM_FILE = "outputMenu.txt";
 	private static final String PROMOSET_FILE = "promosets.txt";
 	private int orderId;
+	private int tableId;
 	private int staffId;
 	private List<Integer> itemId;
 	private List<Integer> promoSetId;
@@ -18,8 +19,9 @@ public class Order {
 	
 	public Order() {};
 	
-	public Order(int orderId, int staffId, List<Integer> itemId, List<Integer> promoSetId, double price, String comment, LocalDateTime dateTime) {
+	public Order(int orderId, int tableId, int staffId, List<Integer> itemId, List<Integer> promoSetId, double price, String comment, LocalDateTime dateTime) {
 		this.orderId = orderId;
+		this.tableId = tableId;
 		this.staffId = staffId;
 		this.itemId = itemId;
 		this.promoSetId = promoSetId;
@@ -30,6 +32,10 @@ public class Order {
 	
 	public int getOrderId () {
 		return this.orderId;
+	}
+	
+	public int getTableId() {
+		return this.tableId;
 	}
 	
 	public int getStaffId () {
@@ -74,9 +80,9 @@ public class Order {
 		
 		LocalDateTime dateTime = LocalDateTime.now();
 
-		Order newOrder = new Order(0, od.staffId, od.itemId, od.promoSetId, 0, od.comment, dateTime);
+		Order newOrder = new Order(0, od.tableId, od.staffId, od.itemId, od.promoSetId, 0, od.comment, dateTime);
 		
-	List<Menu> menuLst = MenuFunc.getMenu(ITEM_FILE);
+		List<Menu> menuLst = MenuFunc.getMenu(ITEM_FILE);
 		for(int id: newOrder.itemId) {
 			for(Menu mn: menuLst) {
 				if(id==mn.getFoodID()) {
@@ -131,6 +137,7 @@ public class Order {
 			for(Order od: orderLst) {
 				if(sel == od.getOrderId()) {
 					System.out.println("\nOrder ID\t\t: " + od.getOrderId());
+					System.out.println("Table No.\t\t: " + od.getTableId());
 					System.out.println("Staff ID\t\t: " + od.getStaffId());
 					List<Integer> odIt = od.getItemId();
 					for(int i = 0; i < odIt.size(); i++) {

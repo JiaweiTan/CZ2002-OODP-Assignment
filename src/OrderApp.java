@@ -9,7 +9,7 @@ public class OrderApp {
 	
 	public static void createOrder() throws IOException {
 		
-		int staffId, it, ps, index = 1;
+		int tableId, staffId, it, ps, index = 1;
 		String comment = null, cmt;
 		List<Integer> itemLst = new ArrayList<>();
 		List<Integer> psLst = new ArrayList<>();
@@ -20,6 +20,8 @@ public class OrderApp {
 		System.out.println("=============================");
 		System.out.println("\tCreating Order");
 		System.out.println("=============================");
+		System.out.print("Enter Table No.: "); //Validation??
+		tableId = sc.nextInt();
 		System.out.print("Enter Staff ID: "); //Validation??
 		staffId = sc.nextInt();
 		index = 1;
@@ -60,7 +62,7 @@ public class OrderApp {
 				cmt = "invalid";
 		}while(cmt.equals("invalid"));
 		//itemLst.stream().mapToInt(i->i).toArray()
-		Order newOrder = new Order(0, staffId, itemLst, psLst, 0, comment, LocalDateTime.now());
+		Order newOrder = new Order(0, tableId, staffId, itemLst, psLst, 0, comment, LocalDateTime.now());
 		System.out.println("Order created successfully. Order ID: " + Order.createOrder(newOrder));
 	}
 	

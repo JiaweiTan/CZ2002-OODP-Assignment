@@ -8,6 +8,7 @@ public class MainMenu {
 		int sel;
 		
 		do {
+			System.out.println();
 			System.out.println("\t Welcome to 4 Star Michelin Restaurant");
 			System.out.println("=========================================================");
 			System.out.println("1. Create Order");
