@@ -7,11 +7,17 @@
 /Order.class
 /OrderApp.class
 /PromoSet.class
+/PromoSetApp.class
+/PromoSetCon.class
 /Reservation.class
 /Reservation.txt
 /ReservationApp.class
+/Staff.class
+/StaffApp.class
+/StaffList.txt
 /Table.class
 /Table.txt
 /TableInfo.class
 /TableInfo.txt
 /outputMenu.txt
+/promotionList.txt

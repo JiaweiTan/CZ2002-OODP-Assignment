@@ -40,6 +40,13 @@ public class MainMenu {
 				case 2:
 					OrderApp.updateOrder();
 					break;
+				case 6:
+					PromoSetApp.main(null);
+					break;
+				case 7:
+					StaffApp.main(null);
+					break;
+					
 				default:
 					System.out.println("Invalid input. Please enter again.\n");
 			}
