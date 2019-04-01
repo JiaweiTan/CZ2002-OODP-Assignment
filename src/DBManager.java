@@ -318,6 +318,60 @@ public class DBManager {
 		}
 		write(filename, alw);
 	}
+	
+	public static ArrayList readInvoice(String filename) throws IOException 
+	{
+	// read String from text file
+		ArrayList stringArray = (ArrayList)read(filename);
+		ArrayList alr = new ArrayList() ;// to store Professors data
+		for (int i = 0 ; i < stringArray.size() ; i++) 
+		{
+			String st = (String)stringArray.get(i);
+			// get individual 'fields' of the string separated by SEPARATOR
+			StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","	
+			int invoiceID = Integer.parseInt(star.nextToken().trim());
+			String paymentType = star.nextToken().trim();
+			int orderID = Integer.parseInt(star.nextToken().trim());
+			double originalPrice = Double.parseDouble(star.nextToken().trim());
+			double GST = Double.parseDouble(star.nextToken().trim());;
+			double serviceCharge = Double.parseDouble(star.nextToken().trim());
+			double finalPrice = Double.parseDouble(star.nextToken().trim());
+			LocalDateTime dateTime = LocalDateTime.parse(star.nextToken().trim());
+			// create Professor object from file data
+			Invoice invoice = new Invoice(invoiceID, paymentType, orderID, originalPrice, finalPrice, GST, serviceCharge, dateTime);
+			alr.add(invoice) ;
+		}
+		return alr ;
+	}
+
+		  // an example of saving
+	public static void saveInvoice(String filename, List al) throws IOException 
+	{
+		List alw = new ArrayList() ;// to store Professors data
+		for (int i = 0 ; i < al.size() ; i++) 
+		{
+			Invoice invoice = (Invoice)al.get(i);
+			StringBuilder st =  new StringBuilder() ;
+			st.append(invoice.getInvoiceID());
+			st.append(SEPARATOR);
+			st.append(invoice.getPaymentType().trim());
+			st.append(SEPARATOR);
+			st.append(invoice.getOrderID());
+			st.append(SEPARATOR);
+			st.append(invoice.getOriginalPrice());
+			st.append(SEPARATOR);
+			st.append(invoice.getFinalPrice());
+			st.append(SEPARATOR);
+			st.append(invoice.getGST());
+			st.append(SEPARATOR);
+			st.append(invoice.getServiceCharge());
+			st.append(SEPARATOR);
+			st.append(invoice.getDateTime());
+			st.append(SEPARATOR);
+			alw.add(st.toString()) ;
+		}
+					write(filename,alw);
+	}
 
 	// READ items file
 	/*
