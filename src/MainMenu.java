@@ -17,15 +17,17 @@ public class MainMenu {
 			System.out.println("3. Create Reservation booking");
 			System.out.println("4. Update/Remove/View Reservation booking");
 			System.out.println("---------------------------------------------------------");
-			System.out.println("5. Create/Update/Remove/View menu item.");
+			System.out.println("5. View table availability");
+			System.out.println("---------------------------------------------------------");			
+			System.out.println("6. Create/Update/Remove/View menu item.");
 			System.out.println("---------------------------------------------------------");
-			System.out.println("6. Create/Update/Remove/View Promotion item. ");
+			System.out.println("7. Create/Update/Remove/View Promotion item. ");
 			System.out.println("---------------------------------------------------------");
-			System.out.println("7. Create/Update/Remove/View Staff ");
+			System.out.println("8. Create/Update/Remove/View Staff ");
 			System.out.println("---------------------------------------------------------");
-			System.out.println("8. Billing");
+			System.out.println("9. Billing");
 			System.out.println("---------------------------------------------------------");
-			System.out.println("9. Exit");
+			System.out.println("0. Exit");
 			System.out.println("=========================================================");
 			System.out.println();
 			System.out.print("Enter your choice: ");
@@ -46,10 +48,13 @@ public class MainMenu {
 				case 4:
 					ReservationApp.updateReservation();
 					break;
-				case 6:
-					PromoSetApp.main(null);
+				case 5:
+					TableApp.menu();
 					break;
 				case 7:
+					PromoSetApp.main(null);
+					break;
+				case 8:
 					StaffApp.main(null);
 					break;
 					

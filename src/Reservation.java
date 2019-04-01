@@ -132,6 +132,22 @@ public class Reservation {
 		}
 		return null;
 	}
+	
+	public ArrayList<Reservation> getTodayReservation(String todaydate, String session) {
+		ArrayList<Reservation> resTb = new ArrayList<Reservation>();
+		ArrayList<Reservation> todayResTb = new ArrayList<Reservation>();
+		try {
+			resTb = DBManager.readReservationInfo("Reservation.txt");
+			for(Reservation item: resTb) {
+				if(((item.Date).equals(todaydate)) && ((item.checkSession(item.ArrivalTime)).equals(session))) {
+					todayResTb.add(item);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return todayResTb;
+	}
 
 	public void updateReservation(Reservation oldres, Reservation newres) {
 		try {
