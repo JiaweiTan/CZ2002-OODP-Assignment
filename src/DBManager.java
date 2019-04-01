@@ -754,7 +754,14 @@ public class DBManager {
 					String newAddress = sc.nextLine();
 					staffloop.setAddress(newAddress);
 					
-				} else if (i == 5) {
+				}if (i == 4) {
+					System.out.println("Shift");
+					System.out.print("New value:");
+					String newShift = sc.nextLine();
+					staffloop.setShift(newShift);
+					
+				}
+				else if (i == 5) {
 					System.out.println("Job Title");
 					System.out.print("New value:");
 					String newJobTitle = sc.nextLine();
