@@ -98,7 +98,7 @@ public class TableInfo {
 		ArrayList<TableInfo> tbInfo = new ArrayList<TableInfo>();
 
 		try {
-			tbInfo = DBManager.readTableInfo("src/TableInfo.txt");
+			tbInfo = DBManager.readTableInfo("TableInfo.txt");
 			if (tbInfo.size() != 0) {
 				for (TableInfo tbl : tbInfo) {
 

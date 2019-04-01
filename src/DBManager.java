@@ -42,9 +42,9 @@ public class DBManager {
 
 	public static ArrayList<TableInfo> readTableInfo(String filename) throws IOException {
 		ArrayList stringArray = (ArrayList) read(filename);
-
+		
 		ArrayList<TableInfo> alr = new ArrayList<TableInfo>();
-
+		
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR);
@@ -61,18 +61,18 @@ public class DBManager {
 		}
 		return alr;
 	}
-
+	
 	public static void saveNewTableSession(TableInfo tbl) throws IOException {
-		String filename = "src/TableInfo.txt";
+		String filename = "TableInfo.txt";
 		ArrayList<TableInfo> tbSession = new ArrayList<TableInfo>();
 		tbSession = readTableInfo(filename);
 		tbSession.add(tbl);
-
+		
 		List alw = new ArrayList();
-
-		for (int i = 0; i < tbSession.size(); i++) {
-			TableInfo tbItem = (TableInfo) tbSession.get(i);
-			StringBuilder st = new StringBuilder();
+		
+		for(int i = 0; i < tbSession.size(); i++) {
+			TableInfo tbItem = (TableInfo)tbSession.get(i);
+			StringBuilder st =  new StringBuilder();
 			st.append(tbItem.getDate().trim());
 			st.append(SEPARATOR);
 			st.append(tbItem.getSession().trim());
@@ -92,20 +92,21 @@ public class DBManager {
 	}
 
 	public static void UpdateTableSessionCount(TableInfo tblItem) throws IOException {
-		String filename = "src/TableInfo.txt";
+		String filename = "TableInfo.txt";
 		List alw = new ArrayList();
 		ArrayList<TableInfo> tbRec = new ArrayList<TableInfo>();
 		tbRec = readTableInfo(filename);
-
+		
 		TableInfo updatedtbl = new TableInfo();
 		for (TableInfo tbl : tbRec) {
-			if ((tbl.getDate()).equals(tblItem.getDate()) && (tbl.getSession()).equals(tblItem.getSession())) {
+			if((tbl.getDate()).equals(tblItem.getDate()) && (tbl.getSession()).equals(tblItem.getSession())) {
 				updatedtbl = tblItem;
-			} else {
+			}
+			else {
 				updatedtbl = tbl;
 			}
-			StringBuilder st = new StringBuilder();
-
+			StringBuilder st =  new StringBuilder();
+			
 			st.append(updatedtbl.getDate().trim());
 			st.append(SEPARATOR);
 			st.append(updatedtbl.getSession().trim());
@@ -123,15 +124,15 @@ public class DBManager {
 		}
 		write(filename, alw);
 	}
-
-	//////////////////////////////////////////////////////////////// Reservation
-	//////////////////////////////////////////////////////////////// /////////////////////////////////////////////////////////////////////
-
+	
+	//////////////////////////////////////////////////////////////// Reservation /////////////////////////////////////////////////////////////////////
+	
+	
 	public static ArrayList<Reservation> readReservationInfo(String filename) throws IOException {
 		ArrayList stringArray = (ArrayList) read(filename);
-
+		
 		ArrayList<Reservation> alr = new ArrayList<Reservation>();
-
+		
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR);
@@ -148,19 +149,19 @@ public class DBManager {
 		}
 		return alr;
 	}
-
+	
 	public static void saveNewReservation(Reservation res) throws IOException {
-		String filename = "src/Reservation.txt";
+		String filename = "Reservation.txt";
 		ArrayList<Reservation> resItem = new ArrayList<Reservation>();
 		resItem = readReservationInfo(filename);
 		resItem.add(res);
-
+		
 		List alw = new ArrayList();
-
-		for (int i = 0; i < resItem.size(); i++) {
-			Reservation resv = (Reservation) resItem.get(i);
-			StringBuilder st = new StringBuilder();
-
+		
+		for(int i = 0; i < resItem.size(); i++) {
+			Reservation resv = (Reservation)resItem.get(i);
+			StringBuilder st =  new StringBuilder();
+			
 			st.append(resv.getTableId());
 			st.append(SEPARATOR);
 			st.append(resv.getDate().trim());
@@ -170,7 +171,7 @@ public class DBManager {
 			st.append(resv.getPax());
 			st.append(SEPARATOR);
 			st.append(resv.getName());
-			st.append(SEPARATOR);
+			st.append(SEPARATOR);		
 			st.append(resv.getContactNumber());
 
 			alw.add(st.toString());
@@ -179,17 +180,18 @@ public class DBManager {
 	}
 
 	public static void saveExistingReservation(Reservation res, int contactNumber) throws IOException {
-		String filename = "src/Reservation.txt";
+		String filename = "Reservation.txt";
 		ArrayList<Reservation> resItem = new ArrayList<Reservation>();
 		resItem = readReservationInfo(filename);
 		Reservation resv = new Reservation();
-
+		
 		List alw = new ArrayList();
-		for (int i = 0; i < resItem.size(); i++) {
-			StringBuilder st = new StringBuilder();
-			if (resItem.get(i).getContactNumber() == contactNumber) {
+		for(int i = 0; i < resItem.size(); i++) {
+			StringBuilder st =  new StringBuilder();
+			if(resItem.get(i).getContactNumber() == contactNumber) {
 				resv = res;
-			} else {
+			}
+			else {
 				resv = resItem.get(i);
 			}
 			st.append(resv.getTableId());
@@ -201,40 +203,38 @@ public class DBManager {
 			st.append(resv.getPax());
 			st.append(SEPARATOR);
 			st.append(resv.getName());
-			st.append(SEPARATOR);
+			st.append(SEPARATOR);		
 			st.append(resv.getContactNumber());
 
-			alw.add(st.toString());
+			alw.add(st.toString());		
 		}
 		write(filename, alw);
 	}
-
+	
 	public static void deleteReservation(Reservation res) throws IOException {
-		String filename = "src/Reservation.txt";
+		String filename = "Reservation.txt";
 		ArrayList<Reservation> resItem = new ArrayList<Reservation>();
 		resItem = readReservationInfo(filename);
-		Reservation resv = new Reservation();
-
 		List alw = new ArrayList();
-		for (int i = 0; i < resItem.size(); i++) {
-			StringBuilder st = new StringBuilder();
-			if (resItem.get(i).getContactNumber() != res.getContactNumber()) {
-				st.append(resv.getTableId());
+		for(int i = 0; i < resItem.size(); i++) {
+			StringBuilder st =  new StringBuilder();
+			if(resItem.get(i).getContactNumber() != res.getContactNumber()) {
+				st.append(resItem.get(i).getTableId());
 				st.append(SEPARATOR);
-				st.append(resv.getDate().trim());
+				st.append(resItem.get(i).getDate().trim());
 				st.append(SEPARATOR);
-				st.append(resv.getArrivalTime());
+				st.append(resItem.get(i).getArrivalTime());
 				st.append(SEPARATOR);
-				st.append(resv.getPax());
+				st.append(resItem.get(i).getPax());
 				st.append(SEPARATOR);
-				st.append(resv.getName());
-				st.append(SEPARATOR);
-				st.append(resv.getContactNumber());
+				st.append(resItem.get(i).getName());
+				st.append(SEPARATOR);		
+				st.append(resItem.get(i).getContactNumber());
 				alw.add(st.toString());
-			}
+			}		
 		}
 		write(filename, alw);
-
+	
 	}
 
 	// READ orders file

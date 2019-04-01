@@ -40,6 +40,12 @@ public class MainMenu {
 				case 2:
 					OrderApp.updateOrder();
 					break;
+				case 3:
+					ReservationApp.createReservation();
+					break;
+				case 4:
+					ReservationApp.updateReservation();
+					break;
 				case 6:
 					PromoSetApp.main(null);
 					break;

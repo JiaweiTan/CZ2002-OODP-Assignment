@@ -120,7 +120,7 @@ public class Reservation {
 		ArrayList<Reservation> res = new ArrayList<Reservation>();
 		Reservation resItem = new Reservation();
 		try {
-			res = DBManager.readReservationInfo("src/Reservation.txt");
+			res = DBManager.readReservationInfo("Reservation.txt");
 			for (Reservation item : res) {
 				if (item.ContactNumber == contactNumber) {
 					resItem = item;
@@ -149,12 +149,6 @@ public class Reservation {
 				// User change dates
 				// User change session
 				// User change pax
-				System.out.println(oldresDate);
-				System.out.println(newresDate);
-				System.out.println(oldSession);
-				System.out.println(newSession);
-				System.out.println(oldTableSize);
-				System.out.println(newTableSize);
 				
 				// Best case scenario, no change to dates, session and pax!
 				// Just update the database immediately!
