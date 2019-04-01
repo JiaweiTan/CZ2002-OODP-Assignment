@@ -7,7 +7,7 @@ public class Order {
 	
 	private static final String ORDER_FILE = "orders.txt";
 	private static final String ITEM_FILE = "outputMenu.txt";
-	private static final String PROMOSET_FILE = "promosets.txt";
+	private static final String PROMOSET_FILE = "src/promotionList.txt";
 	private int orderId;
 	private int tableId;
 	private int staffId;
@@ -92,9 +92,9 @@ public class Order {
 			}
 		}
 		
-		List<PromoSet> psLst = DBManager.readPromoSets(PROMOSET_FILE);
+		List<PromoSetCon> psLst = DBManager.readPromoSetInfo(PROMOSET_FILE);
 		for(int id: newOrder.promoSetId) {
-			for(PromoSet ps: psLst) {
+			for(PromoSetCon ps: psLst) {
 				if(id==ps.getPromoSetId()) {
 					newOrder.price += ps.getPrice();
 					break;
@@ -118,7 +118,7 @@ public class Order {
 		
 		List<Order> orderLst = DBManager.readOrders(ORDER_FILE);
 		List<Menu> menuLst = MenuFunc.getMenu(ITEM_FILE);
-		List<PromoSet> psLst = DBManager.readPromoSets(PROMOSET_FILE);
+		List<PromoSetCon> psLst = DBManager.readPromoSetInfo(PROMOSET_FILE);
 		List<String> tmpCmtLst = new ArrayList<String>();
 		int sel, valid=0;
 		
@@ -161,7 +161,7 @@ public class Order {
 					List<Integer> odPs = od.getPromoSetId();
 					for(int i = 0; i < odPs.size(); i++) {
 						if(i == 0) {
-							for(PromoSet ps: psLst) {
+							for(PromoSetCon ps: psLst) {
 								if(odPs.get(i)==ps.getPromoSetId()) {
 									System.out.println("Promo Set\t\t: " + odPs.get(i) + " " + ps.getName());
 									break;
@@ -169,7 +169,7 @@ public class Order {
 							}
 						}
 						else {
-							for(PromoSet ps: psLst) {
+							for(PromoSetCon ps: psLst) {
 								if(odPs.get(i)==ps.getPromoSetId()) {
 									System.out.println("\t\t\t  " + odPs.get(i) + " " + ps.getName());
 									break;
@@ -235,9 +235,9 @@ public class Order {
 			od.setPromoSetId(tmpPsLst);
 		}
 		else {
-			List<PromoSet> psLst = DBManager.readPromoSets(PROMOSET_FILE);
+			List<PromoSetCon> psLst = DBManager.readPromoSetInfo(PROMOSET_FILE);
 			for(int id: od.promoSetId) {
-				for(PromoSet ps: psLst) {
+				for(PromoSetCon ps: psLst) {
 					if(id==ps.getPromoSetId()) {
 						od.price += ps.getPrice();
 						break;
@@ -277,5 +277,17 @@ public class Order {
 		}
 		
 		return null;
+	}
+	
+	public static int updateItemQuota (int itemId, int addDel) throws IOException {
+		//addDel = 1 -- add item, quota -1
+		//addDel = 0 -- delete item, quota +1
+		
+		return MenuFunc.updateItemQuota(itemId, addDel);
+	}
+	
+	public static int updatePromoSetQuota (int promoSetId, int addDel) throws IOException {
+		
+		return DBManager.updatePromoSetQuota(promoSetId, addDel);
 	}
 }

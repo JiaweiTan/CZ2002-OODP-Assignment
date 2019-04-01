@@ -207,7 +207,7 @@ public class MenuFunc extends MenuApp {
 			editRecord(filepath, editTerm, newID, newName, newType, newPrice, newDesc, newQuota);
 		}
 		
-		public void editRecord(String filepath,String editTerm,String newID,String newName,String newType,String newPrice, String newDesc, String newQuota) {
+		public static void editRecord(String filepath,String editTerm,String newID,String newName,String newType,String newPrice, String newDesc, String newQuota) {
 			
 			String tempFile = "temp.txt";
 			File oldFile = new File(filepath);
@@ -254,5 +254,50 @@ public class MenuFunc extends MenuApp {
 			{
 				JOptionPane.showMessageDialog(null, "Error");
 			}
+		}
+		
+		public static int updateItemQuota (int itemId, int addDel) throws IOException {
+			
+			String filepath = "outputMenu.txt";
+			List<Menu> mnLst = getMenu(filepath);
+			
+			for(Menu mn: mnLst) {
+				if(itemId == mn.getFoodID()) {
+					if(addDel==1) {
+						if(mn.getFoodQuota()>0) {
+							mn.setFoodQuota(mn.getFoodQuota()-1);
+						}
+						else {
+							return -1;
+						}
+					}
+					else {
+						mn.setFoodQuota(mn.getFoodQuota()+1);
+					}
+					break;
+				}
+			}
+			
+			List alw = new ArrayList();
+
+			for (int i = 0; i < mnLst.size(); i++) {
+				Menu mn = (Menu) mnLst.get(i);
+				StringBuilder st = new StringBuilder();
+				st.append(mn.getFoodID());
+				st.append(SEPARATOR);
+				st.append(mn.getFoodName());
+				st.append(SEPARATOR);
+				st.append(mn.getFoodType());
+				st.append(SEPARATOR);
+				st.append(mn.getFoodPrice());
+				st.append(SEPARATOR);
+				st.append(mn.getFoodDesc());
+				st.append(SEPARATOR);
+				st.append(mn.getFoodQuota());
+				alw.add(st.toString());
+			}
+			DBManager.write(filepath, alw);
+			
+			return 0;
 		}
 }

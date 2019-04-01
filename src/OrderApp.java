@@ -29,9 +29,15 @@ public class OrderApp {
 			// Can display out all items??
 			System.out.print("Enter ID for Item " + index +" (Enter 0 to move next): ");
 			it = sc.nextInt();
-			if (it > 0) 
-				itemLst.add(it);
-			index++;
+			if (it > 0) {
+				if(Order.updateItemQuota(it, 1) < 0) {
+					System.out.println("Item has sold out. Please order another item.");
+				}
+				else {
+					itemLst.add(it);
+					index++;
+				}
+			}
 		} while (it > 0);
 		if(itemLst.size()==0) {
 			itemLst.add(0);
@@ -42,7 +48,13 @@ public class OrderApp {
 			System.out.print("Enter ID for PromoSet " + index +" (Enter 0 to move next): ");
 			ps = sc.nextInt();
 			if (ps > 0) 
-				psLst.add(ps);
+				if(Order.updatePromoSetQuota(ps, 1) < 0) {
+					System.out.println("Promo Set has sold out. Please order another Promo Set.");
+				}
+				else {
+					psLst.add(ps);
+					index++;
+				}
 			index++;
 		} while (ps > 0);
 		if(psLst.size()==0)
@@ -135,7 +147,13 @@ public class OrderApp {
 									System.out.print("Enter ID for Item " + index +" (Enter 0 to move next): ");
 									it = sc.nextInt();
 									if (it > 0) 
-										itemLst.add(it);
+										if(Order.updateItemQuota(it, 1) < 0) {
+											System.out.println("Item has sold out. Please order another item.");
+										}
+										else {
+											itemLst.add(it);
+											index++;
+										}
 									index++;
 								} while (it > 0);
 								if(itemLst.size() > 0) {
@@ -155,7 +173,13 @@ public class OrderApp {
 									System.out.print("Enter ID for Promo Set " + index +" (Enter 0 to move next): ");
 									ps = sc.nextInt();
 									if (ps > 0) 
-										psLst.add(ps);
+										if(Order.updatePromoSetQuota(ps, 1) < 0) {
+											System.out.println("Promo Set has sold out. Please order another Promo Set.");
+										}
+										else {
+											psLst.add(ps);
+											index++;
+										}
 									index++;
 								} while (ps > 0);
 								if(psLst.size() > 0) {
@@ -229,6 +253,7 @@ public class OrderApp {
 									valid = 0;
 									for(int i = 0; i < itemLst.size(); i++) {
 										if(it == itemLst.get(i)) {
+											Order.updateItemQuota(it, 0);
 											itemLst.remove(i);
 											valid = 1;
 											break;
@@ -259,6 +284,7 @@ public class OrderApp {
 									valid = 0;
 									for(int i = 0; i < psLst.size(); i++) {
 										if(ps == psLst.get(i)) {
+											Order.updatePromoSetQuota(ps, 0);
 											psLst.remove(i);
 											valid = 1;
 											break;

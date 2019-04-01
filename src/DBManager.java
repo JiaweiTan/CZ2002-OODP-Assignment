@@ -340,39 +340,6 @@ public class DBManager {
 	 * price, desc, quota); // add to Items list alr.add(mn); } return alr; }
 	 */
 
-	// READ PromoSets file
-	public static ArrayList readPromoSets(String filename) throws IOException {
-		// read String from text file
-		ArrayList stringArray = (ArrayList) read(filename);
-		ArrayList alr = new ArrayList();// to store Professors data
-
-		for (int i = 0; i < stringArray.size(); i++) {
-			String st = (String) stringArray.get(i);
-			// get individual 'fields' of the string separated by SEPARATOR
-			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
-																		// using delimiter ","
-
-			int promoSetId = Integer.parseInt(star.nextToken().trim());
-			String name = star.nextToken().trim();
-			String[] itemStrArr = star.nextToken().trim().split(" ");
-			int[] itemId = new int[itemStrArr.length];
-			for (int j = 0; j < itemStrArr.length; j++) {
-				itemId[j] = Integer.parseInt(itemStrArr[j]);
-			}
-			double price = Double.parseDouble(star.nextToken().trim());
-			DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			LocalDate startDate = LocalDate.parse(star.nextToken().trim(), DATEFORMATTER);
-			LocalDate endDate = LocalDate.parse(star.nextToken().trim(), DATEFORMATTER);
-			int quota = Integer.parseInt(star.nextToken().trim());
-
-			// create Item object from file data
-			PromoSet ps = new PromoSet(promoSetId, name, itemId, price, startDate, endDate, quota);
-			// add to Items list
-			alr.add(ps);
-		}
-		return alr;
-	}
-
 	public static ArrayList<PromoSetCon> readPromoSetInfo(String filename) throws IOException {
 		ArrayList stringArray = (ArrayList) read(filename);
 
@@ -599,6 +566,53 @@ public class DBManager {
 		}
 		return check;
 	}
+	
+	public static int updatePromoSetQuota(int promoSetId, int addDel) throws IOException {
+		String filename = "src/promotionList.txt";
+		ArrayList<PromoSetCon> promoSession = new ArrayList<PromoSetCon>();
+		promoSession = readPromoSetInfo(filename);
+		
+		for(PromoSetCon ps: promoSession) {
+			if(promoSetId == ps.getPromoSetId()) {
+				if(addDel==1) {
+					if(ps.getQuota()>0) {
+						ps.setQuota(ps.getQuota()-1);
+					}
+					else {
+						return -1;
+					}
+				}
+				else {
+					ps.setQuota(ps.getQuota()+1);
+				}
+				break;
+			}
+		}
+
+		List alw = new ArrayList();
+
+		for (int i = 0; i < promoSession.size(); i++) {
+			PromoSetCon promoItem = (PromoSetCon) promoSession.get(i);
+			StringBuilder st = new StringBuilder();
+			st.append(promoItem.getPromoSetId());
+			st.append(SEPARATOR);
+			st.append(promoItem.getItemId());
+			st.append(SEPARATOR);
+			st.append(promoItem.getName());
+			st.append(SEPARATOR);
+			st.append(promoItem.getPrice());
+			st.append(SEPARATOR);
+			st.append(promoItem.getStartDate().trim());
+			st.append(SEPARATOR);
+			st.append(promoItem.getEndDate().trim());
+			st.append(SEPARATOR);
+			st.append(promoItem.getQuota());
+			alw.add(st.toString());
+		}
+		write(filename, alw);
+		return 0;
+	}
+	
 	public static ArrayList<Staff> readStaffInfo(String filename) throws IOException {
 		ArrayList stringArray = (ArrayList) read(filename);
 

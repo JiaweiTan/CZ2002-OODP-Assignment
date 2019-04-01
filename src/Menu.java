@@ -12,6 +12,8 @@ public class Menu {
     private int foodQuota;
     
 	Scanner sc = new Scanner(System.in);
+	
+	public Menu() {};
     
 	public Menu(int id, String name, String type, int price, String desc, int quota)  {
 		this.foodID = id ;
@@ -47,6 +49,10 @@ public class Menu {
     
     public int getFoodQuota() {
     	return foodQuota;
+    }
+    
+    public void setFoodQuota(int foodQuota) {
+    	this.foodQuota = foodQuota;
     }
 
 }
