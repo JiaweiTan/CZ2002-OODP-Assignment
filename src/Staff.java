@@ -27,15 +27,11 @@ public class Staff {
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
 	public char getGender() {
 		return gender;
 	}
-	public void setGender(char gender) {
-		this.gender = gender;
-	}
+
 	public String getContact() {
 		return contact;
 	}
@@ -57,9 +53,7 @@ public class Staff {
 	public int getEmployeeId() {
 		return employeeId;
 	}
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
+
 	public String getShift() {
 		return shift;
 	}

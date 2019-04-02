@@ -374,7 +374,7 @@ public class DBManager {
 					}
 					write(filename,alw);
 			}
-			public static ArrayList readSalesRevenue(String filename) throws IOException {
+				public static ArrayList readSalesRevenue(String filename) throws IOException {
 				// read String from text file
 				ArrayList stringArray = (ArrayList)read(filename);
 				ArrayList alr = new ArrayList() ;// to store Professors data
@@ -442,10 +442,10 @@ public class DBManager {
 	 * price, desc, quota); // add to Items list alr.add(mn); } return alr; }
 	 */
 
-	public static ArrayList<PromoSetCon> readPromoSetInfo(String filename) throws IOException {
+	public static ArrayList<PromoSet> readPromoSetInfo(String filename) throws IOException {
 		ArrayList stringArray = (ArrayList) read(filename);
 
-		ArrayList<PromoSetCon> alr = new ArrayList<PromoSetCon>();
+		ArrayList<PromoSet> alr = new ArrayList<PromoSet>();
 
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
@@ -470,23 +470,23 @@ public class DBManager {
 			String endDate = star.nextToken().trim();
 			int quota = Integer.parseInt(star.nextToken().trim());
 
-			PromoSetCon PromoSetInfo = new PromoSetCon(PromoSetId, name, itemId, price, startDate, endDate, quota);
+			PromoSet PromoSetInfo = new PromoSet(PromoSetId, name, itemId, price, startDate, endDate, quota);
 
 			alr.add(PromoSetInfo);
 		}
 		return alr;
 	}
 
-	public static void savePromoItems(PromoSetCon promoSetItemData) throws IOException {
+	public static void savePromoItems(PromoSet promoSetItemData) throws IOException {
 		String filename = "src/promotionList.txt";
-		ArrayList<PromoSetCon> promoSession = new ArrayList<PromoSetCon>();
+		ArrayList<PromoSet> promoSession = new ArrayList<PromoSet>();
 		promoSession = readPromoSetInfo(filename);
 		promoSession.add(promoSetItemData);
 
 		List alw = new ArrayList();
 
 		for (int i = 0; i < promoSession.size(); i++) {
-			PromoSetCon promoItem = (PromoSetCon) promoSession.get(i);
+			PromoSet promoItem = (PromoSet) promoSession.get(i);
 			StringBuilder st = new StringBuilder();
 			st.append(promoItem.getPromoSetId());
 			st.append(SEPARATOR);
@@ -510,11 +510,11 @@ public class DBManager {
 		Scanner sc = new Scanner(System.in);
 		String filename = "src/promotionList.txt";
 		List alw = new ArrayList();
-		ArrayList<PromoSetCon> promoSetList = new ArrayList<PromoSetCon>();
+		ArrayList<PromoSet> promoSetList = new ArrayList<PromoSet>();
 		promoSetList = readPromoSetInfo(filename);
 
-		PromoSetCon updatedtbl = new PromoSetCon();
-		for (PromoSetCon promoSetloop : promoSetList) {
+		PromoSet updatedtbl = new PromoSet();
+		for (PromoSet promoSetloop : promoSetList) {
 			if (promoSetloop.getPromoSetId() == promoId) {
 				updatedtbl = promoSetloop;
 				if (i == 1) {
@@ -622,13 +622,13 @@ public class DBManager {
 
 	public static void deletePromoSet(int promoId) throws IOException {
 		String filename = "src/promotionList.txt";
-		ArrayList<PromoSetCon> promoSetList = new ArrayList<PromoSetCon>();
+		ArrayList<PromoSet> promoSetList = new ArrayList<PromoSet>();
 		promoSetList = readPromoSetInfo(filename);
-		PromoSetCon resv = new PromoSetCon();
+		PromoSet resv = new PromoSet();
 
 		List alw = new ArrayList();
 
-		for (PromoSetCon promoSetloop : promoSetList) {
+		for (PromoSet promoSetloop : promoSetList) {
 			if (promoSetloop.getPromoSetId() != promoId) {
 
 				StringBuilder st = new StringBuilder();
@@ -658,10 +658,10 @@ public class DBManager {
 		String filename = "src/promotionList.txt";
 		boolean check = false;
 		List alw = new ArrayList();
-		ArrayList<PromoSetCon> tbRec = new ArrayList<PromoSetCon>();
+		ArrayList<PromoSet> tbRec = new ArrayList<PromoSet>();
 		tbRec = readPromoSetInfo(filename);
-		PromoSetCon updatedPromoSetCon = new PromoSetCon();
-		for (PromoSetCon tbl : tbRec) {
+		PromoSet updatedPromoSetCon = new PromoSet();
+		for (PromoSet tbl : tbRec) {
 			if (tbl.getPromoSetId() == id) {
 				check = true;
 			}
@@ -671,10 +671,10 @@ public class DBManager {
 	
 	public static int updatePromoSetQuota(int promoSetId, int addDel) throws IOException {
 		String filename = "src/promotionList.txt";
-		ArrayList<PromoSetCon> promoSession = new ArrayList<PromoSetCon>();
+		ArrayList<PromoSet> promoSession = new ArrayList<PromoSet>();
 		promoSession = readPromoSetInfo(filename);
 		
-		for(PromoSetCon ps: promoSession) {
+		for(PromoSet ps: promoSession) {
 			if(promoSetId == ps.getPromoSetId()) {
 				if(addDel==1) {
 					if(ps.getQuota()>0) {
@@ -694,7 +694,7 @@ public class DBManager {
 		List alw = new ArrayList();
 
 		for (int i = 0; i < promoSession.size(); i++) {
-			PromoSetCon promoItem = (PromoSetCon) promoSession.get(i);
+			PromoSet promoItem = (PromoSet) promoSession.get(i);
 			StringBuilder st = new StringBuilder();
 			st.append(promoItem.getPromoSetId());
 			st.append(SEPARATOR);
@@ -782,7 +782,7 @@ public class DBManager {
 		ArrayList<Staff> StaffSession = new ArrayList<Staff>();
 		StaffSession = readStaffInfo(filename);
 		
-		PromoSetCon updatedPromoSetCon = new PromoSetCon();
+		PromoSet updatedPromoSetCon = new PromoSet();
 		for (Staff Stafflist : StaffSession) {
 			if (Stafflist.getEmployeeId() == id) {
 				check = true;

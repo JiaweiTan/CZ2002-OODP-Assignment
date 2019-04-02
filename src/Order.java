@@ -92,9 +92,9 @@ public class Order {
 			}
 		}
 		
-		List<PromoSetCon> psLst = DBManager.readPromoSetInfo(PROMOSET_FILE);
+		List<PromoSet> psLst = DBManager.readPromoSetInfo(PROMOSET_FILE);
 		for(int id: newOrder.promoSetId) {
-			for(PromoSetCon ps: psLst) {
+			for(PromoSet ps: psLst) {
 				if(id==ps.getPromoSetId()) {
 					newOrder.price += ps.getPrice();
 					break;
@@ -118,7 +118,7 @@ public class Order {
 		
 		List<Order> orderLst = DBManager.readOrders(ORDER_FILE);
 		List<Menu> menuLst = MenuFunc.getMenu(ITEM_FILE);
-		List<PromoSetCon> psLst = DBManager.readPromoSetInfo(PROMOSET_FILE);
+		List<PromoSet> psLst = DBManager.readPromoSetInfo(PROMOSET_FILE);
 		List<String> tmpCmtLst = new ArrayList<String>();
 		int sel, valid=0;
 		
@@ -161,7 +161,7 @@ public class Order {
 					List<Integer> odPs = od.getPromoSetId();
 					for(int i = 0; i < odPs.size(); i++) {
 						if(i == 0) {
-							for(PromoSetCon ps: psLst) {
+							for(PromoSet ps: psLst) {
 								if(odPs.get(i)==ps.getPromoSetId()) {
 									System.out.println("Promo Set\t\t: " + odPs.get(i) + " " + ps.getName());
 									break;
@@ -169,7 +169,7 @@ public class Order {
 							}
 						}
 						else {
-							for(PromoSetCon ps: psLst) {
+							for(PromoSet ps: psLst) {
 								if(odPs.get(i)==ps.getPromoSetId()) {
 									System.out.println("\t\t\t  " + odPs.get(i) + " " + ps.getName());
 									break;
@@ -235,9 +235,9 @@ public class Order {
 			od.setPromoSetId(tmpPsLst);
 		}
 		else {
-			List<PromoSetCon> psLst = DBManager.readPromoSetInfo(PROMOSET_FILE);
+			List<PromoSet> psLst = DBManager.readPromoSetInfo(PROMOSET_FILE);
 			for(int id: od.promoSetId) {
-				for(PromoSetCon ps: psLst) {
+				for(PromoSet ps: psLst) {
 					if(id==ps.getPromoSetId()) {
 						od.price += ps.getPrice();
 						break;

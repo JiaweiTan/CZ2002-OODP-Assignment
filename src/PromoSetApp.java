@@ -5,16 +5,15 @@ import java.util.Scanner;
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 public class PromoSetApp {
-	private int PromoSetId, quota;
-	private static int menuInput, OperationInput, UpdateInput;
-	private ArrayList<Integer> itemId;
-	private double Price;
-	private String startDate, endDate, name;
+	
+
+
+
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-
+		int  OperationInput;
 		Scanner sc = new Scanner(System.in);
 		DBManager db = new DBManager();
 
@@ -29,7 +28,7 @@ public class PromoSetApp {
 		System.out.println("4) View promotion items");
 		System.out.println("0) Back");
 		System.out.print("\nEnter your choice: ");
-
+		
 		OperationInput = sc.nextInt();
 		sc.nextLine();
 
@@ -76,15 +75,14 @@ public class PromoSetApp {
 			int tempQuota = sc.nextInt();
 			sc.nextLine();
 
-			db.savePromoItems(new PromoSetCon(tempPromoSetid, tempName, tempItemIDList, tempPrice, tempStartDate,
+			db.savePromoItems(new PromoSet(tempPromoSetid, tempName, tempItemIDList, tempPrice, tempStartDate,
 					tempEndDate, tempQuota));
 
 			PromoSetApp.main(null);
 			break;
 		case 2:
 
-			int postion = 0, counting = 0;
-
+			int  UpdateInput;
 			System.out.println();
 			System.out.println();
 			System.out.println("======================================");
@@ -159,7 +157,7 @@ public class PromoSetApp {
 			System.out.println("\tViewing Promotion Set");
 			System.out.println("=============================================");
 			String filename = "src/promotionList.txt";
-			ArrayList<PromoSetCon> resItem = new ArrayList<PromoSetCon>();
+			ArrayList<PromoSet> resItem = new ArrayList<PromoSet>();
 			resItem = db.readPromoSetInfo(filename);
 			System.out.println(
 					"-------------------------------------------------------------------------------------------------------------------------------");
@@ -167,7 +165,7 @@ public class PromoSetApp {
 					"Start Data", "End Date", "Quota");
 			System.out.println();
 			int index = 1;
-			for (PromoSetCon g : resItem) {
+			for (PromoSet g : resItem) {
 
 				System.out.format("%5s %10s %30s %40s %15s %15s %5s", index, g.getPromoSetId(), g.getName(),
 						g.getItemId(), g.getEndDate(), g.getEndDate(), g.getQuota());

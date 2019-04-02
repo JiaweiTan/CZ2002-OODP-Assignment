@@ -3,8 +3,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StaffApp {
-	static int  OperationInput;
+	
 	public static void main(String[] args) throws IOException {
+		int  OperationInput;
 		Scanner sc = new Scanner(System.in);
 		DBManager db = new DBManager();
 
@@ -69,8 +70,7 @@ public class StaffApp {
 			StaffApp.main(null);
 			break;
 		case 2:
-			
-			int postion = 0, counting = 0;
+		
 			int UpdateInput=0;
 			int staffId = 0;
 			
