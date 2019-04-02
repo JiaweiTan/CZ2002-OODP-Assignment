@@ -128,7 +128,7 @@ public class Invoice {
 	
 	public static void printBillInvoice(Order order, Invoice invoice) throws IOException 
 	{
-		List<PromoSet> promoLst = DBManager.readPromoSets("promosets.txt");
+		List<PromoSetCon> promoLst = DBManager.readPromoSetInfo("src/promotionList.txt");
 		List<Menu> menuLst = MenuFunc.getMenu("outputMenu.txt");
 		
 		System.out.println("\t\t  RRPSS");
@@ -183,7 +183,7 @@ public class Invoice {
 			}
 			else 
 			{
-				for(PromoSet promoMenu: promoLst)
+				for(PromoSetCon promoMenu: promoLst)
 				{
 					if(promoItem == promoMenu.getPromoSetId()) 
 					{

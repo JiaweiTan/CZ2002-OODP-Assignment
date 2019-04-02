@@ -57,6 +57,8 @@ public class MainMenu {
 				case 8:
 					StaffApp.main(null);
 					break;
+				case 9: 
+					BillingApp.main(null);
 					
 				default:
 					System.out.println("Invalid input. Please enter again.\n");
