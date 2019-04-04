@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -506,7 +507,7 @@ public class DBManager {
 		write(filename, alw);
 	}
 
-	public static void UpdatePromoItem(int promoId, int i) throws IOException {
+	public static void UpdatePromoItem(int promoId, int i) throws IOException, ParseException {
 		Scanner sc = new Scanner(System.in);
 		String filename = "PromotionList.txt";
 		List alw = new ArrayList();
@@ -580,16 +581,34 @@ public class DBManager {
 					sc.nextLine();
 					promoSetloop.setPrice(newPrice);
 				} else if (i == 4) {
+					
 					System.out.println("Start date Formate:DD/MM/YYYY");
 					System.out.print("New value:");
 					String newStartDate = sc.nextLine();
+					Validation inputValidation= new Validation();
+					while(inputValidation.isDateValid(newStartDate)==false)
+					{
+						System.out.println("Invalid value, please key in a new value");
+						System.out.print("Start date Formate:YYYY-MM-DD :");
+						newStartDate = sc.nextLine();
+					}
 					promoSetloop.setStartDate(newStartDate);
 				} else if (i == 5) {
+					
+					
 					System.out.println("End date Formate:DD/MM/YYYY");
 					System.out.print("New value:");
 					String newEndDate = sc.nextLine();
+					Validation inputValidation= new Validation();
+					while(inputValidation.isDateValid(newEndDate)==false)
+					{
+						System.out.println("Invalid value, please key in a new value");
+						System.out.print("End date Formate:YYYY-MM-DD :");
+						newEndDate = sc.nextLine();
+					}
+					
 					promoSetloop.setEndDate(newEndDate);
-				} else if (i == 6) {
+				}  else if (i == 6) {
 					System.out.print("New value:");
 					int newQuota = sc.nextInt();
 					sc.nextLine();
@@ -653,22 +672,7 @@ public class DBManager {
 
 	}
 
-	public boolean checkIfExistPromoSet(int id) throws IOException {
-		Scanner sc = new Scanner(System.in);
-		String filename = "PromotionList.txt";
-		boolean check = false;
-		List alw = new ArrayList();
-		ArrayList<PromoSet> tbRec = new ArrayList<PromoSet>();
-		tbRec = readPromoSetInfo(filename);
-		PromoSet updatedPromoSetCon = new PromoSet();
-		for (PromoSet tbl : tbRec) {
-			if (tbl.getPromoSetId() == id) {
-				check = true;
-			}
-		}
-		return check;
-	}
-	
+
 	public static int updatePromoSetQuota(int promoSetId, int addDel) throws IOException {
 		String filename = "PromotionList.txt";
 		ArrayList<PromoSet> promoSession = new ArrayList<PromoSet>();
@@ -775,21 +779,7 @@ public class DBManager {
 		}
 		write(filename, alw);
 	}
-	public boolean checkIfExistStaff(int id) throws IOException {
-		Scanner sc = new Scanner(System.in);
-		String filename = "StaffList.txt";
-		boolean check = false;
-		ArrayList<Staff> StaffSession = new ArrayList<Staff>();
-		StaffSession = readStaffInfo(filename);
-		
-		PromoSet updatedPromoSetCon = new PromoSet();
-		for (Staff Stafflist : StaffSession) {
-			if (Stafflist.getEmployeeId() == id) {
-				check = true;
-			}
-		}
-		return check;
-	}
+	
 	
 	public static void deleteStaff(int StaffId) throws IOException {
 		String filename = "StaffList.txt";

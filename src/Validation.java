@@ -1,5 +1,10 @@
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class Validation {
 	
@@ -47,4 +52,28 @@ public class Validation {
 		
 		return 1;
 	}
+public static boolean isDateValid(String dateToValidate){
+		
+		if(dateToValidate == null){
+			return false;
+		}
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+		dateFormat.setLenient(false);
+		
+		try {
+			
+			Date date = dateFormat.parse(dateToValidate);
+			//System.out.println(date);
+		
+		} catch (ParseException e) {
+			
+			//e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+
+
 }

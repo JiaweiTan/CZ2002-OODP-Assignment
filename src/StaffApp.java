@@ -3,11 +3,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StaffApp {
-	
-	public static void main(String[] args) throws IOException {
+	final static  String filename = "StaffList.txt";
+	public static void main() throws IOException {
 		int  OperationInput;
 		Scanner sc = new Scanner(System.in);
-		DBManager db = new DBManager();
+		Staff staff=new Staff();
+		Validation inputValidation= new Validation();
 
 		System.out.println();
 		System.out.println();
@@ -33,14 +34,9 @@ public class StaffApp {
 			System.out.println("=================================");
 
 			System.out.print("Staff ID:");
-			int tempStaffId = sc.nextInt();
-			sc.nextLine();
-			while (db.checkIfExistStaff(tempStaffId) == true) {
-				System.out.print("This id exists. Please provides another input:");
-				tempStaffId = sc.nextInt();
-				sc.nextLine();
-			}
-
+			
+			System.out.print(staff.SystemGeneratedID(filename));		
+			System.out.println();
 			System.out.print("Name:");
 			String tempName = sc.nextLine();
 
@@ -61,10 +57,12 @@ public class StaffApp {
 
 			System.out.print("Job Title:");
 			String tempJobTitle = sc.nextLine();
-
-			db.saveStaffDetails(new Staff(tempStaffId, tempName, tempGender, tempContact, tempEmail,tempAdress, tempShift, tempJobTitle));		
 			
-			StaffApp.main(null);
+			
+			staff.addPromoItems(new Staff(staff.SystemGeneratedID(filename), tempName, tempGender, tempContact, tempEmail,tempAdress, tempShift, tempJobTitle));
+	
+			
+			StaffApp.main();
 			break;
 		case 2:
 		
@@ -94,26 +92,27 @@ public class StaffApp {
 			switch (UpdateInput) {
 
 			case 1:
-				db.UpdateStaffItem(staffId, 1);
+				staff.updateInfo(staffId, 1);
+				
 				break;
 			case 2:
-				db.UpdateStaffItem(staffId, 2);
+				staff.updateInfo(staffId, 2);
 				break;
 			case 3:
-				db.UpdateStaffItem(staffId, 3);
+				staff.updateInfo(staffId, 3);
 				break;
 			case 4:	
-				db.UpdateStaffItem(staffId, 4);
+				staff.updateInfo(staffId, 4);
 				break;
 			case 5:
-				db.UpdateStaffItem(staffId, 5);
+				staff.updateInfo(staffId, 5);
 				break;
 			default:
 
 				break;
 			}		
 			
-			StaffApp.main(null);
+			StaffApp.main();
 			break;
 		case 3:
 			System.out.println();
@@ -123,9 +122,10 @@ public class StaffApp {
 			System.out.print("Enter Staff ID: ");
 			int removeID = sc.nextInt();
 			sc.nextLine();
-			db.deleteStaff(removeID);
+			staff.remove(removeID);
 			
-			StaffApp.main(null);
+			
+			StaffApp.main();
 			break;
 		case 4: 
 			
@@ -133,9 +133,9 @@ public class StaffApp {
 			System.out.println("=============================================");
 			System.out.println("\tViewing Staff");
 			System.out.println("=============================================");
-			String filename = "StaffList.txt";
+			
 			ArrayList<Staff> resItem = new ArrayList<Staff>();
-			resItem = db.readStaffInfo(filename);
+			resItem = staff.readStaffInfo(filename);
 			System.out.println(
 					"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			
@@ -153,10 +153,10 @@ public class StaffApp {
 			System.out.println(
 					"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			
-			StaffApp.main(null);
+			StaffApp.main();
 			break;
 		default:
-			MainMenu.main(null);
+			
 			break;
 		}
 	}
