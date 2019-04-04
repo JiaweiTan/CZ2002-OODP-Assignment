@@ -12,13 +12,13 @@ public class Reservation {
 	private String ArrivalTime;
 	private int Pax;
 	private String Name;
-	private int ContactNumber;
+	private String ContactNumber;
 
 	public Reservation() {
 
 	}
 
-	public Reservation(int TableId, String Date, String ArrivalTime, int Pax, String Name, int ContactNumber) {
+	public Reservation(int TableId, String Date, String ArrivalTime, int Pax, String Name, String ContactNumber) {
 		this.TableId = TableId;
 		this.Date = Date;
 		this.ArrivalTime = ArrivalTime;
@@ -75,10 +75,14 @@ public class Reservation {
 		Name = name;
 	}
 
-	public int getContactNumber() {
+	public String getContactNumber() {
 		return ContactNumber;
 	}
 
+	public void setContactNumber(String contactNumber) {
+		ContactNumber = contactNumber;
+	}
+	
 	public String checkSession(String arrivaltime) {
 		// 24 hour timing
 		// Check session range to see if input is valid
@@ -104,10 +108,6 @@ public class Reservation {
 		return result;
 	}
 
-	public void setContactNumber(int contactNumber) {
-		ContactNumber = contactNumber;
-	}
-
 	public void createReservation(Reservation item) {
 		try {
 			DBManager.saveNewReservation(item);
@@ -116,7 +116,7 @@ public class Reservation {
 		}
 	}
 
-	public Reservation getReservation(int contactNumber) {
+	public Reservation getReservation(String contactNumber) {
 		ArrayList<Reservation> res = new ArrayList<Reservation>();
 		Reservation resItem = new Reservation();
 		try {

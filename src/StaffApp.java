@@ -50,7 +50,6 @@ public class StaffApp {
 			System.out.print("Contact:");
 			String tempContact = sc.nextLine();
 			
-
 			System.out.print("Email:");
 			String tempEmail = sc.nextLine();
 
@@ -63,9 +62,7 @@ public class StaffApp {
 			System.out.print("Job Title:");
 			String tempJobTitle = sc.nextLine();
 
-			db.saveStaffDetails(new Staff(tempStaffId, tempName, tempGender, tempContact, tempEmail,tempAdress, tempShift, tempJobTitle));
-			
-			
+			db.saveStaffDetails(new Staff(tempStaffId, tempName, tempGender, tempContact, tempEmail,tempAdress, tempShift, tempJobTitle));		
 			
 			StaffApp.main(null);
 			break;
@@ -97,24 +94,16 @@ public class StaffApp {
 			switch (UpdateInput) {
 
 			case 1:
-				
 				db.UpdateStaffItem(staffId, 1);
-
 				break;
 			case 2:
-				
 				db.UpdateStaffItem(staffId, 2);
-
 				break;
 			case 3:
-				
 				db.UpdateStaffItem(staffId, 3);
-
 				break;
-			case 4:
-				
+			case 4:	
 				db.UpdateStaffItem(staffId, 4);
-
 				break;
 			case 5:
 				db.UpdateStaffItem(staffId, 5);
@@ -122,9 +111,7 @@ public class StaffApp {
 			default:
 
 				break;
-			}
-			
-			
+			}		
 			
 			StaffApp.main(null);
 			break;
@@ -171,6 +158,6 @@ public class StaffApp {
 		default:
 			MainMenu.main(null);
 			break;
-	}
+		}
 	}
 }

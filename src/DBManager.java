@@ -141,7 +141,7 @@ public class DBManager {
 			String ArrivalTime = star.nextToken().trim();
 			int Pax = Integer.parseInt(star.nextToken().trim());
 			String Name = star.nextToken().trim();
-			int ContactNumber = Integer.parseInt(star.nextToken().trim());
+			String ContactNumber = star.nextToken().trim();
 
 			Reservation resInfo = new Reservation(TableId, Date, ArrivalTime, Pax, Name, ContactNumber);
 
@@ -179,7 +179,7 @@ public class DBManager {
 		write(filename, alw);
 	}
 
-	public static void saveExistingReservation(Reservation res, int contactNumber) throws IOException {
+	public static void saveExistingReservation(Reservation res, String contactNumber) throws IOException {
 		String filename = "Reservation.txt";
 		ArrayList<Reservation> resItem = new ArrayList<Reservation>();
 		resItem = readReservationInfo(filename);
