@@ -340,7 +340,7 @@ public class DBManager {
 						LocalDateTime dateTime = LocalDateTime.parse(star.nextToken().trim());
 						// create Professor object from file data
 
-						Invoice invoice = new Invoice(invoiceID, paymentType, orderID, originalPrice, finalPrice, GST, serviceCharge, dateTime);
+						Invoice invoice = new Invoice(invoiceID, paymentType, orderID, originalPrice, finalPrice, GST, serviceCharge, 0, dateTime);
 						alr.add(invoice) ;
 					}
 					return alr ;
@@ -733,9 +733,6 @@ public class DBManager {
 			String shift = star.nextToken().trim();
 			String jobTitle = star.nextToken().trim();
 			
-			
-		
-
 			Staff StaffInfo = new Staff(StaffId, name, gender, contact, email,address, shift, jobTitle);
 
 			staffSetList.add(StaffInfo);
@@ -745,18 +742,18 @@ public class DBManager {
 
 	
 	
-	public static void saveStaffDetails(Staff Staff) throws IOException {
+	public static void saveStaffDetails(Staff staff) throws IOException {
 		String filename = "StaffList.txt";
 		ArrayList<Staff> StaffSession = new ArrayList<Staff>();
 		StaffSession = readStaffInfo(filename);
-		StaffSession.add(Staff);
+		StaffSession.add(staff);
 
 		List alw = new ArrayList();
 
 		for (int i = 0; i < StaffSession.size(); i++) {
 			Staff StaffItem = (Staff) StaffSession.get(i);
 			StringBuilder st = new StringBuilder();
-			st.append(StaffItem.getEmployeeId());
+			st.append(StaffItem.getID());
 			st.append(SEPARATOR);
 			st.append(StaffItem.getName().trim());
 			st.append(SEPARATOR);
@@ -784,14 +781,14 @@ public class DBManager {
 		
 		PromoSet updatedPromoSetCon = new PromoSet();
 		for (Staff Stafflist : StaffSession) {
-			if (Stafflist.getEmployeeId() == id) {
+			if (Stafflist.getID() == id) {
 				check = true;
 			}
 		}
 		return check;
 	}
 	
-	public static void deleteStaff(int StaffId) throws IOException {
+	public static void deleteStaff(int staffId) throws IOException {
 		String filename = "StaffList.txt";
 		ArrayList<Staff> StaffSession = new ArrayList<Staff>();
 		StaffSession = readStaffInfo(filename);
@@ -800,11 +797,11 @@ public class DBManager {
 		List alw = new ArrayList();
 
 		for (Staff Staffloop : StaffSession) {
-			if (Staffloop.getEmployeeId() != StaffId) {
+			if (Staffloop.getID() != staffId) {
 
 				StringBuilder st = new StringBuilder();
 
-				st.append(Staffloop.getEmployeeId());
+				st.append(Staffloop.getID());
 				st.append(SEPARATOR);
 				st.append(Staffloop.getName().trim());
 				st.append(SEPARATOR);
@@ -826,7 +823,7 @@ public class DBManager {
 
 	}
 	
-	public static void UpdateStaffItem(int StaffId, int i) throws IOException {
+	public static void UpdateStaffItem(int staffId, int i) throws IOException {
 		Scanner sc = new Scanner(System.in);
 		String filename = "StaffList.txt";
 		List alw = new ArrayList();
@@ -835,7 +832,7 @@ public class DBManager {
 
 		Staff updatedStaff = new Staff();
 		for (Staff staffloop : staffSesson) {
-			if (staffloop.getEmployeeId() == StaffId) {
+			if (staffloop.getID() == staffId) {
 				updatedStaff = staffloop;
 				if (i == 1) {
 					System.out.println("Contact");
@@ -876,7 +873,7 @@ public class DBManager {
 
 			StringBuilder st = new StringBuilder();
 
-			st.append(updatedStaff.getEmployeeId());
+			st.append(updatedStaff.getID());
 			st.append(SEPARATOR);
 			st.append(updatedStaff.getName().trim());
 			st.append(SEPARATOR);
@@ -896,8 +893,86 @@ public class DBManager {
 		write(filename, alw);
 	}
 
+	public static void saveCustomerDetails(Customer customer) throws IOException {
+		String filename = "CustomerList.txt";
+		ArrayList<Customer> customerLst = readCustomerInfo(filename);
+		
+		if(customer.getID() == 0) {
+			if(customerLst.size()>0)
+				customer.setID(customerLst.get(customerLst.size()-1).getID() + 1);
+			else
+				customer.setID(1001);
+			customerLst.add(customer);
+		}
+		else {
+			for(Customer cs: customerLst) {
+				if(customer.getID() == cs.getID()) {
+					cs.setName(customer.getName());
+					cs.setContact(customer.getContact());
+					cs.setExpiry(customer.getExpiry());
+					cs.setStatus(customer.getStatus());
+					cs.setInvoiceId(customer.getInvoiceId());
+					break;
+				}
+			}
+		}
+
+		List alw = new ArrayList();
+
+		for (int i = 0; i < customerLst.size(); i++) {
+			Customer cs = (Customer) customerLst.get(i);
+			StringBuilder st = new StringBuilder();
+			st.append(cs.getID());
+			st.append(SEPARATOR);
+			st.append(cs.getName().trim());
+			st.append(SEPARATOR);
+			st.append(cs.getContact().trim());
+			st.append(SEPARATOR);
+			st.append(cs.getExpiry());
+			st.append(SEPARATOR);
+			st.append(cs.getStatus());
+			st.append(SEPARATOR);
+			List<Integer> invoiceLst = cs.getInvoiceId();
+			if(invoiceLst != null) {
+				for (int var : invoiceLst)
+					st.append(var + " ");
+			}
+			else
+				st.append("0");
+			alw.add(st.toString());
+		}
+		write(filename, alw);
+	}
 	
-	
+	//Read customer details from DB
+	public static ArrayList<Customer> readCustomerInfo(String filename) throws IOException {
+		ArrayList stringArray = (ArrayList) read(filename);
+
+		ArrayList<Customer> customerList = new ArrayList<Customer>();
+
+		for (int i = 0; i < stringArray.size(); i++) {
+			String st = (String) stringArray.get(i);
+			StringTokenizer star = new StringTokenizer(st, SEPARATOR);
+
+			int customerId = Integer.parseInt(star.nextToken().trim());
+			String name = star.nextToken().trim();
+			String contact = star.nextToken().trim();
+			String expiry = star.nextToken().trim();
+			boolean status = Boolean.parseBoolean(star.nextToken().trim());
+			String[] invoiceArr = star.nextToken().trim().split(" ");
+			List<Integer> invoiceId = new ArrayList<Integer>();
+			if (invoiceArr != null) {
+				for (int j = 0; j < invoiceArr.length; j++) {
+					invoiceId.add(j, Integer.parseInt(invoiceArr[j]));
+				}
+			}
+			
+			Customer customerInfo = new Customer(customerId, name, contact, expiry, status, invoiceId);
+
+			customerList.add(customerInfo);
+		}
+		return customerList;
+	}
 	
 	
 	public static void main(String[] aArgs) {

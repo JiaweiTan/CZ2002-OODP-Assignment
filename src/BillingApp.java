@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
@@ -86,9 +87,88 @@ public class BillingApp {
 								System.out.println("Order has previously been billed.\n");
 								break;
 							}
-							//Create new invoice and print
+
 							Order order = new Order();
 							order = Order.getOrder(orderID);
+							Customer cst = new Customer();
+							int memberId = 0;
+							do {
+								System.out.println("Membership ID (Enter 0 to skip): ");
+								memberId = sc.nextInt();
+								if(memberId == 0)
+									break;
+								//Check if expired
+								int memStatus = Validation.customerExistsDB(memberId);
+								if(memStatus < 0) {
+									System.out.println("Invalid Membership ID. Please enter a valid ID.");
+									memberId = -1;
+								}
+								else if(memStatus == 0) {
+									if(order.getPrice() >= 100) {
+										List<Customer> csLst = DBManager.readCustomerInfo("CustomerList.txt");
+										for(Customer cs: csLst) {
+											if(cs.getID() == memberId) {
+												cst = cs;
+												cst.setExpiry(LocalDate.now().plusYears(1).toString());
+												order.setIsMember(true);
+												DBManager.saveCustomerDetails(cst);
+											}
+										}
+									}
+									else {
+										System.out.println("The membership has expired. Please spend above $100 to renew membership.");
+										break;
+									}
+								}
+								else {
+									order.setIsMember(true);
+								}
+							} while(memberId < 0);
+							
+							if(order.getPrice() >= 100 && memberId < 1) {
+								System.out.println("Do you want to be a member? (Y/N)");
+								String sel = sc.next();
+								if(sel.equalsIgnoreCase("y")) {
+									//create customer record
+									boolean invalid = true;
+									do {
+										System.out.println("Enter Reservation Number (Enter 0 to skip): ");
+										int resNo = sc.nextInt();
+										if(resNo == 0) {
+											//Ask for details
+											cst.setID(0);
+											System.out.print("Enter Name\t: ");
+											sc.next();
+											cst.setName(sc.next());
+											System.out.print("Enter Contact No.\t: ");
+											cst.setContact(sc.next());
+											cst.setExpiry(LocalDate.now().toString());
+											invalid = false;
+										}
+										else {
+											//get details from reservation
+											List<Reservation> rsLst = DBManager.readReservationInfo("Reservation.txt");
+											for(Reservation rs: rsLst) {
+												if(resNo == rs.getReservationId()) {
+													cst.setID(0);
+													cst.setName(rs.getName());
+													cst.setContact(Integer.toString(rs.getContactNumber()));
+													cst.setExpiry(LocalDate.now().toString());
+													invalid = false;
+													break;
+												}
+											}
+										}
+										if(invalid) {
+											System.out.println("Invalid Reservation ID.");
+										}
+									} while (invalid);
+									DBManager.saveCustomerDetails(cst);
+									order.setIsMember(true);
+								}
+							}
+							
+							//Create new invoice and print
 							Invoice invoice = Invoice.createInvoice(order);
 							Invoice.printBillInvoice(order, invoice);
 							System.out.println("\nPayment Success!\n");

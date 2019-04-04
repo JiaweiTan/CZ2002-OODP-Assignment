@@ -12,10 +12,11 @@ public class Invoice {
 	private double finalPrice;
 	private double serviceCharge;
 	private double GST;
+	private double discount;
 	private LocalDateTime dateTime;
 	
 	
-	public Invoice(int invoiceID, String paymentType, int orderID, double originalPrice, double finalPrice, double serviceCharge, double GST, LocalDateTime dateTime) 
+	public Invoice(int invoiceID, String paymentType, int orderID, double originalPrice, double finalPrice, double serviceCharge, double GST, double discount, LocalDateTime dateTime) 
 	{
 		this.invoiceID = invoiceID;
 		this.paymentType = paymentType;
@@ -24,6 +25,7 @@ public class Invoice {
 		this.finalPrice = finalPrice;
 		this.serviceCharge = serviceCharge;
 		this.GST = GST;
+		this.discount = discount;
 		this.dateTime = dateTime;
 	}
 	
@@ -66,11 +68,15 @@ public class Invoice {
 		return dateTime;
 	}
 	
+	public double getDiscount() {
+		return discount;
+	}
+	
 	public static Invoice createInvoice(Order order) throws IOException 
 	{ 
 		Scanner sc = new Scanner(System.in);
 		int invoiceID;
-		double GST = 0, serviceCharge = 0, finalPrice = 0;
+		double GST = 0, serviceCharge = 0, finalPrice = 0, discount = 0;
 		String paymentType = "";
 		int choice;
 		
@@ -96,6 +102,10 @@ public class Invoice {
 			}
 		} while (choice < 1 || choice > 4);
 		
+		if(order.getIsMember()) {
+			discount = computerDiscount(order.getPrice());
+			order.setPrice(order.getPrice() - discount);
+		}
 		serviceCharge = computeServiceCharge(order.getPrice());
 		GST = computeGST(order.getPrice(), serviceCharge);
 		finalPrice = order.getPrice() + GST + serviceCharge;
@@ -107,7 +117,7 @@ public class Invoice {
 		else
 			invoiceID = 10001;
 		
-		Invoice invoice = new Invoice(invoiceID, paymentType, order.getOrderId(),  order.getPrice(), finalPrice, serviceCharge, GST, dateTime);
+		Invoice invoice = new Invoice(invoiceID, paymentType, order.getOrderId(),  order.getPrice(), finalPrice, serviceCharge, GST, discount, dateTime);
 		
 		invoiceLst.add(invoice);
 		DBManager.saveInvoice("Invoice.txt", invoiceLst);
@@ -115,6 +125,10 @@ public class Invoice {
 		return invoice;
 	}
 	
+	public static double computerDiscount(double originalPrice) 
+	{
+		return originalPrice * 0.05;
+	}
 	
 	public static double computeServiceCharge(double originalPrice) 
 	{
@@ -200,7 +214,11 @@ public class Invoice {
 		}
 		
 		System.out.println("----------------------------------------");
-		System.out.println("   SubTotal\t\t\t" + invoice.getOriginalPrice());
+		System.out.println("   SubTotal\t\t\t" + String.format("%.2f", (invoice.getOriginalPrice() + invoice.getDiscount())));
+		if(order.getIsMember()) {
+			//System.out.println("   SubTotal\t\t\t" + String.format("%.2f", invoice.getOriginalPrice() + invoice.getDiscount()));
+			System.out.println("   Member Discount 5%\t\t-" + String.format("%.2f", invoice.getDiscount()));
+		}
 		System.out.println("   Service Charge 10%\t\t" + String.format("%.2f", invoice.getServiceCharge()));
 		System.out.println("   GST 7%\t\t\t" + String.format("%.2f", invoice.getGST()));
 		System.out.println("   Total\t\t\t" + String.format("%.2f", invoice.getFinalPrice()));

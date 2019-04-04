@@ -158,7 +158,7 @@ public class StaffApp {
 			int index = 1;
 			for (Staff g : resItem) {
 
-				System.out.format("%5s %10s %20s %10s %20s %30s %50s %20s %10s", index, g.getEmployeeId(), g.getName(),g.getGender(), g.getContact(), g.getEmail(), g.getAddress(),g.getShift(),g.getJobTitle());
+				System.out.format("%5s %10s %20s %10s %20s %30s %50s %20s %10s", index, g.getID(), g.getName(),g.getGender(), g.getContact(), g.getEmail(), g.getAddress(),g.getShift(),g.getJobTitle());
 				index++;
 				System.out.println();
 

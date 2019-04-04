@@ -16,6 +16,7 @@ public class Order {
 	private double price;
 	private String comment;
 	private LocalDateTime dateTime;
+	private boolean isMember;
 	
 	public Order() {};
 	
@@ -64,6 +65,10 @@ public class Order {
 		return this.price;
 	}
 	
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
 	public String getComment () {
 		return this.comment;
 	}
@@ -74,6 +79,14 @@ public class Order {
 	
 	public LocalDateTime getDateTime() {
 		return this.dateTime;
+	}
+	
+	public boolean getIsMember() {
+		return this.isMember;
+	}
+	
+	public void setIsMember(boolean isMember) {
+		this.isMember = isMember;
 	}
 	
 	public static int createOrder(Order od) throws IOException { //static??
