@@ -20,10 +20,27 @@ public class OrderApp {
 		System.out.println("=============================");
 		System.out.println("\tCreating Order");
 		System.out.println("=============================");
-		System.out.print("Enter Table No.: "); //Validation??
+		System.out.print("Enter Table No.: ");
 		tableId = sc.nextInt();
-		System.out.print("Enter Staff ID: "); //Validation??
+		if (Validation.tableExistsDB(tableId) < 0) {
+			do {
+				System.out.print("Table No. is invalid. Please enter a valid ID.");
+				System.out.println();
+				System.out.print("Enter Table No.: ");
+				tableId = sc.nextInt();
+			} while (Validation.tableExistsDB(tableId) < 0);
+		}
+		System.out.print("Enter Staff ID: ");
 		staffId = sc.nextInt();
+		if ((Validation.staffExistsDB(staffId) < 0)) {
+			do {
+				System.out.print("Table No. is invalid. Please enter a valid ID.");
+				System.out.println();
+				System.out.print("Enter Staff ID: ");
+				staffId = sc.nextInt();
+			} while (Validation.staffExistsDB(staffId) < 0);
+		}
+		
 		index = 1;
 		do {
 			// Can display out all items??
@@ -31,7 +48,10 @@ public class OrderApp {
 			it = sc.nextInt();
 			if (it > 0) {
 				if(Order.updateItemQuota(it, 1) < 0) {
-					System.out.println("Item has sold out. Please order another item.");
+					System.out.println("Item is sold out. Please order another item.");
+				}
+				else if(Validation.itemExistsDB(it) < 0) {
+					System.out.println("Invalid item ID. Please enter a valid ID.");
 				}
 				else {
 					itemLst.add(it);
@@ -49,13 +69,15 @@ public class OrderApp {
 			ps = sc.nextInt();
 			if (ps > 0) 
 				if(Order.updatePromoSetQuota(ps, 1) < 0) {
-					System.out.println("Promo Set has sold out. Please order another Promo Set.");
+					System.out.println("Promo Set is sold out. Please order another Promo Set.");
+				}
+				else if(Validation.promoSetExistsDB(ps) < 0) {
+					System.out.println("Invalid Promo Set ID. Please enter a valid ID.");
 				}
 				else {
 					psLst.add(ps);
 					index++;
 				}
-			index++;
 		} while (ps > 0);
 		if(psLst.size()==0)
 			psLst.add(0);
@@ -125,6 +147,14 @@ public class OrderApp {
 					}
 					System.out.print("Enter Staff ID: "); //Validation??
 					staffId = sc.nextInt();
+					if ((Validation.staffExistsDB(staffId) < 0)) {
+						do {
+							System.out.print("Table No. is invalid. Please enter a valid ID.");
+							System.out.println();
+							System.out.print("Enter Staff ID: ");
+							staffId = sc.nextInt();
+						} while (Validation.staffExistsDB(staffId) < 0);
+					}
 					int addSel;
 					index = 1;
 					do {
@@ -148,7 +178,10 @@ public class OrderApp {
 									it = sc.nextInt();
 									if (it > 0) 
 										if(Order.updateItemQuota(it, 1) < 0) {
-											System.out.println("Item has sold out. Please order another item.");
+											System.out.println("Item is sold out. Please order another item.");
+										}
+										else if(Validation.itemExistsDB(it) < 0) {
+											System.out.println("Invalid item ID. Please enter a valid ID.");
 										}
 										else {
 											itemLst.add(it);
@@ -174,7 +207,10 @@ public class OrderApp {
 									ps = sc.nextInt();
 									if (ps > 0) 
 										if(Order.updatePromoSetQuota(ps, 1) < 0) {
-											System.out.println("Promo Set has sold out. Please order another Promo Set.");
+											System.out.println("Promo Set is sold out. Please order another Promo Set.");
+										}
+										else if(Validation.promoSetExistsDB(ps) < 0) {
+											System.out.println("Invalid Promo Set ID. Please enter a valid ID.");
 										}
 										else {
 											psLst.add(ps);
@@ -222,6 +258,14 @@ public class OrderApp {
 					}
 					System.out.print("Enter Staff ID: "); //Validation??
 					staffId = sc.nextInt();
+					if ((Validation.staffExistsDB(staffId) < 0)) {
+						do {
+							System.out.print("Table No. is invalid. Please enter a valid ID.");
+							System.out.println();
+							System.out.print("Enter Staff ID: ");
+							staffId = sc.nextInt();
+						} while (Validation.staffExistsDB(staffId) < 0);
+					}
 					int delSel;
 					index = 1;
 					do {

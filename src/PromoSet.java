@@ -3,9 +3,11 @@ import java.util.ArrayList;
 public class PromoSet {
 
 	private int PromoSetId, quota;
+	private static int menuInput, OperationInput, UpdateInput;
 	private ArrayList<Integer> itemId;
 	private double Price;
 	private String startDate, endDate,name;
+	private static ArrayList<PromoSet> List123;
 
 	public PromoSet()
 	{
@@ -29,6 +31,9 @@ public class PromoSet {
 		return PromoSetId;
 	}
 
+	public void setPromoSetId(int promoSetId) {
+		PromoSetId = promoSetId;
+	}
 
 	public ArrayList<Integer> getItemId() {
 		return itemId;
