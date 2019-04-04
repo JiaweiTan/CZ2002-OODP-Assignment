@@ -72,7 +72,7 @@ public class Invoice {
 		return discount;
 	}
 	
-	public static Invoice createInvoice(Order order) throws IOException 
+	public static Invoice createInvoice(Order order, Customer customer) throws IOException 
 	{ 
 		Scanner sc = new Scanner(System.in);
 		int invoiceID;
@@ -82,6 +82,7 @@ public class Invoice {
 		
 		do 
 		{
+			System.out.println();
 			System.out.println("Select Payment Method:");
 			System.out.println("1. Cash");
 			System.out.println("2. Nets");
@@ -119,8 +120,21 @@ public class Invoice {
 		
 		Invoice invoice = new Invoice(invoiceID, paymentType, order.getOrderId(),  order.getPrice(), finalPrice, serviceCharge, GST, discount, dateTime);
 		
+		if(customer.getInvoiceId() == null) {
+			List<Integer> invLst = new ArrayList<Integer>();
+			invLst.add(invoiceID);
+			customer.setInvoiceId(invLst);
+		}
+		else {
+			List<Integer> invLst = customer.getInvoiceId();
+			invLst.add(invoiceID);
+			customer.setInvoiceId(invLst);
+		}
 		invoiceLst.add(invoice);
 		DBManager.saveInvoice("Invoice.txt", invoiceLst);
+		if(customer.getExpiry() != null) {
+			DBManager.saveCustomerDetails(customer);
+		}
 		
 		return invoice;
 	}

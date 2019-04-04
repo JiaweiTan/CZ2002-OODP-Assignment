@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Customer extends Person{
 		this.contact = contact;
 		this.expiry = expiry;
 		this.status = status;
+		this.invoiceId = invoiceId;
 	}
 	
 	public String getExpiry() {
@@ -39,6 +41,16 @@ public class Customer extends Person{
 	
 	public void setInvoiceId(List<Integer> invoiceId){
 		this.invoiceId = invoiceId;
+	}
+	
+	public static Customer getCustomer(int customerId) throws IOException {
+		List<Customer> cstLst = DBManager.readCustomerInfo("CustomerList.txt");
+		for(Customer cs: cstLst) {
+			if(customerId == cs.getID()) {
+				return cs;
+			}
+		}
+		return null;
 	}
 	
 }

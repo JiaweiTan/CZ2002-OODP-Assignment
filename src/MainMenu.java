@@ -27,6 +27,8 @@ public class MainMenu {
 			System.out.println("---------------------------------------------------------");
 			System.out.println("9. Billing");
 			System.out.println("---------------------------------------------------------");
+			System.out.println("10. Update Membership");
+			System.out.println("---------------------------------------------------------");
 			System.out.println("0. Exit");
 			System.out.println("=========================================================");
 			System.out.println();
@@ -59,9 +61,13 @@ public class MainMenu {
 					break;
 				case 9: 
 					BillingApp.main(null);
-					
+					break;
+				case 10:
+					CustomerApp.updateCustomerDetails();
+					break;
 				default:
 					System.out.println("Invalid input. Please enter again.\n");
+					break;
 			}
 
 		} while (sel != 9);

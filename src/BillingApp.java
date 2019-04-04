@@ -122,6 +122,7 @@ public class BillingApp {
 								}
 								else {
 									order.setIsMember(true);
+									cst = Customer.getCustomer(memberId);
 								}
 							} while(memberId < 0);
 							
@@ -134,14 +135,16 @@ public class BillingApp {
 									do {
 										System.out.println("Enter Reservation Number (Enter 0 to skip): ");
 										int resNo = sc.nextInt();
+										sc.nextLine();
 										if(resNo == 0) {
 											//Ask for details
 											cst.setID(0);
-											System.out.print("Enter Name\t: ");
-											sc.next();
-											cst.setName(sc.next());
+											System.out.print("Enter Name\t\t: ");
+											String name = sc.nextLine();
+											cst.setName(name);
 											System.out.print("Enter Contact No.\t: ");
-											cst.setContact(sc.next());
+											String contact = sc.nextLine();
+											cst.setContact(contact);
 											cst.setExpiry(LocalDate.now().toString());
 											invalid = false;
 										}
@@ -169,7 +172,7 @@ public class BillingApp {
 							}
 							
 							//Create new invoice and print
-							Invoice invoice = Invoice.createInvoice(order);
+							Invoice invoice = Invoice.createInvoice(order, cst);
 							Invoice.printBillInvoice(order, invoice);
 							System.out.println("\nPayment Success!\n");
 							break;
