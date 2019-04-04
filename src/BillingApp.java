@@ -10,13 +10,16 @@ public class BillingApp {
 		int choice = 0;
 		int orderID;
 		int invoiceID;
-		boolean validOrderID, validDate;
+		double totalRevenue;
+		boolean validOrderID, validDate, entryFound;
+		String [] salesRevenueDate;
 		
 		LocalDateTime date;
 		int month, year;
 		
 		List<Invoice> invoiceLst = new ArrayList<Invoice>();
 		List<Order> orderLst = new ArrayList<Order>();
+		List<SalesRevenue> salesRevenueLst = new ArrayList<SalesRevenue>();
 		
 		Scanner sc = new Scanner(System.in);
 		do 
@@ -29,12 +32,13 @@ public class BillingApp {
 			
 			validOrderID = false;
 			validDate = false;
+			entryFound = false;
 			choice = sc.nextInt();
 			
 			switch(choice) 
 			{
 				case 1: 
-						orderLst = DBManager.readOrders("orders.txt");
+						orderLst = DBManager.readOrders("Orders.txt");
 						//Check if there are any orders
 						if(orderLst.size() <= 0)
 						{
@@ -68,7 +72,7 @@ public class BillingApp {
 							}while (!validOrderID);
 							
 							//Check if order has been billed before
-							invoiceLst = DBManager.readInvoice("src/Invoice.txt");
+							invoiceLst = DBManager.readInvoice("Invoice.txt");
 							for(Invoice inv: invoiceLst) 
 							{
 								if(inv.getOrderID() == orderID)
@@ -102,14 +106,15 @@ public class BillingApp {
 						invoiceId.add(10004);
 						SalesRevenue salesRevenue = new SalesRevenue("022019", (double)20000, invoiceId);
 						salesRevenueLst.add(salesRevenue);*/
-						/*do 
+						//Check for valid date (i.e. date <= currentDate)
+						do 
 						{
 							System.out.println("Enter Year(YYYY)): ");
 							year = sc.nextInt();
 							System.out.println("Enter Month(MM): ");
 							month = sc.nextInt();
 							date = LocalDateTime.now();
-							if(year > date.getYear() || (year == date.getYear() && month > date.getMonthValue())) 
+							if(year > date.getYear() || (year == date.getYear() && month > date.getMonthValue()) || year <= 0 || month <= 0) 
 								validDate = false;
 							else
 								validDate = true;
@@ -119,13 +124,50 @@ public class BillingApp {
 							}
 						} while (!validDate);
 						
-						invoiceLst = DBManager.readInvoice("src/Invoice.txt");
-						List<Invoice> al = new ArrayList<Invoice>();
+						//Check the invoices of the same Date
+						invoiceLst = DBManager.readInvoice("Invoice.txt");
+						List<Invoice> tempInvoiceLst = new ArrayList<Invoice>();
 						for(Invoice invoice: invoiceLst) 
 						{
 							if(month == invoice.getDateTime().getMonthValue() && year == invoice.getDateTime().getYear())
-								al.add(invoice);
-						}/*
+								tempInvoiceLst.add(invoice);
+						}
+						//Exits loop if there are no invoices in the date
+						if(tempInvoiceLst.size() <= 0)
+						{
+							System.out.println("There were no sales in " + month + "-" + year + ".");
+							break;
+						} 
+						else
+						{
+							//Check for existing entry in SalesRevenue
+							salesRevenueLst = DBManager.readSalesRevenue("SalesRevenue.txt");
+							SalesRevenue salesRevenue = new SalesRevenue();
+							if(salesRevenueLst.size() > 0)
+							{
+								for(SalesRevenue salesRev: salesRevenueLst) 
+								{
+									salesRevenueDate = salesRev.getDateYear().split("-");
+									if(Integer.parseInt(salesRevenueDate[0]) == month && Integer.parseInt(salesRevenueDate[1]) == year)
+									{
+										//updates the entry
+										salesRevenue = SalesRevenue.updateSalesRevenue(salesRev, tempInvoiceLst);
+										DBManager.saveSalesRevenue("SalesRevenue.txt", salesRevenueLst);
+										entryFound = true;
+										break;
+									}								
+								}
+							}
+							//creates a new SalesRevenue entry
+							if(!entryFound)
+							{
+								salesRevenue = SalesRevenue.createSalesRevenue(tempInvoiceLst,month,year);
+								salesRevenueLst.add(salesRevenue);
+								DBManager.saveSalesRevenue("SalesRevenue.txt",salesRevenueLst);
+							}
+							SalesRevenue.printSalesRevenue(salesRevenue);
+						}
+						break;
 						/*List<SalesRevenue> salesRevenueLst = DBManager.readSalesRevenue("src/SalesRevenue.txt");
 						
 						if(salesRevenueLst.size() <= 0)
@@ -135,8 +177,8 @@ public class BillingApp {
 						}
 						break;*/
 						
-				case 3: System.exit(0);
-				
+				case 3: 
+					break;	
 			}
 			
 			

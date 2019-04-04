@@ -5,9 +5,9 @@ import java.util.*;
 
 public class Order {
 	
-	private static final String ORDER_FILE = "orders.txt";
-	private static final String ITEM_FILE = "outputMenu.txt";
-	private static final String PROMOSET_FILE = "src/promotionList.txt";
+	private static final String ORDER_FILE = "Orders.txt";
+	private static final String ITEM_FILE = "OutputMenu.txt";
+	private static final String PROMOSET_FILE = "PromotionList.txt";
 	private int orderId;
 	private int tableId;
 	private int staffId;

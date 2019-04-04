@@ -18,7 +18,7 @@ public class MenuFunc extends MenuApp {
 		
 	public static void displayMenu()  {
     	MenuFunc menuFunc = new MenuFunc();
-    	String filename = "outputMenu.txt" ;
+    	String filename = "OutputMenu.txt" ;
 		try {
 			// read file containing Professor records.
 			ArrayList al = MenuFunc.getMenu(filename) ;
@@ -38,7 +38,7 @@ public class MenuFunc extends MenuApp {
   }
 	
 	public static final String SEPARATOR = "|";
-	String filename = "outputMenu.txt";
+	String filename = "OutputMenu.txt";
 	
     // getMenu()
 	public static ArrayList getMenu(String filename) throws IOException {
@@ -86,8 +86,8 @@ public class MenuFunc extends MenuApp {
 
 		public static void createMenu(int foodID) throws IOException {
 			
-			File file = new File("outputMenu.txt");
-			FileWriter writer = new FileWriter("outputMenu.txt",true);
+			File file = new File("OutputMenu.txt");
+			FileWriter writer = new FileWriter("OutputMenu.txt",true);
 			BufferedWriter bwriter = new BufferedWriter(writer);
 			Scanner sc = new Scanner(System.in);
 			int cont;
@@ -129,7 +129,7 @@ public class MenuFunc extends MenuApp {
 		
 		//3. deletes an item
 		public void deleteMenu(int foodID2) {
-			String filepath = "outputMenu.txt";
+			String filepath = "OutputMenu.txt";
 			String removeTerm = Integer.toString(foodID2);
 			
 			removeRecord(filepath, removeTerm);
@@ -181,7 +181,7 @@ public class MenuFunc extends MenuApp {
 		//2. updates an item
 		public void updateMenu() {
 			
-			String filepath = "outputMenu.txt";
+			String filepath = "OutputMenu.txt";
 			
 			System.out.println("Enter the ID of the items to be updated: ");
 			String editTerm = sc.nextLine();
@@ -258,7 +258,7 @@ public class MenuFunc extends MenuApp {
 		
 		public static int updateItemQuota (int itemId, int addDel) throws IOException {
 			
-			String filepath = "outputMenu.txt";
+			String filepath = "OutputMenu.txt";
 			List<Menu> mnLst = getMenu(filepath);
 			
 			for(Menu mn: mnLst) {

@@ -146,7 +146,7 @@ public class StaffApp {
 			System.out.println("=============================================");
 			System.out.println("\tViewing Staff");
 			System.out.println("=============================================");
-			String filename = "src/StaffList.txt";
+			String filename = "StaffList.txt";
 			ArrayList<Staff> resItem = new ArrayList<Staff>();
 			resItem = db.readStaffInfo(filename);
 			System.out.println(

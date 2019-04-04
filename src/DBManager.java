@@ -478,7 +478,7 @@ public class DBManager {
 	}
 
 	public static void savePromoItems(PromoSet promoSetItemData) throws IOException {
-		String filename = "src/promotionList.txt";
+		String filename = "PromotionList.txt";
 		ArrayList<PromoSet> promoSession = new ArrayList<PromoSet>();
 		promoSession = readPromoSetInfo(filename);
 		promoSession.add(promoSetItemData);
@@ -508,7 +508,7 @@ public class DBManager {
 
 	public static void UpdatePromoItem(int promoId, int i) throws IOException {
 		Scanner sc = new Scanner(System.in);
-		String filename = "src/promotionList.txt";
+		String filename = "PromotionList.txt";
 		List alw = new ArrayList();
 		ArrayList<PromoSet> promoSetList = new ArrayList<PromoSet>();
 		promoSetList = readPromoSetInfo(filename);
@@ -621,7 +621,7 @@ public class DBManager {
 	}
 
 	public static void deletePromoSet(int promoId) throws IOException {
-		String filename = "src/promotionList.txt";
+		String filename = "PromotionList.txt";
 		ArrayList<PromoSet> promoSetList = new ArrayList<PromoSet>();
 		promoSetList = readPromoSetInfo(filename);
 		PromoSet resv = new PromoSet();
@@ -655,7 +655,7 @@ public class DBManager {
 
 	public boolean checkIfExistPromoSet(int id) throws IOException {
 		Scanner sc = new Scanner(System.in);
-		String filename = "src/promotionList.txt";
+		String filename = "PromotionList.txt";
 		boolean check = false;
 		List alw = new ArrayList();
 		ArrayList<PromoSet> tbRec = new ArrayList<PromoSet>();
@@ -670,7 +670,7 @@ public class DBManager {
 	}
 	
 	public static int updatePromoSetQuota(int promoSetId, int addDel) throws IOException {
-		String filename = "src/promotionList.txt";
+		String filename = "PromotionList.txt";
 		ArrayList<PromoSet> promoSession = new ArrayList<PromoSet>();
 		promoSession = readPromoSetInfo(filename);
 		
@@ -746,7 +746,7 @@ public class DBManager {
 	
 	
 	public static void saveStaffDetails(Staff Staff) throws IOException {
-		String filename = "src/StaffList.txt";
+		String filename = "StaffList.txt";
 		ArrayList<Staff> StaffSession = new ArrayList<Staff>();
 		StaffSession = readStaffInfo(filename);
 		StaffSession.add(Staff);
@@ -777,7 +777,7 @@ public class DBManager {
 	}
 	public boolean checkIfExistStaff(int id) throws IOException {
 		Scanner sc = new Scanner(System.in);
-		String filename = "src/StaffList.txt";
+		String filename = "StaffList.txt";
 		boolean check = false;
 		ArrayList<Staff> StaffSession = new ArrayList<Staff>();
 		StaffSession = readStaffInfo(filename);
@@ -792,7 +792,7 @@ public class DBManager {
 	}
 	
 	public static void deleteStaff(int StaffId) throws IOException {
-		String filename = "src/StaffList.txt";
+		String filename = "StaffList.txt";
 		ArrayList<Staff> StaffSession = new ArrayList<Staff>();
 		StaffSession = readStaffInfo(filename);
 		Staff resv = new Staff();
@@ -828,7 +828,7 @@ public class DBManager {
 	
 	public static void UpdateStaffItem(int StaffId, int i) throws IOException {
 		Scanner sc = new Scanner(System.in);
-		String filename = "src/StaffList.txt";
+		String filename = "StaffList.txt";
 		List alw = new ArrayList();
 		ArrayList<Staff> staffSesson = new ArrayList<Staff>();
 		staffSesson = readStaffInfo(filename);

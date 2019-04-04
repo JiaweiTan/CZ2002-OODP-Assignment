@@ -156,7 +156,7 @@ public class PromoSetApp {
 			System.out.println("=============================================");
 			System.out.println("\tViewing Promotion Set");
 			System.out.println("=============================================");
-			String filename = "src/promotionList.txt";
+			String filename = "promotionList.txt";
 			ArrayList<PromoSet> resItem = new ArrayList<PromoSet>();
 			resItem = db.readPromoSetInfo(filename);
 			System.out.println(

@@ -101,7 +101,7 @@ public class Invoice {
 		finalPrice = order.getPrice() + GST + serviceCharge;
 		LocalDateTime dateTime = LocalDateTime.now();
 		
-		List<Invoice> invoiceLst = DBManager.readInvoice("src/Invoice.txt");
+		List<Invoice> invoiceLst = DBManager.readInvoice("Invoice.txt");
 		if(invoiceLst.size()>0)
 			invoiceID = invoiceLst.get(invoiceLst.size()-1).getInvoiceID() + 1;
 		else
@@ -110,7 +110,7 @@ public class Invoice {
 		Invoice invoice = new Invoice(invoiceID, paymentType, order.getOrderId(),  order.getPrice(), finalPrice, serviceCharge, GST, dateTime);
 		
 		invoiceLst.add(invoice);
-		DBManager.saveInvoice("src/Invoice.txt", invoiceLst);
+		DBManager.saveInvoice("Invoice.txt", invoiceLst);
 		
 		return invoice;
 	}
@@ -128,8 +128,8 @@ public class Invoice {
 	
 	public static void printBillInvoice(Order order, Invoice invoice) throws IOException 
 	{
-		List<PromoSet> promoLst = DBManager.readPromoSetInfo("src/promotionList.txt");
-		List<Menu> menuLst = MenuFunc.getMenu("outputMenu.txt");
+		List<PromoSet> promoLst = DBManager.readPromoSetInfo("PromotionList.txt");
+		List<Menu> menuLst = MenuFunc.getMenu("OutputMenu.txt");
 		
 		System.out.println("\t\t  RRPSS");
 		System.out.println("----------------------------------------");

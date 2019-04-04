@@ -92,14 +92,14 @@ public class SalesRevenue {
 		int i = 0;
 		double price = 0;
 		
-		List<PromoSet> promoLst = DBManager.readPromoSets("promosets.txt");
-		List<Menu> menuLst = MenuFunc.getMenu("outputMenu.txt");
+		List<PromoSet> promoLst = DBManager.readPromoSetInfo("PromotionList.txt");
+		List<Menu> menuLst = MenuFunc.getMenu("OutputMenu.txt");
 		
 		List<Integer> invoiceIDLst = salesRevenue.getInvoiceID();
-		List<Invoice> invoiceLst = DBManager.readInvoice("src/Invoice.txt");
+		List<Invoice> invoiceLst = DBManager.readInvoice("Invoice.txt");
 		
 		List<Integer> orderIDLst = new ArrayList<Integer>();
-		List<Order> orderLst = DBManager.readOrders("orders.txt");
+		List<Order> orderLst = DBManager.readOrders("Orders.txt");
 		
 		List<Integer> itemLst = new ArrayList<Integer>();
 		List<Integer> promoItemLst = new ArrayList<Integer>();
