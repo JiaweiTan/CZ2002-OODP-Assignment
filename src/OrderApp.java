@@ -187,7 +187,6 @@ public class OrderApp {
 											itemLst.add(it);
 											index++;
 										}
-									index++;
 								} while (it > 0);
 								if(itemLst.size() > 0) {
 									List<Integer> tmpItemLst = new ArrayList<Integer>(od.getItemId());
@@ -216,7 +215,6 @@ public class OrderApp {
 											psLst.add(ps);
 											index++;
 										}
-									index++;
 								} while (ps > 0);
 								if(psLst.size() > 0) {
 									List<Integer> tmpPsLst = new ArrayList<Integer>(od.getPromoSetId());

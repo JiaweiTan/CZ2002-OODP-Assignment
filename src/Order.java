@@ -140,7 +140,36 @@ public class Order {
 					System.out.println("Table No.\t\t: " + od.getTableId());
 					System.out.println("Staff ID\t\t: " + od.getStaffId());
 					List<Integer> odIt = od.getItemId();
-					for(int i = 0; i < odIt.size(); i++) {
+					
+					int multiplier = 1, j = 0, first = 0;
+					for(int it: odIt) 
+					{
+						if(j != odIt.lastIndexOf(it))
+						{
+							multiplier++;
+						}
+						else 
+						{
+							for(Menu mn: menuLst)
+							{
+								if(it == mn.getFoodID()) 
+								{
+									if(first > 0) {
+										System.out.println("\t\t\t  " + multiplier + "x\t" + odIt.get(j) + " " + mn.getFoodName());
+									}
+									else {
+										System.out.println("Items\t\t\t: " + multiplier + "x\t" + odIt.get(j) + " " + mn.getFoodName());
+										first++;
+									}
+									break;
+								}
+							}
+							multiplier = 1;
+						}
+						j++;
+					}
+					
+					/*for(int i = 0; i < odIt.size(); i++) {
 						if(i == 0) {
 							for(Menu mn: menuLst) {
 								if(odIt.get(i)==mn.getFoodID()) {
@@ -157,8 +186,41 @@ public class Order {
 								}
 							}
 						}
-					}
+					}*/
+					
+					multiplier = 1;
+					j = 0;
+					first = 0;
+					
 					List<Integer> odPs = od.getPromoSetId();
+					for(int ps: odPs) 
+					{
+						if(j != odPs.lastIndexOf(ps))
+						{
+							multiplier++;
+						}
+						else 
+						{
+							for(PromoSet pst: psLst)
+							{
+								if(ps == pst.getPromoSetId()) 
+								{
+									if(first > 0) {
+										System.out.println("\t\t\t  " + multiplier + "x\t" + odPs.get(j) + " " + pst.getName());
+									}
+									else {
+										System.out.println("Promo Set\t\t: " + multiplier + "x\t" + odPs.get(j) + " " + pst.getName());
+										first++;
+									}
+									break;
+								}
+							}
+							multiplier = 1;
+						}
+						j++;
+					}
+					
+					/*List<Integer> odPs = od.getPromoSetId();
 					for(int i = 0; i < odPs.size(); i++) {
 						if(i == 0) {
 							for(PromoSet ps: psLst) {
@@ -176,7 +238,7 @@ public class Order {
 								}
 							}
 						}
-					}
+					}*/
 					System.out.println("Price\t\t\t: " + od.getPrice());
 					tmpCmt=od.getComment();
 					if(tmpCmt.contains("\\n")) {
