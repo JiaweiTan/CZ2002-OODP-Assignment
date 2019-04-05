@@ -238,6 +238,5 @@ public class Invoice {
 		System.out.println("   Total\t\t\t" + String.format("%.2f", invoice.getFinalPrice()));
 		System.out.println("   Payment By " + invoice.getPaymentType().toUpperCase());
 		System.out.println("----------------------------------------");
-		
 	}
 }

@@ -18,7 +18,8 @@ public class Reservation {
 
 	}
 
-	public Reservation(int TableId, String Date, String ArrivalTime, int Pax, String Name, String ContactNumber) {
+	public Reservation(int ReservationId, int TableId, String Date, String ArrivalTime, int Pax, String Name, String ContactNumber) {
+		this.ReservationId = ReservationId;
 		this.TableId = TableId;
 		this.Date = Date;
 		this.ArrivalTime = ArrivalTime;
@@ -116,13 +117,30 @@ public class Reservation {
 		}
 	}
 
+	public int getNewReservationId() {
+		ArrayList<Reservation> res = new ArrayList<Reservation>();
+		Reservation resItem = new Reservation();
+		int newid = 1;
+		try {
+			res = DBManager.readReservationInfo("Reservation.txt");
+			if(res.size() != 0) {
+				resItem = res.get(res.size() - 1);
+				newid = resItem.ReservationId + newid;	
+			}
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return newid;
+	}
+	
 	public Reservation getReservation(String contactNumber) {
 		ArrayList<Reservation> res = new ArrayList<Reservation>();
 		Reservation resItem = new Reservation();
 		try {
 			res = DBManager.readReservationInfo("Reservation.txt");
 			for (Reservation item : res) {
-				if (item.ContactNumber == contactNumber) {
+				if ((item.ContactNumber).equals(contactNumber)) {
 					resItem = item;
 					return resItem;
 				}
@@ -131,6 +149,17 @@ public class Reservation {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public ArrayList<Reservation> getAllReservations(){
+		ArrayList<Reservation> resTb = new ArrayList<Reservation>();
+		try {
+			resTb = DBManager.readReservationInfo("Reservation.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resTb;
 	}
 	
 	public ArrayList<Reservation> getTodayReservation(String todaydate, String session) {

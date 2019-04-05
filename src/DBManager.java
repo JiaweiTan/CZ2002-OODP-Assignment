@@ -45,7 +45,6 @@ public class DBManager {
 		ArrayList stringArray = (ArrayList) read(filename);
 		
 		ArrayList<TableInfo> alr = new ArrayList<TableInfo>();
-		
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR);
@@ -57,7 +56,6 @@ public class DBManager {
 			int TwoSeater = Integer.parseInt(star.nextToken().trim());
 			int TotalCount = Integer.parseInt(star.nextToken().trim());
 			TableInfo tbInfo = new TableInfo(Date, Session, TenSeater, EightSeater, FourSeater, TwoSeater, TotalCount);
-
 			alr.add(tbInfo);
 		}
 		return alr;
@@ -137,6 +135,7 @@ public class DBManager {
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR);
+			int ReservationId = Integer.parseInt(star.nextToken().trim());
 			int TableId = Integer.parseInt(star.nextToken().trim());
 			String Date = star.nextToken().trim();
 			String ArrivalTime = star.nextToken().trim();
@@ -144,7 +143,7 @@ public class DBManager {
 			String Name = star.nextToken().trim();
 			String ContactNumber = star.nextToken().trim();
 
-			Reservation resInfo = new Reservation(TableId, Date, ArrivalTime, Pax, Name, ContactNumber);
+			Reservation resInfo = new Reservation(ReservationId, TableId, Date, ArrivalTime, Pax, Name, ContactNumber);
 
 			alr.add(resInfo);
 		}
@@ -162,7 +161,8 @@ public class DBManager {
 		for(int i = 0; i < resItem.size(); i++) {
 			Reservation resv = (Reservation)resItem.get(i);
 			StringBuilder st =  new StringBuilder();
-			
+			st.append(resv.getReservationId());
+			st.append(SEPARATOR);			
 			st.append(resv.getTableId());
 			st.append(SEPARATOR);
 			st.append(resv.getDate().trim());
@@ -189,12 +189,14 @@ public class DBManager {
 		List alw = new ArrayList();
 		for(int i = 0; i < resItem.size(); i++) {
 			StringBuilder st =  new StringBuilder();
-			if(resItem.get(i).getContactNumber() == contactNumber) {
+			if(resItem.get(i).getContactNumber().contentEquals(contactNumber)) {
 				resv = res;
 			}
 			else {
 				resv = resItem.get(i);
 			}
+			st.append(resv.getReservationId());
+			st.append(SEPARATOR);
 			st.append(resv.getTableId());
 			st.append(SEPARATOR);
 			st.append(resv.getDate().trim());
@@ -219,7 +221,9 @@ public class DBManager {
 		List alw = new ArrayList();
 		for(int i = 0; i < resItem.size(); i++) {
 			StringBuilder st =  new StringBuilder();
-			if(resItem.get(i).getContactNumber() != res.getContactNumber()) {
+			if(!((resItem.get(i).getContactNumber()).equals(res.getContactNumber()))) {
+				st.append(resItem.get(i).getReservationId());
+				st.append(SEPARATOR);
 				st.append(resItem.get(i).getTableId());
 				st.append(SEPARATOR);
 				st.append(resItem.get(i).getDate().trim());

@@ -49,7 +49,6 @@ public class ReservationApp {
 				String resName = sc.nextLine();
 				System.out.print("Enter contact number: ");
 				String resContact = sc.nextLine();
-				sc.nextLine();
 				System.out.print("Enter arrival time: ");
 				String resArrival = sc.nextLine();
 
@@ -57,8 +56,9 @@ public class ReservationApp {
 				tblItem = tbInfo.getTableSession(resDate, resSession);
 				int tablesize = tbInfo.checkTableSize(resPax);
 				int tableID = tbInfo.assignTable(tblItem, tablesize);
-
-				Reservation myRes = new Reservation(tableID, resDate, resArrival, resPax, resName, resContact);
+				
+				int newReservationId = res.getNewReservationId();
+				Reservation myRes = new Reservation(newReservationId, tableID, resDate, resArrival, resPax, resName, resContact);
 				res.createReservation(myRes);
 
 				System.out.println();
@@ -112,7 +112,6 @@ public class ReservationApp {
 					System.out.println();
 					System.out.print("Enter reservation contact: ");
 					String contact = sc.nextLine();
-					sc.nextLine();
 					Reservation myReservation = new Reservation();
 					myReservation = res.getReservation(contact);
 					if (myReservation != null) {
@@ -143,7 +142,6 @@ public class ReservationApp {
 					System.out.println();
 					System.out.print("Enter reservation contact: ");
 					String contact = sc.nextLine();
-					sc.nextLine();
 					Reservation resItem = new Reservation();
 					resItem = res.getReservation(contact);
 					if(!resItem.equals(null)) {
@@ -158,10 +156,9 @@ public class ReservationApp {
 						String newName = sc.nextLine();
 						System.out.print("Enter new contact: ");
 						String newContact = sc.nextLine();
-						sc.nextLine();
 						System.out.println();
 						int tableId = resItem.getTableId();
-						Reservation updatedResItem = new Reservation(tableId,newDate,newTime,newPax,newName,newContact);
+						Reservation updatedResItem = new Reservation(resItem.getReservationId(),tableId,newDate,newTime,newPax,newName,newContact);
 						res.updateReservation(resItem, updatedResItem);
 						System.out.println("Reservation with contact: " + resItem.getContactNumber() + " have been updated");
 						System.out.println();
@@ -181,8 +178,6 @@ public class ReservationApp {
 					System.out.println();
 					System.out.print("Enter reservation contact: ");
 					String contact = sc.nextLine();
-					sc.nextLine();
-					
 					Reservation resItem = new Reservation();
 					resItem = res.getReservation(contact);			
 					if(resItem != null) {
