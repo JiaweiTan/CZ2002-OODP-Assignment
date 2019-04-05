@@ -152,16 +152,15 @@ public class TableInfo {
 		TableInfo tbl = new TableInfo();
 		tbl = getTableSession(resDate, resSession);
 		int tablesize = checkTableSize(resPax);
-
 		switch (tablesize) {
 		case 2:
-			result = tbl.TenSeater > 0 ? true : false;
-		case 4:
-			result = tbl.EightSeater > 0 ? true : false;
-		case 8:
-			result = tbl.FourSeater > 0 ? true : false;
-		case 10:
 			result = tbl.TwoSeater > 0 ? true : false;
+		case 4:
+			result = tbl.FourSeater > 0 ? true : false;
+		case 8:
+			result = tbl.EightSeater > 0 ? true : false;
+		case 10:
+			result = tbl.TenSeater > 0 ? true : false;
 		}
 		return result;
 	}
@@ -238,7 +237,7 @@ public class TableInfo {
 			}
 		}
 
-		if(tblItem.getTotalCount() > 0) {
+		if(tblItem.getTotalCount() < 30) {
 			tblItem.setTotalCount(tblItem.TotalCount + 1);		
 		}
 

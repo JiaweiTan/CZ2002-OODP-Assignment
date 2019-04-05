@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ public class Validation {
 	private static final String PROMOSET_FILE = "PromotionList.txt";
 	private static final String STAFF_FILE = "StaffList.txt";
 	private static final String CUSTOMER_FILE = "CustomerList.txt";
+	private static final String RESERVATION_FILE = "Reservation.txt";
+	private static final String TABLEINFO_FILE = "TableInfo.txt";
 
 	public static int itemExistsDB (int itemId) throws IOException {
 		
@@ -68,8 +71,18 @@ public class Validation {
 		return -1;
 	}
 	
+	public static int reservationExistsDB(String contact) throws IOException {
+		List<Reservation> reservationLst = DBManager.readReservationInfo(RESERVATION_FILE);
+		for(Reservation res: reservationLst) {
+			if((res.getContactNumber()).equals(contact)) {
+				return 1;
+			}
+		}
+		return 0;
+	}
+	
+	
 	public static boolean isDateValid(String dateToValidate){
-		
 		if(dateToValidate == null){
 			return false;
 		}
@@ -77,17 +90,14 @@ public class Validation {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
 		dateFormat.setLenient(false);
 		
-		try {
-			
+		try {		
 			Date date = dateFormat.parse(dateToValidate);
 			//System.out.println(date);
-		
 		} catch (ParseException e) {
-			
 			//e.printStackTrace();
 			return false;
 		}
-		
 		return true;
 	}
+	
 }

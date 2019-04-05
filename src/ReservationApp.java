@@ -21,25 +21,55 @@ public class ReservationApp {
 			System.out.println();
 			System.out.print("Enter reservation date (yyyy-mm-dd): ");
 			String resDate = sc.nextLine();
+			//Validate Date
+			while(!Validation.isDateValid(resDate)) {
+				System.out.println();
+				System.out.println("Invalid value, please key in a new value");
+				System.out.print("Reservation date (yyyy-mm-dd): ");
+				resDate = sc.nextLine();
+			}
 			System.out.print("Enter session (AM/PM): ");
 			String resSession = sc.nextLine();
+			//Validate Session
+			while(!(resSession.equals("AM") || resSession.equals("PM"))) {
+				System.out.println();
+				System.out.println("Invalid session, please key in a new session");
+				System.out.print("Session Format (AM/PM): ");
+				resSession = sc.nextLine();
+			}
 			System.out.print("Enter pax (0-10): ");
 			int resPax = sc.nextInt();
 			sc.nextLine();
+			System.out.println();
+			//Validate Pax
+			while(resPax <= 0 || resPax > 10) {
+				//System.out.println();
+				System.out.println("Invalid pax, please key between 1 to 10 pax");
+				System.out.print("Pax (1-10): ");
+				resPax = sc.nextInt();
+				sc.nextLine();
+			}
 
 			boolean tbAvailability = tbInfo.checkAvailableTable(resDate, resSession, resPax);
-
+			//Validate Availability
 			if (tbAvailability != true) {
 				System.out.println("There's no available table for this current date");
 				System.out.println("Would you like to try a different date?");
 				System.out.println();
 				System.out.println("1. Try again");
 				System.out.println("2. Exit");
-				System.out.println();
 				System.out.print("Enter choice: ");
 				int choice1 = sc.nextInt();
-				sc.hasNextLine();
-				if (choice1 == 2) {
+				sc.nextLine();
+				//Validate Choice
+				while(choice1 != 1 && choice1 != 2) {
+					System.out.println();
+					System.out.println("Invalid selection, please key either 1 or 2");
+					System.out.print("Enter choice: ");
+					choice1 = sc.nextInt();
+					sc.nextLine();
+				}
+				if(choice1 == 2) {
 					case1 = false;
 				}
 			} else {
@@ -47,11 +77,33 @@ public class ReservationApp {
 				System.out.println();
 				System.out.print("Enter name: ");
 				String resName = sc.nextLine();
-				System.out.print("Enter contact number: ");
+				//Validate Name
+				while(resName.equals("")) {
+					System.out.println();
+					System.out.println("Reservation name cannot be empty");
+					System.out.print("Enter name: ");
+					resName = sc.nextLine();
+					System.out.println();
+				}
+				System.out.print("Enter contact: ");
 				String resContact = sc.nextLine();
+				//Validate Contact
+				while(!(resContact.matches("^[0-9]*$") && resContact.length() >= 8)) {
+					System.out.println();
+					System.out.println("Invalid selection, please key numbers & no less than 8 digits");
+					System.out.print("Enter contact: ");
+					resContact = sc.nextLine();
+				}
 				System.out.print("Enter arrival time: ");
 				String resArrival = sc.nextLine();
-
+				//Validate Arrival Time
+				while((res.checkSession(resArrival) == "Invalid")) {
+					System.out.println();
+					System.out.println("Invalid time, please key in between 11:00-15:00 or 18:00-22:00");
+					System.out.print("Enter arrival time (hh:mm): ");
+					resArrival = sc.nextLine();		
+				}
+				
 				TableInfo tblItem = new TableInfo();
 				tblItem = tbInfo.getTableSession(resDate, resSession);
 				int tablesize = tbInfo.checkTableSize(resPax);
@@ -62,39 +114,34 @@ public class ReservationApp {
 				res.createReservation(myRes);
 
 				System.out.println();
-				System.out.println("==============================================");
-				System.out.println("\tReservation successfully created!");
-				System.out.println("==============================================");
+				System.out.println("=========================================================");
+				System.out.println("\t     Reservation successfully created! ");
+				System.out.println("=========================================================");
 				System.out.println("TableID: " + tableID);
 				System.out.println("Date: " + resDate);
 				System.out.println("Arrival: " + resArrival);
 				System.out.println("Pax: " + resPax);
 				System.out.println("Name: " + resName);
 				System.out.println("Contact: " + resContact);
-				System.out.println("==============================================");
+				System.out.println("=========================================================");
 				System.out.println();
 				case1 = false;
 			}
 		}
-		System.out.println();
 	}
 	
 	public static void updateReservation() {
-		Table tb = new Table();
-		TableInfo tbInfo = new TableInfo();
 		Reservation res = new Reservation();
 		boolean start = true;
 		while (start) {
 			Scanner sc = new Scanner(System.in);
-			System.out.println("==============================================");
-			System.out.println("   Reservation System");
-			System.out.println("   ------------------");
+			System.out.println("=============================");
+			System.out.println("\t Reservation Menu");
+			System.out.println("=============================");
 			System.out.println("1) View reservation");
 			System.out.println("2) Update reservation");
 			System.out.println("3) Delete reservation");
 			System.out.println("0) Back");
-			System.out.println();
-			System.out.println("==============================================");
 			System.out.print("Enter choice: ");
 			int select = sc.nextInt();
 			sc.nextLine();
@@ -112,19 +159,27 @@ public class ReservationApp {
 					System.out.println();
 					System.out.print("Enter reservation contact: ");
 					String contact = sc.nextLine();
+					//Validate Contact
+					while(!(contact.matches("^[0-9]*$") && contact.length() >= 8)) {
+						System.out.println();
+						System.out.println("Invalid selection, please key numbers & no less than 8 digits");
+						System.out.print("Enter contact: ");
+						contact = sc.nextLine();
+						System.out.println();
+					}
 					Reservation myReservation = new Reservation();
 					myReservation = res.getReservation(contact);
 					if (myReservation != null) {
 						System.out.println();
-						System.out.println("Reservation Record:");
-						System.out.println("==============================================");
+						System.out.println("=============================");
+						System.out.println("\tReservation Info");
+						System.out.println("=============================");
 						System.out.println("Table Id: " + myReservation.getTableId());
 						System.out.println("Date: " + myReservation.getDate());
 						System.out.println("Time: " + myReservation.getArrivalTime());
 						System.out.println("Pax: " + myReservation.getPax());
 						System.out.println("Name: " + myReservation.getName());
 						System.out.println("Contact: " + myReservation.getContactNumber());
-						System.out.println("==============================================");
 						System.out.println();
 						case1 = false;
 					} else {
@@ -142,27 +197,126 @@ public class ReservationApp {
 					System.out.println();
 					System.out.print("Enter reservation contact: ");
 					String contact = sc.nextLine();
+					//Validate Contact
+					while(!(contact.matches("^[0-9]*$") && contact.length() >= 8)) {
+						System.out.println();
+						System.out.println("Invalid selection, please key numbers & no less than 8 digits");
+						System.out.print("Enter contact: ");
+						contact = sc.nextLine();
+						System.out.println();
+					}
 					Reservation resItem = new Reservation();
 					resItem = res.getReservation(contact);
-					if(!resItem.equals(null)) {
-						System.out.print("Enter new date: ");
-						String newDate = sc.nextLine();
-						System.out.print("Enter new time: ");
-						String newTime = sc.nextLine();
-						System.out.print("Enter new pax: ");
-						int newPax = sc.nextInt();
+					if(resItem != null) {		
+						System.out.println();
+						System.out.println("======================================");
+						System.out.println("\tUpdate Reservation");
+						System.out.println("======================================");
+						System.out.println("1) Name");
+						System.out.println("2) Date");
+						System.out.println("3) Arrival Time");
+						System.out.println("4) Pax");
+						System.out.println("5) Contact Number");
+						System.out.println("0) Back");
+						System.out.print("\nEnter your choice: ");
+						int updateselect = sc.nextInt();
 						sc.nextLine();
-						System.out.print("Enter new name: ");
-						String newName = sc.nextLine();
-						System.out.print("Enter new contact: ");
-						String newContact = sc.nextLine();
+						boolean case2a = true;
 						System.out.println();
-						int tableId = resItem.getTableId();
-						Reservation updatedResItem = new Reservation(resItem.getReservationId(),tableId,newDate,newTime,newPax,newName,newContact);
-						res.updateReservation(resItem, updatedResItem);
-						System.out.println("Reservation with contact: " + resItem.getContactNumber() + " have been updated");
-						System.out.println();
+						Reservation updatedResItem = new Reservation();
+						while(case2a) {
+						switch (updateselect) {
+						case 0:
+							case2a = false;
+							break;
+						case 1:
+							System.out.print("Enter new name: ");
+							String newName = sc.nextLine();
+							while(newName.equals("")) {
+								System.out.println();
+								System.out.println("Reservation name cannot be empty");
+								System.out.print("Enter name: ");
+								newName = sc.nextLine();
+								System.out.println();
+							}
+							updatedResItem = new Reservation(resItem.getReservationId(), resItem.getTableId(), resItem.getDate(), resItem.getArrivalTime(), resItem.getPax(), newName, resItem.getContactNumber());
+							res.updateReservation(resItem, updatedResItem);
+							System.out.println("Name is successfully added!");
+							case2a = false;
+							break;
+						case 2:	
+							System.out.print("Enter reservation date (yyyy-mm-dd): ");
+							String resDate = sc.nextLine();
+							while(!Validation.isDateValid(resDate)) {
+								System.out.println();
+								System.out.println("Invalid value, please key in a new value");
+								System.out.print("Reservation date (yyyy-mm-dd): ");
+								resDate = sc.nextLine();
+							}
+							updatedResItem = new Reservation(resItem.getReservationId(), resItem.getTableId(), resDate, resItem.getArrivalTime(), resItem.getPax(), resItem.getName(), resItem.getContactNumber());
+							res.updateReservation(resItem, updatedResItem);
+							System.out.println("Date is successfully added!");
+							case2a = false;
+							break;
+						case 3:
+							System.out.print("Enter arrival time: ");
+							String resArrival = sc.nextLine();
+							//Validate Arrival Time
+							while((res.checkSession(resArrival) == "Invalid")) {
+								System.out.println();
+								System.out.println("Invalid time, please key in between 11:00-15:00 or 18:00-22:00");
+								System.out.print("Enter arrival time (hh:mm): ");
+								resArrival = sc.nextLine();		
+							}
+							updatedResItem = new Reservation(resItem.getReservationId(), resItem.getTableId(), resItem.getDate(), resArrival, resItem.getPax(), resItem.getName(), resItem.getContactNumber());
+							res.updateReservation(resItem, updatedResItem);
+							System.out.println("Arrival time is successfully added!");
+							case2a = false;
+							break;
+						case 4:
+							System.out.print("Enter pax (0-10): ");
+							int resPax = sc.nextInt();
+							sc.nextLine();
+							System.out.println();
+							//Validate Pax
+							while(resPax <= 0 || resPax > 10) {
+								//System.out.println();
+								System.out.println("Invalid pax, please key between 1 to 10 pax");
+								System.out.print("Pax (1-10): ");
+								resPax = sc.nextInt();
+								sc.nextLine();
+							}
+							updatedResItem = new Reservation(resItem.getReservationId(), resItem.getTableId(), resItem.getDate(), resItem.getArrivalTime(), resPax, resItem.getName(), resItem.getContactNumber());
+							res.updateReservation(resItem, updatedResItem);
+							System.out.println("Pax is successfully added!");
+							case2a = false;
+							break;
+						case 5:
+							System.out.print("Enter reservation contact: ");
+							String contactNum = sc.nextLine();
+							//Validate Contact
+							while(!(contactNum.matches("^[0-9]*$") && contactNum.length() >= 8)) {
+								System.out.println();
+								System.out.println("Invalid selection, please key numbers & no less than 8 digits");
+								System.out.print("Enter contact: ");
+								contactNum = sc.nextLine();
+								System.out.println();
+							}
+							updatedResItem = new Reservation(resItem.getReservationId(), resItem.getTableId(), resItem.getDate(), resItem.getArrivalTime(), resItem.getPax(), resItem.getName(), contactNum);
+							res.updateReservation(resItem, updatedResItem);
+							System.out.println("Contact Number is successfully added!");
+							case2a = false;
+							break;
+						default:
+							System.out.println("Invalid input. Please enter between 0-5. ");
+							System.out.print("\nEnter your choice: ");
+							updateselect = sc.nextInt();
+							sc.nextLine();
+							break;
+							}
+						}
 						case2 = false;
+						System.out.println();
 					}
 					else {
 						case2 = subMenu();
@@ -174,6 +328,9 @@ public class ReservationApp {
 				//Check if it exist
 				//Delete Reservation and Table
 				boolean case3 = true;
+				System.out.println("=========================================");
+				System.out.println("\tDeleting Reservation");
+				System.out.println("=========================================");
 				while(case3) {
 					System.out.println();
 					System.out.print("Enter reservation contact: ");
@@ -182,7 +339,7 @@ public class ReservationApp {
 					resItem = res.getReservation(contact);			
 					if(resItem != null) {
 						res.deleteReservation(resItem);
-						System.out.println("Reservation successfully deleted!");
+						System.out.println("Reservation successfully removed!");
 						case3 = false;
 					}
 					else {

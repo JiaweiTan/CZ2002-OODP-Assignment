@@ -194,9 +194,9 @@ public class Reservation {
 				// User change dates
 				// User change session
 				// User change pax
-				
 				// Best case scenario, no change to dates, session and pax!
 				// Just update the database immediately!
+
 				if (oldresDate.compareTo(newresDate) == 0 && oldSession == newSession && oldTableSize == newTableSize) {
 					DBManager.saveExistingReservation(newres, oldres.ContactNumber);
 				} else {
