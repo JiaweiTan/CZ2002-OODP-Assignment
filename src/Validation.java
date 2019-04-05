@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Validation {
-	
+
 	private static final String MENU_FILE = "OutputMenu.txt";
 	private static final String PROMOSET_FILE = "PromotionList.txt";
 	private static final String STAFF_FILE = "StaffList.txt";
@@ -17,52 +18,52 @@ public class Validation {
 	private static final String RESERVATION_FILE = "Reservation.txt";
 	private static final String TABLEINFO_FILE = "TableInfo.txt";
 
-	public static int itemExistsDB (int itemId) throws IOException {
-		
+	public static int itemExistsDB(int itemId) throws IOException {
+
 		List<Menu> mnLst = MenuFunc.getMenu(MENU_FILE);
-		for(Menu mn: mnLst) {
-			if(mn.getFoodID() == itemId) {
+		for (Menu mn : mnLst) {
+			if (mn.getFoodID() == itemId) {
 				return 1;
 			}
 		}
 		return -1;
 	}
-	
-	public static int promoSetExistsDB (int promoSetId) throws IOException {
-		
+
+	public static int promoSetExistsDB(int promoSetId) throws IOException {
+
 		List<PromoSet> psLst = DBManager.readPromoSetInfo(PROMOSET_FILE);
-		for(PromoSet ps: psLst) {
-			if(ps.getPromoSetId() == promoSetId) {
+		for (PromoSet ps : psLst) {
+			if (ps.getPromoSetId() == promoSetId) {
 				return 1;
 			}
 		}
 		return -1;
 	}
-	
-	public static int staffExistsDB (int staffId) throws IOException {
-		
+
+	public static int staffExistsDB(int staffId) throws IOException {
+
 		List<Staff> staffLst = DBManager.readStaffInfo(STAFF_FILE);
-		for(Staff staff: staffLst) {
-			if(staff.getID() == staffId) {
+		for (Staff staff : staffLst) {
+			if (staff.getID() == staffId) {
 				return 1;
 			}
 		}
 		return -1;
 	}
-	
-	public static int tableExistsDB (int tableId) {
-		if(tableId < 1 || tableId > 30) {
+
+	public static int tableExistsDB(int tableId) {
+		if (tableId < 1 || tableId > 30) {
 			return -1;
 		}
-		
+
 		return 1;
 	}
-	
-	public static int customerExistsDB (int customerId) throws IOException {
+
+	public static int customerExistsDB(int customerId) throws IOException {
 		List<Customer> customerLst = DBManager.readCustomerInfo(CUSTOMER_FILE);
-		for(Customer cs: customerLst) {
-			if(cs.getID() == customerId) {
-				if(LocalDate.now().isAfter(LocalDate.parse(cs.getExpiry()))) {
+		for (Customer cs : customerLst) {
+			if (cs.getID() == customerId) {
+				if (LocalDate.now().isAfter(LocalDate.parse(cs.getExpiry()))) {
 					return 0;
 				}
 				return 1;
@@ -70,34 +71,48 @@ public class Validation {
 		}
 		return -1;
 	}
-	
+
 	public static int reservationExistsDB(String contact) throws IOException {
 		List<Reservation> reservationLst = DBManager.readReservationInfo(RESERVATION_FILE);
-		for(Reservation res: reservationLst) {
-			if((res.getContactNumber()).equals(contact)) {
+		for (Reservation res : reservationLst) {
+			if ((res.getContactNumber()).equals(contact)) {
 				return 1;
 			}
 		}
 		return 0;
 	}
-	
-	
-	public static boolean isDateValid(String dateToValidate){
-		if(dateToValidate == null){
+
+	public static boolean dateRange(String resdate) {
+		// Reservation can only be made at most 1 month in advance
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+		Date today = new Date();
+		LocalDate currentDate = LocalDate.now().minusDays(1);
+		LocalDate futureDate = LocalDate.now().plusMonths(1);
+		LocalDate resDate = LocalDate.parse(resdate);
+		if (currentDate.isBefore(resDate) && resDate.isBefore(futureDate)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static boolean isDateValid(String dateToValidate) {
+		if (dateToValidate == null) {
 			return false;
 		}
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
 		dateFormat.setLenient(false);
-		
-		try {		
+
+		try {
 			Date date = dateFormat.parse(dateToValidate);
-			//System.out.println(date);
+			// System.out.println(date);
 		} catch (ParseException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
-	
+
 }

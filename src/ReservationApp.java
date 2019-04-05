@@ -21,12 +21,23 @@ public class ReservationApp {
 			System.out.println();
 			System.out.print("Enter reservation date (yyyy-mm-dd): ");
 			String resDate = sc.nextLine();
+			boolean validDate = false;
 			//Validate Date
-			while(!Validation.isDateValid(resDate)) {
+			while(!validDate) {
 				System.out.println();
-				System.out.println("Invalid value, please key in a new value");
-				System.out.print("Reservation date (yyyy-mm-dd): ");
-				resDate = sc.nextLine();
+				if(!Validation.isDateValid(resDate)) {
+					System.out.println("Invalid value, please key in a new value");
+					System.out.print("Reservation date (yyyy-mm-dd): ");
+					resDate = sc.nextLine();
+				}
+				else if(!Validation.dateRange(resDate)) {
+					System.out.println("Reservation can only be made in at most 1 month in advance. ");
+					System.out.print("Reservation date (yyyy-mm-dd): ");
+					resDate = sc.nextLine();
+				}
+				else {
+					validDate = true;
+				}
 			}
 			System.out.print("Enter session (AM/PM): ");
 			String resSession = sc.nextLine();

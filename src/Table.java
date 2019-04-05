@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Table {
@@ -85,16 +87,30 @@ public class Table {
 	}
 	
 	public ArrayList<Table> getTableStatus(ArrayList<Reservation> resList){
+		ArrayList<Table> tbList = new ArrayList<Table>();
+		ArrayList<Reservation> updatedResList = new ArrayList<Reservation>();
+		Reservation res = new Reservation();
+		tbList = initTables();
+		//Check if Reservation have expired
+		//If it is, delete reservation
+		for(int i = 0; i < resList.size(); i++) {
+			LocalTime arrivalTime = LocalTime.parse(resList.get(i).getArrivalTime());
+			LocalTime futureTime = arrivalTime.plusMinutes(30);
+			LocalTime currentTime = LocalTime.now();
+			if(currentTime.isBefore(arrivalTime) && arrivalTime.isBefore(futureTime)) {
+				updatedResList.add(resList.get(i));
+			}
+			else {
+				res.deleteReservation(resList.get(i));
+			}
+		}
 		//Fetch a list of Reservation table ID
 		//Set the Table Status to booked
 		//Return information to TableApp
-		ArrayList<Table> tbList = new ArrayList<Table>();
-		tbList = initTables();
-		//If there's any reservation for the day 
-		if(resList.size() > 0) {
-			for(int i = 0; i < resList.size(); i++) {
+		if(updatedResList.size() > 0) {
+			for(int i = 0; i < updatedResList.size(); i++) {
 				for(int j = 0; j < tbList.size(); j++) {
-					if(resList.get(i).getTableId() == tbList.get(j).TableId) {
+					if(updatedResList.get(i).getTableId() == tbList.get(j).TableId) {
 						tbList.get(j).Status = 1;
 					}
 				}

@@ -1,5 +1,7 @@
 import java.util.*;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -238,5 +240,34 @@ public class Invoice {
 		System.out.println("   Total\t\t\t" + String.format("%.2f", invoice.getFinalPrice()));
 		System.out.println("   Payment By " + invoice.getPaymentType().toUpperCase());
 		System.out.println("----------------------------------------");
+		
+		
+		/* Note: In order for this to work, you have to create the reservation using today date and time */
+		// As this checks for today reservation and deletes it. 
+		//Restaurant opening hours -> 10:00 to 1500 or 1800-2200
+		//Change your own computer time to test if it's over the restaurant opening hours.
+		Reservation res = new Reservation();
+		boolean isReservation = false;
+		//Get current date, session and tableid
+		int tableid = order.getTableId();
+		String orderdate = order.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		String ordertime = order.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+		ArrayList<Reservation> resList = new ArrayList<Reservation>();
+		//Get all the reservations for this date and session
+		//Find reservation by table id
+		resList = res.getTodayReservation(orderdate, res.checkSession(ordertime));
+		Reservation resv = new Reservation();
+		for(Reservation resitem: resList)
+		{
+			if(resitem.getTableId() == tableid) {
+				isReservation = true;
+				resv = resitem;
+			}
+		}
+		//If yes, delete reservation and release table space
+		if(isReservation) {
+			res.deleteReservation(resv);
+			System.out.println("Table ID: " + resv.getTableId() + " released and Reservation ID: " + resv.getReservationId() + " deleted!");
+		}
 	}
 }
