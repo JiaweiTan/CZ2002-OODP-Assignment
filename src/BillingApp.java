@@ -156,7 +156,7 @@ public class BillingApp {
 												if(resNo == rs.getReservationId()) {
 													cst.setID(0);
 													cst.setName(rs.getName());
-													cst.setContact(Integer.toString(rs.getContactNumber()));
+													cst.setContact(rs.getContactNumber());
 													cst.setExpiry(LocalDate.now().toString());
 													System.out.println("Name\t\t: " + cst.getName());
 													System.out.println("Contact No.\t: " + cst.getContact());

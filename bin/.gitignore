@@ -1,6 +1,7 @@
 /.DS_Store
 /BillingApp.class
 /Customer.class
+/CustomerApp.class
 /DBManager.class
 /Invoice.class
 /MainMenu.class
@@ -21,4 +22,3 @@
 /TableApp.class
 /TableInfo.class
 /Validation.class
-/CustomerApp.class

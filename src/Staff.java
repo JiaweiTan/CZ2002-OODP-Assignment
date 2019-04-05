@@ -69,7 +69,7 @@ public class Staff extends Person {
 	{
 		List<Staff> staffList = DBManager.readStaffInfo(filename);
 		if(staffList.size()>0)
-			return staffList.get(staffList.size()-1).getEmployeeId() + 1;
+			return staffList.get(staffList.size()-1).getID() + 1;
 		else
 			return 1001;
 	}
