@@ -146,6 +146,7 @@ public class BillingApp {
 											String contact = sc.nextLine();
 											cst.setContact(contact);
 											cst.setExpiry(LocalDate.now().toString());
+											System.out.println("Membership created successfully.");
 											invalid = false;
 										}
 										else {
@@ -157,6 +158,9 @@ public class BillingApp {
 													cst.setName(rs.getName());
 													cst.setContact(Integer.toString(rs.getContactNumber()));
 													cst.setExpiry(LocalDate.now().toString());
+													System.out.println("Name\t\t: " + cst.getName());
+													System.out.println("Contact No.\t: " + cst.getContact());
+													System.out.println("Membership created successfully.");
 													invalid = false;
 													break;
 												}

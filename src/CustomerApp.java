@@ -15,7 +15,7 @@ public class CustomerApp {
 			System.out.println();
 			System.out.println("===========================================");
 			System.out.println("\t\tMembership");
-			System.out.println("=======================================");
+			System.out.println("===========================================");
 			System.out.println("1) View membership details");
 			System.out.println("2) Update member's details");
 			System.out.println("3) Terminate membership");
@@ -41,17 +41,19 @@ public class CustomerApp {
 						List<Integer> invIdLst = cs.getInvoiceId();
 						List<Invoice> invLst = DBManager.readInvoice("Invoice.txt");
 						double totalSpent = 0;
+						int visits = 0;
 						if(invIdLst != null) {
 							for(int id: invIdLst) {
 								for(Invoice in: invLst) {
 									if(in.getInvoiceID() == id) {
 										totalSpent += in.getFinalPrice();
+										visits++;
 										break;
 									}
 								}
 							}
 						}
-						System.out.println("Total Visits\t: " + invLst.size());
+						System.out.println("Total Visits\t: " + visits);
 						System.out.println("Total Spent\t: " + String.format("%.2f", totalSpent));
 						System.out.println("Membership Expiry Date\t: " + cs.getExpiry());
 					}
