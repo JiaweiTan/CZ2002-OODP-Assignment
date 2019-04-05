@@ -34,7 +34,7 @@ public class OrderApp {
 		staffId = sc.nextInt();
 		if ((Validation.staffExistsDB(staffId) < 0)) {
 			do {
-				System.out.print("Table No. is invalid. Please enter a valid ID.");
+				System.out.print("Staff ID is invalid. Please enter a valid ID.");
 				System.out.println();
 				System.out.print("Enter Staff ID: ");
 				staffId = sc.nextInt();
@@ -97,7 +97,13 @@ public class OrderApp {
 		}while(cmt.equals("invalid"));
 		//itemLst.stream().mapToInt(i->i).toArray()
 		Order newOrder = new Order(0, tableId, staffId, itemLst, psLst, 0, comment, LocalDateTime.now());
-		System.out.println("Order created successfully. Order ID: " + Order.createOrder(newOrder));
+		System.out.println();
+		System.out.println("=========================================================");
+		System.out.println("\t      Order successfully created!");
+		System.out.println("=========================================================");
+		Order.viewOrders(Order.createOrder(newOrder));
+		System.out.println("=========================================================");
+		System.out.println();
 	}
 	
 	public static void updateOrder() throws IOException {
@@ -196,7 +202,7 @@ public class OrderApp {
 									od.setItemId(Stream.concat(tmpItemLst.stream(), itemLst.stream()).collect(Collectors.toList()));
 								}
 								Order.updateOrder(od);
-								System.out.println("Item(s) added to order successfully.");
+								System.out.println("Item(s) successfully added!");
 								break;
 							case 2:
 								index = 1;
@@ -224,7 +230,7 @@ public class OrderApp {
 									od.setPromoSetId(Stream.concat(tmpPsLst.stream(), psLst.stream()).collect(Collectors.toList()));
 								}
 								Order.updateOrder(od);
-								System.out.println("Promo Set(s) added to order successfully.");
+								System.out.println("Promo Set(s) successfully added!");
 								break;
 							case 3:
 								System.out.print("Enter comment to update: ");
@@ -234,7 +240,7 @@ public class OrderApp {
 								else
 									od.setComment(od.getComment() + "\\n" + comment);
 								Order.updateOrder(od);
-								System.out.println("Comment added to order successfully.");
+								System.out.println("Comment is successfully added!");
 								break;
 							default:
 								System.out.println("Invalid input. Please enter again. ");
@@ -305,7 +311,7 @@ public class OrderApp {
 										System.out.println("Item ID " + it + " not found in the order.");
 									}
 									else
-										System.out.println("Item ID " + it + " is removed from the order.");
+										System.out.println("Item ID " + it + " successfully removed!");
 								}
 								od.setItemId(itemLst);
 								Order.updateOrder(od);
@@ -336,13 +342,13 @@ public class OrderApp {
 										System.out.println("Promo Set ID " + ps + " not found in the order.");
 									}
 									else
-										System.out.println("Promo Set ID " + ps + " is removed from the order.");
+										System.out.println("Promo Set ID " + ps + " successfully removed!");
 								}
 								od.setPromoSetId(psLst);
 								Order.updateOrder(od);
 								break;
 							case 3:
-								System.out.println("Comment is removed from the order. ");
+								System.out.println("Comment is successfully removed!");
 								od.setComment("No comment");
 								Order.updateOrder(od);
 								break;

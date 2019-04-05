@@ -902,7 +902,7 @@ public class DBManager {
 		write(filename, alw);
 	}
 
-	public static void saveCustomerDetails(Customer customer) throws IOException {
+	public static int saveCustomerDetails(Customer customer) throws IOException {
 		String filename = "CustomerList.txt";
 		ArrayList<Customer> customerLst = readCustomerInfo(filename);
 		
@@ -951,6 +951,8 @@ public class DBManager {
 			alw.add(st.toString());
 		}
 		write(filename, alw);
+		
+		return customer.getID();
 	}
 	
 	//Read customer details from DB

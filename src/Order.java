@@ -281,6 +281,116 @@ public class Order {
 		}
 		
 	}
+	
+public static void viewOrders(int orderId) throws IOException{
+		
+		List<Order> orderLst = DBManager.readOrders(ORDER_FILE);
+		List<Menu> menuLst = MenuFunc.getMenu(ITEM_FILE);
+		List<PromoSet> psLst = DBManager.readPromoSetInfo(PROMOSET_FILE);
+		List<String> tmpCmtLst = new ArrayList<String>();
+		int sel, valid=0;
+		
+		Scanner sc = new Scanner(System.in);
+		String tmpCmt;
+		
+		if(orderLst.size()>0) {
+			
+			for(Order od: orderLst) {
+				if(orderId == od.getOrderId()) {
+					System.out.println("Order ID\t\t: " + od.getOrderId());
+					System.out.println("Table No.\t\t: " + od.getTableId());
+					System.out.println("Staff ID\t\t: " + od.getStaffId());
+					List<Integer> odIt = od.getItemId();
+					
+					int multiplier = 1, j = 0, first = 0;
+					for(int it: odIt) 
+					{
+						if(j != odIt.lastIndexOf(it))
+						{
+							multiplier++;
+						}
+						else 
+						{
+							for(Menu mn: menuLst)
+							{
+								if(it == mn.getFoodID()) 
+								{
+									if(first > 0) {
+										System.out.println("\t\t\t  " + multiplier + "x\t" + odIt.get(j) + " " + mn.getFoodName());
+									}
+									else {
+										System.out.println("Items\t\t\t: " + multiplier + "x\t" + odIt.get(j) + " " + mn.getFoodName());
+										first++;
+									}
+									break;
+								}
+							}
+							multiplier = 1;
+						}
+						j++;
+					}
+					
+					multiplier = 1;
+					j = 0;
+					first = 0;
+					
+					List<Integer> odPs = od.getPromoSetId();
+					for(int ps: odPs) 
+					{
+						if(j != odPs.lastIndexOf(ps))
+						{
+							multiplier++;
+						}
+						else 
+						{
+							for(PromoSet pst: psLst)
+							{
+								if(ps == pst.getPromoSetId()) 
+								{
+									if(first > 0) {
+										System.out.println("\t\t\t  " + multiplier + "x\t" + odPs.get(j) + " " + pst.getName());
+									}
+									else {
+										System.out.println("Promo Set\t\t: " + multiplier + "x\t" + odPs.get(j) + " " + pst.getName());
+										first++;
+									}
+									break;
+								}
+							}
+							multiplier = 1;
+						}
+						j++;
+					}
+					
+					System.out.println("Price\t\t\t: " + od.getPrice());
+					tmpCmt=od.getComment();
+					if(tmpCmt.contains("\\n")) {
+						tmpCmtLst = Arrays.asList(tmpCmt.split("\\\\n"));
+						for(int i = 0; i < tmpCmtLst.size(); i++) {
+							if(i == 0) {
+								System.out.println("Comment\t\t\t: " + tmpCmtLst.get(i));
+							}
+							else {
+								System.out.println("\t\t\t  " + tmpCmtLst.get(i));
+							}
+						}
+					}
+					else
+						System.out.println("Comment\t\t\t: " + tmpCmt);
+					System.out.println("Date & Time\t\t: " + od.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+					valid = 1;
+					break;
+				}
+			}
+			if(valid == 0) {
+				System.out.println("Order ID " + orderId + " not found.");
+			}
+		}
+		else {
+			System.out.println("The order list empty. ");
+		}
+		
+	}
 
 	public static List<Order> updateOrder(Order od) throws IOException{
 		

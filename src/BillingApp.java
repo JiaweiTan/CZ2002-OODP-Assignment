@@ -56,7 +56,7 @@ public class BillingApp {
 							//Checks for valid ID
 							do
 							{
-								System.out.println("Enter orderID: ");
+								System.out.print("\nEnter orderID: ");
 								orderID = sc.nextInt();
 								for(Order od: orderLst) 
 								{
@@ -93,7 +93,7 @@ public class BillingApp {
 							Customer cst = new Customer();
 							int memberId = 0;
 							do {
-								System.out.println("Membership ID (Enter 0 to skip): ");
+								System.out.print("Membership ID (Enter 0 to skip): ");
 								memberId = sc.nextInt();
 								if(memberId == 0)
 									break;
@@ -127,13 +127,13 @@ public class BillingApp {
 							} while(memberId < 0);
 							
 							if(order.getPrice() >= 100 && memberId < 1) {
-								System.out.println("Do you want to be a member? (Y/N)");
+								System.out.print("Do you want to be a member? (Y/N)");
 								String sel = sc.next();
 								if(sel.equalsIgnoreCase("y")) {
 									//create customer record
 									boolean invalid = true;
 									do {
-										System.out.println("Enter Reservation Number (Enter 0 to skip): ");
+										System.out.print("Enter Reservation Number (Enter 0 to skip): ");
 										int resNo = sc.nextInt();
 										sc.nextLine();
 										if(resNo == 0) {
@@ -146,7 +146,10 @@ public class BillingApp {
 											String contact = sc.nextLine();
 											cst.setContact(contact);
 											cst.setExpiry(LocalDate.now().toString());
-											System.out.println("Membership created successfully.");
+											System.out.println();
+											System.out.println("=======================================================");
+											System.out.println("\tMembership created successfully!");
+											System.out.println("=======================================================");
 											invalid = false;
 										}
 										else {
@@ -160,7 +163,10 @@ public class BillingApp {
 													cst.setExpiry(LocalDate.now().toString());
 													System.out.println("Name\t\t: " + cst.getName());
 													System.out.println("Contact No.\t: " + cst.getContact());
-													System.out.println("Membership created successfully.");
+													System.out.println();
+													System.out.println("=======================================================");
+													System.out.println("\tMembership created successfully!");
+													System.out.println("=======================================================");
 													invalid = false;
 													break;
 												}
@@ -170,7 +176,7 @@ public class BillingApp {
 											System.out.println("Invalid Reservation ID.");
 										}
 									} while (invalid);
-									DBManager.saveCustomerDetails(cst);
+									Customer.viewCustomer(DBManager.saveCustomerDetails(cst));;
 									order.setIsMember(true);
 								}
 							}
