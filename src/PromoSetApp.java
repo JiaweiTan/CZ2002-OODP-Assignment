@@ -1,21 +1,19 @@
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 public class PromoSetApp {
-	
-
-
-
-
-	public static void main(String[] args) throws IOException {
+	final static String filename = "promotionList.txt";
+	public static void main() throws IOException, ParseException  {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 		int  OperationInput;
 		Scanner sc = new Scanner(System.in);
-		DBManager db = new DBManager();
+		PromoSet promo=new PromoSet();
+		Validation inputValidation= new Validation();
 
 		System.out.println();
 		System.out.println();
@@ -41,13 +39,8 @@ public class PromoSetApp {
 			System.out.println("=================================");
 
 			System.out.print("Promotion set ID:");
-			int tempPromoSetid = sc.nextInt();
-			sc.nextLine();
-			while (db.checkIfExistPromoSet(tempPromoSetid) == true) {
-				System.out.print("This id exists. Please provides another input:");
-				tempPromoSetid = sc.nextInt();
-				sc.nextLine();
-			}
+			System.out.print(promo.SystemGeneratedID(filename));		
+			System.out.println();
 
 			System.out.print("Name:");
 			String tempName = sc.nextLine();
@@ -67,18 +60,31 @@ public class PromoSetApp {
 
 			System.out.print("Start date Formate:YYYY-MM-DD :");
 			String tempStartDate = sc.nextLine();
+			while(inputValidation.isDateValid(tempStartDate)==false)
+			{
+				System.out.println("Invalid value, please key in a new value");
+				System.out.print("Start date Formate:YYYY-MM-DD :");
+				tempStartDate = sc.nextLine();
+			}
+			
 
 			System.out.print("End date Formate:YYYY-MM-DD :");
 			String tempEndDate = sc.nextLine();
-
+			while(inputValidation.isDateValid(tempStartDate)==false)
+			{
+				System.out.println("Invalid value, please key in a new value");
+				System.out.print("End date Formate:YYYY-MM-DD :");
+				tempEndDate = sc.nextLine();
+			}
 			System.out.print("Quota:");
 			int tempQuota = sc.nextInt();
 			sc.nextLine();
-
-			db.savePromoItems(new PromoSet(tempPromoSetid, tempName, tempItemIDList, tempPrice, tempStartDate,
+			
+			promo.addPromoItems(new PromoSet(promo.SystemGeneratedID(filename), tempName, tempItemIDList, tempPrice, tempStartDate,
 					tempEndDate, tempQuota));
+			
 
-			PromoSetApp.main(null);
+			PromoSetApp.main();
 			break;
 		case 2:
 
@@ -107,36 +113,36 @@ public class PromoSetApp {
 			switch (UpdateInput) {
 
 			case 1:
+				promo.updateInfo(promoId, 1);
 				
-				db.UpdatePromoItem(promoId, 1);
 
 				break;
 			case 2:
 				
-				db.UpdatePromoItem(promoId, 2);
+				promo.updateInfo(promoId, 2);
 
 				break;
 			case 3:
 				
-				db.UpdatePromoItem(promoId, 3);
+				promo.updateInfo(promoId, 3);
 
 				break;
 			case 4:
 				
-				db.UpdatePromoItem(promoId, 4);
+				promo.updateInfo(promoId, 4);
 
 				break;
 			case 5:
-				db.UpdatePromoItem(promoId, 5);
+				promo.updateInfo(promoId, 5);
 				break;
 			case 6:
-				db.UpdatePromoItem(promoId, 6);
+				promo.updateInfo(promoId, 6);
 				break;
 			default:
 
 				break;
 			}
-			PromoSetApp.main(null);
+			PromoSetApp.main();
 			break;
 		case 3:
 
@@ -147,8 +153,9 @@ public class PromoSetApp {
 			System.out.print("Enter Promotion Set ID: ");
 			int removeID = sc.nextInt();
 			sc.nextLine();
-			db.deletePromoSet(removeID);
-			PromoSetApp.main(null);
+			promo.remove(removeID);
+			
+			PromoSetApp.main();
 			break;
 
 		case 4:
@@ -156,9 +163,10 @@ public class PromoSetApp {
 			System.out.println("=============================================");
 			System.out.println("\tViewing Promotion Set");
 			System.out.println("=============================================");
-			String filename = "promotionList.txt";
+			
 			ArrayList<PromoSet> resItem = new ArrayList<PromoSet>();
-			resItem = db.readPromoSetInfo(filename);
+			
+			resItem = promo.readPromoInfo(filename);
 			System.out.println(
 					"-------------------------------------------------------------------------------------------------------------------------------");
 			System.out.printf("%5s %10s %30s %40s %15s %15s %5s", "Index", "PromoSet ID", "Name", "PromoSet Item List",
@@ -175,12 +183,11 @@ public class PromoSetApp {
 			}
 			System.out.println(
 					"-------------------------------------------------------------------------------------------------------------------------------");
-			PromoSetApp.main(null);
+			PromoSetApp.main();
 			break;
 
 		default:
 
-			MainMenu.main(null);
 			break;
 		}
 

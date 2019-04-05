@@ -1,13 +1,14 @@
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PromoSet {
 
 	private int PromoSetId, quota;
-	private static int menuInput, OperationInput, UpdateInput;
 	private ArrayList<Integer> itemId;
 	private double Price;
 	private String startDate, endDate,name;
-	private static ArrayList<PromoSet> List123;
 
 	public PromoSet()
 	{
@@ -31,9 +32,6 @@ public class PromoSet {
 		return PromoSetId;
 	}
 
-	public void setPromoSetId(int promoSetId) {
-		PromoSetId = promoSetId;
-	}
 
 	public ArrayList<Integer> getItemId() {
 		return itemId;
@@ -83,7 +81,38 @@ public class PromoSet {
 	{
 		this.name= name ;
 	}
-	
+
+	public void addPromoItems(PromoSet promoSet) throws IOException {
+		// TODO Auto-generated method stub
+		DBManager db = new DBManager();
+		db.savePromoItems(promoSet);
+	}
+
+	public void updateInfo(int promoId, int i) throws IOException, ParseException {
+		// TODO Auto-generated method stub
+		DBManager db = new DBManager();
+		db.UpdatePromoItem(promoId, i);
+	}
+
+	public void remove(int removeID) throws IOException {
+		// TODO Auto-generated method stub
+		DBManager db = new DBManager();
+		db.deletePromoSet(removeID);
+	}
+
+	public ArrayList<PromoSet> readPromoInfo(String filename) throws IOException {
+		// TODO Auto-generated method stub
+		DBManager db = new DBManager();
+		return  db.readPromoSetInfo(filename);
+	}
+	public int SystemGeneratedID(String filename) throws IOException
+	{
+		List<PromoSet> PromoSetList = DBManager.readPromoSetInfo(filename);
+		if(PromoSetList.size()>0)
+			return PromoSetList.get(PromoSetList.size()-1).getPromoSetId() + 1;
+		else
+			return 1001;
+	}
 
 
 	

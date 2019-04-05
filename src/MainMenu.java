@@ -1,9 +1,10 @@
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class MainMenu {
 	
-	public static void main (String[] arg) throws IOException {
+	public static void main (String[] arg) throws IOException, ParseException {
 		Scanner sc = new Scanner(System.in);
 		int sel;
 		
@@ -54,10 +55,10 @@ public class MainMenu {
 					TableApp.menu();
 					break;
 				case 7:
-					PromoSetApp.main(null);
+					PromoSetApp.main();
 					break;
 				case 8:
-					StaffApp.main(null);
+					StaffApp.main();
 					break;
 				case 9: 
 					BillingApp.main(null);

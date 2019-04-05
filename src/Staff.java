@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Staff extends Person {
 
@@ -39,6 +42,36 @@ public class Staff extends Person {
 	
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
+	}
+	public void addPromoItems(Staff staff) throws IOException {
+		// TODO Auto-generated method stub
+		DBManager db = new DBManager();
+		db.saveStaffDetails(staff);		
+		
+	}
+	public void updateInfo(int staffId, int i) throws IOException {
+		// TODO Auto-generated method stub
+		DBManager db = new DBManager();
+		db.UpdateStaffItem(staffId, i);
+		
+	}
+	public void remove(int removeID) throws IOException {
+		// TODO Auto-generated method stub
+		DBManager db = new DBManager();
+		db.deleteStaff(removeID);
+	}
+	public ArrayList<Staff> readStaffInfo(String filename) throws IOException {
+		// TODO Auto-generated method stub
+		DBManager db = new DBManager();
+		return db.readStaffInfo(filename);
+	}
+	public int SystemGeneratedID(String filename) throws IOException
+	{
+		List<Staff> staffList = DBManager.readStaffInfo(filename);
+		if(staffList.size()>0)
+			return staffList.get(staffList.size()-1).getEmployeeId() + 1;
+		else
+			return 1001;
 	}
 	
 

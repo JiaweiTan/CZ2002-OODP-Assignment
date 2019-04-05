@@ -48,7 +48,7 @@ public class ReservationApp {
 				System.out.print("Enter name: ");
 				String resName = sc.nextLine();
 				System.out.print("Enter contact number: ");
-				int resContact = sc.nextInt();
+				String resContact = sc.nextLine();
 				sc.nextLine();
 				System.out.print("Enter arrival time: ");
 				String resArrival = sc.nextLine();
@@ -111,7 +111,7 @@ public class ReservationApp {
 				while (case1) {
 					System.out.println();
 					System.out.print("Enter reservation contact: ");
-					int contact = sc.nextInt();
+					String contact = sc.nextLine();
 					sc.nextLine();
 					Reservation myReservation = new Reservation();
 					myReservation = res.getReservation(contact);
@@ -142,7 +142,7 @@ public class ReservationApp {
 				while (case2) {
 					System.out.println();
 					System.out.print("Enter reservation contact: ");
-					int contact = sc.nextInt();
+					String contact = sc.nextLine();
 					sc.nextLine();
 					Reservation resItem = new Reservation();
 					resItem = res.getReservation(contact);
@@ -157,7 +157,7 @@ public class ReservationApp {
 						System.out.print("Enter new name: ");
 						String newName = sc.nextLine();
 						System.out.print("Enter new contact: ");
-						int newContact = sc.nextInt();
+						String newContact = sc.nextLine();
 						sc.nextLine();
 						System.out.println();
 						int tableId = resItem.getTableId();
@@ -180,7 +180,7 @@ public class ReservationApp {
 				while(case3) {
 					System.out.println();
 					System.out.print("Enter reservation contact: ");
-					int contact = sc.nextInt();
+					String contact = sc.nextLine();
 					sc.nextLine();
 					
 					Reservation resItem = new Reservation();
