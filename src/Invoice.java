@@ -15,10 +15,11 @@ public class Invoice {
 	private double serviceCharge;
 	private double GST;
 	private double discount;
+	private String remarks;
 	private LocalDateTime dateTime;
 	
 	
-	public Invoice(int invoiceID, String paymentType, int orderID, double originalPrice, double finalPrice, double serviceCharge, double GST, double discount, LocalDateTime dateTime) 
+	public Invoice(int invoiceID, String paymentType, int orderID, double originalPrice, double finalPrice, double serviceCharge, double GST, double discount, String remarks,LocalDateTime dateTime) 
 	{
 		this.invoiceID = invoiceID;
 		this.paymentType = paymentType;
@@ -28,6 +29,7 @@ public class Invoice {
 		this.serviceCharge = serviceCharge;
 		this.GST = GST;
 		this.discount = discount;
+		this.remarks = remarks;
 		this.dateTime = dateTime;
 	}
 	
@@ -64,6 +66,12 @@ public class Invoice {
 	public double getGST() {
 		return GST;
 	}
+	
+	public String getRemarks() 
+	{
+		return remarks;
+	}
+	
 
 	public LocalDateTime getDateTime() 
 	{
@@ -79,7 +87,7 @@ public class Invoice {
 		Scanner sc = new Scanner(System.in);
 		int invoiceID;
 		double GST = 0, serviceCharge = 0, finalPrice = 0, discount = 0;
-		String paymentType = "";
+		String paymentType = "", remarks = "";
 		int choice;
 		
 		do 
@@ -89,7 +97,7 @@ public class Invoice {
 			System.out.println("1. Cash");
 			System.out.println("2. Nets");
 			System.out.println("3. Visa");
-			System.out.println("4. Credit Card");
+			System.out.println("4. MasterCard");
 			choice = sc.nextInt();
 			switch(choice)
 			{
@@ -114,13 +122,18 @@ public class Invoice {
 		finalPrice = order.getPrice() + GST + serviceCharge;
 		LocalDateTime dateTime = LocalDateTime.now();
 		
-		List<Invoice> invoiceLst = DBManager.readInvoice("Invoice.txt");
-		if(invoiceLst.size()>0)
-			invoiceID = invoiceLst.get(invoiceLst.size()-1).getInvoiceID() + 1;
-		else
-			invoiceID = 10001;
+		invoiceID = Invoice.SystemGeneratedID("Invoice.txt");
 		
-		Invoice invoice = new Invoice(invoiceID, paymentType, order.getOrderId(),  order.getPrice(), finalPrice, serviceCharge, GST, discount, dateTime);
+		do 
+		{
+		System.out.println("Remarks with maximum 35 characters:");
+		System.out.println("(Enter 0 to skip)");
+		remarks = sc.next();
+		if(remarks.length() > 35)
+			System.out.println("Too many characters. Please try again.");
+		} while(remarks.length() > 35);
+		
+		Invoice invoice = new Invoice(invoiceID, paymentType, order.getOrderId(),  order.getPrice(), finalPrice, serviceCharge, GST, discount, remarks ,dateTime);
 		
 		if(customer.getInvoiceId() == null) {
 			List<Integer> invLst = new ArrayList<Integer>();
@@ -132,6 +145,7 @@ public class Invoice {
 			invLst.add(invoiceID);
 			customer.setInvoiceId(invLst);
 		}
+		List<Invoice> invoiceLst = DBManager.readInvoice("Invoice.txt");
 		invoiceLst.add(invoice);
 		DBManager.saveInvoice("Invoice.txt", invoiceLst);
 		if(customer.getExpiry() != null) {
@@ -139,6 +153,14 @@ public class Invoice {
 		}
 		
 		return invoice;
+	}
+	public static int SystemGeneratedID(String filename) throws IOException
+	{
+		List<Invoice> invoiceLst = DBManager.readInvoice(filename);
+		if(invoiceLst.size()>0)
+			return invoiceLst.get(invoiceLst.size()-1).getInvoiceID() + 1;
+		else
+			return 9001;
 	}
 	
 	public static double computerDiscount(double originalPrice) 
@@ -161,11 +183,14 @@ public class Invoice {
 		List<PromoSet> promoLst = DBManager.readPromoSetInfo("PromotionList.txt");
 		List<Menu> menuLst = MenuFunc.getMenu("OutputMenu.txt");
 		
-		System.out.println("\t\t  RRPSS");
-		System.out.println("----------------------------------------");
-		System.out.println("\t\t\t\t"+ invoice.getInvoiceID());
-		System.out.println("   "+ invoice.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\t\t"+ invoice.getOrderID());
-		System.out.println("----------------------------------------");
+		System.out.println("========================================");
+		System.out.println("       4 Star Michelin Restaurant");
+		System.out.println("========================================");
+		System.out.println("   Invoice ID\t\t\t" + invoice.getInvoiceID());
+		System.out.println("   Order ID\t\t\t" + invoice.getOrderID());
+		System.out.println("   Table\t\t\t" + order.getTableId());
+		System.out.println("   DateTime"+ invoice.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+		System.out.println("========================================");
 		System.out.println(" Qty\tItem\n");
 		List<Integer> itemLst = order.getItemId();
 		Collections.sort(itemLst);
@@ -229,7 +254,7 @@ public class Invoice {
 			i++;
 		}
 		
-		System.out.println("----------------------------------------");
+		System.out.println("========================================");
 		System.out.println("   SubTotal\t\t\t" + String.format("%.2f", (invoice.getOriginalPrice() + invoice.getDiscount())));
 		if(order.getIsMember()) {
 			//System.out.println("   SubTotal\t\t\t" + String.format("%.2f", invoice.getOriginalPrice() + invoice.getDiscount()));
@@ -239,7 +264,12 @@ public class Invoice {
 		System.out.println("   GST 7%\t\t\t" + String.format("%.2f", invoice.getGST()));
 		System.out.println("   Total\t\t\t" + String.format("%.2f", invoice.getFinalPrice()));
 		System.out.println("   Payment By " + invoice.getPaymentType().toUpperCase());
-		System.out.println("----------------------------------------");
+		if(!invoice.getRemarks().equals("0"))
+		{
+			System.out.println(" Remarks:");
+			System.out.println(" " + invoice.getRemarks());
+		}
+		System.out.println("========================================\n\n");
 		
 		
 		/* Note: In order for this to work, you have to create the reservation using today date and time */

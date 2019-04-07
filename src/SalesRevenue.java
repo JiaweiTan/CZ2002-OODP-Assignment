@@ -6,7 +6,7 @@ import java.io.IOException;
 public class SalesRevenue {
 
 	private String dateYear;
-	private Double totalRevenue;
+	private Double netSales;
 	private List<Integer> invoiceID;
 	
 	public SalesRevenue() 
@@ -14,10 +14,10 @@ public class SalesRevenue {
 		
 	}
 	
-	public SalesRevenue(String dateYear, Double totalRevenue, List<Integer> invoiceID) 
+	public SalesRevenue(String dateYear, Double netSales, List<Integer> invoiceID) 
 	{
 		this.dateYear = dateYear;
-		this.totalRevenue = totalRevenue;
+		this.netSales = netSales;
 		this.invoiceID = invoiceID;
 	}
 	
@@ -29,12 +29,12 @@ public class SalesRevenue {
 		this.dateYear = dateYear;
 	}
 
-	public Double getTotalRevenue() {
-		return totalRevenue;
+	public Double getNetSales() {
+		return netSales;
 	}
 
-	public void setTotalRevenue(Double totalRevenue) {
-		this.totalRevenue = totalRevenue;
+	public void setNetSales(Double netSales) {
+		this.netSales = netSales;
 	}
 
 	public List<Integer> getInvoiceID() {
@@ -48,7 +48,7 @@ public class SalesRevenue {
 	public static SalesRevenue createSalesRevenue(List<Invoice> invoiceLst, int month, int year) 
 	{
 		String dateYear = "";
-		double totalRevenue = 0;
+		double netSales = 0;
 		List<Integer> invoiceIDLst = new ArrayList<Integer>();
 		
 		if(month >= 0 && month <= 9) 
@@ -63,25 +63,25 @@ public class SalesRevenue {
 		
 		for(Invoice invoice: invoiceLst) 
 		{
-			totalRevenue += invoice.getFinalPrice();
+			netSales += invoice.getFinalPrice();
 			invoiceIDLst.add(invoice.getInvoiceID());
 		}
-		SalesRevenue salesRevenue = new SalesRevenue(dateYear, totalRevenue, invoiceIDLst);
+		SalesRevenue salesRevenue = new SalesRevenue(dateYear, netSales, invoiceIDLst);
 		return salesRevenue;
 	}
 	
 	public static SalesRevenue updateSalesRevenue(SalesRevenue salesRevenue, List<Invoice> invoiceLst) 
 	{
-		double totalRevenue = 0;
+		double netSales = 0;
 		List<Integer> invoiceIDLst = new ArrayList<Integer>();
 		
 		for(Invoice invoice: invoiceLst) 
 		{
-			totalRevenue += invoice.getFinalPrice();
+			netSales += invoice.getFinalPrice();
 			invoiceIDLst.add(invoice.getInvoiceID());
 		}
 		
-		salesRevenue.setTotalRevenue(totalRevenue);
+		salesRevenue.setNetSales(netSales);
 		salesRevenue.setInvoiceID(invoiceIDLst);
 		return salesRevenue;
 	}
@@ -90,7 +90,7 @@ public class SalesRevenue {
 		boolean print = false;
 		int multiplier = 1;
 		int i = 0;
-		double price = 0;
+		double price = 0, totalPrice = 0;
 		
 		List<PromoSet> promoLst = DBManager.readPromoSetInfo("PromotionList.txt");
 		List<Menu> menuLst = MenuFunc.getMenu("OutputMenu.txt");
@@ -129,10 +129,11 @@ public class SalesRevenue {
 		}
 		Collections.sort(itemLst);
 		Collections.sort(promoItemLst);
-		
+		System.out.println("========================================");
 		System.out.println("\tSales Revenue Report");
+		System.out.println("\t     (Monthly)");
 		System.out.println("\t      " + salesRevenue.getDateYear());
-		System.out.println("------------------------------------");
+		System.out.println("========================================");
 	
 		for(int item: itemLst) 
 		{
@@ -150,6 +151,7 @@ public class SalesRevenue {
 					{
 						System.out.println(" x" + multiplier + "\t" + menu.getFoodName());
 						price = multiplier * menu.getFoodPrice();
+						totalPrice += price;
 						break;
 					}
 				}
@@ -178,6 +180,7 @@ public class SalesRevenue {
 					{
 						System.out.println(" x" + multiplier + "\t" + promoMenu.getName());
 						price = multiplier * (int)promoMenu.getPrice();
+						totalPrice += price;
 						break;
 					}
 				}
@@ -187,10 +190,10 @@ public class SalesRevenue {
 			}
 			i++;
 		}
-		
-		System.out.println("----------------------------------------");
-		System.out.println("   Total Revenue\t\t" + String.format("%.2f", salesRevenue.getTotalRevenue()));
-		System.out.println("----------------------------------------\n");
+		System.out.println("========================================");
+		System.out.println(" Total\t\t\t\t" + totalPrice);
+		System.out.println(" Net Sales\t\t\t" + String.format("%.2f", salesRevenue.getNetSales()));
+		System.out.println("========================================\n\n");
 	}
 	
 	

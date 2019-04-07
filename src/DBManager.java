@@ -342,10 +342,11 @@ public class DBManager {
 						double finalPrice = Double.parseDouble(star.nextToken().trim());;
 						double serviceCharge = Double.parseDouble(star.nextToken().trim());
 						double GST = Double.parseDouble(star.nextToken().trim());
+						String remarks = star.nextToken().trim();
 						LocalDateTime dateTime = LocalDateTime.parse(star.nextToken().trim());
 						// create Professor object from file data
 
-						Invoice invoice = new Invoice(invoiceID, paymentType, orderID, originalPrice, finalPrice, GST, serviceCharge, 0, dateTime);
+						Invoice invoice = new Invoice(invoiceID, paymentType, orderID, originalPrice, finalPrice, GST, serviceCharge, 0, remarks ,dateTime);
 						alr.add(invoice) ;
 					}
 					return alr ;
@@ -373,6 +374,8 @@ public class DBManager {
 						st.append(SEPARATOR);
 						st.append(invoice.getGST());
 						st.append(SEPARATOR);
+						st.append(invoice.getRemarks());
+						st.append(SEPARATOR);
 						st.append(invoice.getDateTime());
 						st.append(SEPARATOR);
 						alw.add(st.toString()) ;
@@ -391,7 +394,7 @@ public class DBManager {
 
 						
 						String dateYear = star.nextToken().trim();
-						Double totalRevenue = Double.parseDouble(star.nextToken().trim());
+						Double netSales = Double.parseDouble(star.nextToken().trim());
 						String[] invoiceStrArr = star.nextToken().trim().split(" ");
 				        List<Integer> invoiceID = new ArrayList<Integer>();
 				        if(invoiceStrArr != null) {
@@ -401,7 +404,7 @@ public class DBManager {
 					        }
 				        }
 						// create Professor object from file data
-						SalesRevenue salesRevenue = new SalesRevenue(dateYear, totalRevenue, invoiceID);
+						SalesRevenue salesRevenue = new SalesRevenue(dateYear, netSales, invoiceID);
 						alr.add(salesRevenue);
 					}
 					return alr ;
@@ -415,7 +418,7 @@ public class DBManager {
 						StringBuilder st =  new StringBuilder() ;
 						st.append(salesRevenue.getDateYear().trim());
 						st.append(SEPARATOR);
-						st.append(salesRevenue.getTotalRevenue());
+						st.append(salesRevenue.getNetSales());
 						st.append(SEPARATOR);
 						List<Integer> invoiceIDLst = salesRevenue.getInvoiceID();
 						for (int invoiceID: invoiceIDLst)

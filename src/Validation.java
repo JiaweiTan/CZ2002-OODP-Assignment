@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.text.ParseException;
@@ -17,6 +18,8 @@ public class Validation {
 	private static final String CUSTOMER_FILE = "CustomerList.txt";
 	private static final String RESERVATION_FILE = "Reservation.txt";
 	private static final String TABLEINFO_FILE = "TableInfo.txt";
+	private static final String ORDER_FILE = "Orders.txt";
+	private static final String INVOICE_FILE = "Invoice.txt";
 
 	public static int itemExistsDB(int itemId) throws IOException {
 
@@ -114,5 +117,34 @@ public class Validation {
 		}
 		return true;
 	}
-
+	public static boolean orderExistDB (int orderId) throws IOException
+	{
+		List<Order> orderLst = DBManager.readOrders(ORDER_FILE);
+		for(Order ord: orderLst)
+		{
+			if(ord.getOrderId() == orderId)
+				return true;
+		}
+		return false;
+	}
+	
+	public static boolean isBilled(int orderId) throws IOException
+	{
+		List<Invoice >invoiceLst = DBManager.readInvoice("Invoice.txt");
+		for(Invoice inv: invoiceLst) 
+		{
+			if(inv.getOrderID() == orderId)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	public static boolean isSalesRevenueDateValid(int year, int month) {
+		LocalDateTime date = LocalDateTime.now();
+		if(year > date.getYear() || (year == date.getYear() && month > date.getMonthValue()) || year <= 0 || month <= 0) 
+			return false;
+		else
+			return true;
+	}
 }

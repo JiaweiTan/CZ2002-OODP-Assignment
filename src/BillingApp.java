@@ -14,8 +14,6 @@ public class BillingApp {
 		double totalRevenue;
 		boolean validOrderID, validDate, entryFound;
 		String [] salesRevenueDate;
-		
-		LocalDateTime date;
 		int month, year;
 		
 		List<Invoice> invoiceLst = new ArrayList<Invoice>();
@@ -25,11 +23,12 @@ public class BillingApp {
 		Scanner sc = new Scanner(System.in);
 		do 
 		{
-			System.out.println("  Billing");
-			System.out.println("  ----------------");
-			System.out.println("1: Print bill invoice");
-			System.out.println("2: Print sale revenue report");
-			System.out.println("3: Exit");
+			System.out.println("========================================");
+			System.out.println("\t      Billing Menu");
+			System.out.println("========================================");
+			System.out.println("1. Print Bill Invoice");
+			System.out.println("2. Print Sales Revenue Report");
+			System.out.println("0. Back");
 			
 			validOrderID = false;
 			validDate = false;
@@ -53,19 +52,12 @@ public class BillingApp {
 							{
 								System.out.println(od.getOrderId());	
 							}
-							//Checks for valid ID
+							//Checks for valid OrderID
 							do
 							{
 								System.out.print("\nEnter orderID: ");
 								orderID = sc.nextInt();
-								for(Order od: orderLst) 
-								{
-									if(od.getOrderId() == orderID)
-									{
-										validOrderID = true;
-										break;
-									}
-								}
+								validOrderID = Validation.orderExistDB(orderID);
 								if(!validOrderID) 
 								{
 									System.out.println("OrderID not found. Please try again.");
@@ -73,18 +65,23 @@ public class BillingApp {
 							}while (!validOrderID);
 							
 							//Check if order has been billed before
-							invoiceLst = DBManager.readInvoice("Invoice.txt");
-							for(Invoice inv: invoiceLst) 
-							{
-								if(inv.getOrderID() == orderID)
-								{
-									validOrderID = false;
-									break;
-								}
-							}
+							
+							validOrderID = Validation.isBilled(orderID);
 							if(!validOrderID)
 							{
 								System.out.println("Order has previously been billed.\n");
+								System.out.println("========================================");
+								System.out.println("\t     Reprinting Bill");
+								System.out.println("========================================\n");
+								invoiceLst = DBManager.readInvoice("Invoice.txt");
+								for(Invoice inv: invoiceLst)
+								{
+									if(inv.getOrderID() == orderID)	
+									{
+										Invoice.printBillInvoice(Order.getOrder(orderID), inv);
+										break;
+									}
+								}
 								break;
 							}
 
@@ -184,7 +181,7 @@ public class BillingApp {
 							//Create new invoice and print
 							Invoice invoice = Invoice.createInvoice(order, cst);
 							Invoice.printBillInvoice(order, invoice);
-							System.out.println("\nPayment Success!\n");
+							System.out.println("\n\n\n");
 							break;
 						}
 				case 2: /*List<SalesRevenue> salesRevenueLst = DBManager.readSalesRevenue("src/SalesRevenue");
@@ -206,11 +203,7 @@ public class BillingApp {
 							year = sc.nextInt();
 							System.out.println("Enter Month(MM): ");
 							month = sc.nextInt();
-							date = LocalDateTime.now();
-							if(year > date.getYear() || (year == date.getYear() && month > date.getMonthValue()) || year <= 0 || month <= 0) 
-								validDate = false;
-							else
-								validDate = true;
+							validDate = Validation.isSalesRevenueDateValid(year,month);
 							if(!validDate)
 							{
 								System.out.println("Date entered not valid. Please try again.");
@@ -270,11 +263,10 @@ public class BillingApp {
 						}
 						break;*/
 						
-				case 3: 
-					break;	
+				case 0: break;	
 			}
 			
 			
-		}while (choice < 3);
+		}while (choice != 0);
 	}
 }
