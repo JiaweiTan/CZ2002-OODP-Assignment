@@ -26,7 +26,7 @@ public class MenuApp{
 			System.out.println("2: Update a menu item. ");
 			System.out.println("3: Delete a menu item. ");
 			System.out.println("4: Display the full menu. ");
-			System.out.println("5: Quit");
+			System.out.println("5: Back");
 			System.out.print("Please enter your choice : ");
 			
 			choice = sc.nextInt();
@@ -54,7 +54,10 @@ public class MenuApp{
 				break;
 				
 			case 5: 
-				System.out.println("------Goodbye------");
+				break;
+			
+			default:
+				System.out.println("Invalid input. Please enter again.\n");
 			}
 			
 		 } while (choice < 5);
