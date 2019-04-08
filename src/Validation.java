@@ -156,7 +156,25 @@ public class Validation {
 		}
 		return true;
 	}
-	public static boolean isSalesRevenueDateValid(int year, int month) {
+	public static boolean isSalesRevenueYearDateValid(int year) {
+		LocalDateTime date = LocalDateTime.now();
+		if(year > date.getYear() || year <= 0) 
+			return false;
+		else
+			return true;
+	}
+	
+	public static boolean isSalesRevenueDayDateValid(int year, int month, int day) {
+		LocalDateTime date = LocalDateTime.now();
+		if(year > date.getYear() || (year == date.getYear() && month > date.getMonthValue()) || 
+			(year == date.getYear() && month == date.getMonthValue() && day > date.getDayOfMonth()) || 
+			 year <= 0 || month <= 0 || day <= 0) 
+			return false;
+		else
+			return true;
+	}
+	
+	public static boolean isSalesRevenueMonthDateValid(int year, int month) {
 		LocalDateTime date = LocalDateTime.now();
 		if(year > date.getYear() || (year == date.getYear() && month > date.getMonthValue()) || year <= 0 || month <= 0) 
 			return false;

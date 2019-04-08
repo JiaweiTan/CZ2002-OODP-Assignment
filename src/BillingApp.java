@@ -3,8 +3,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Scanner;
 
 public class BillingApp {
 	public static void main(String [] args) throws IOException, ParseException 
@@ -15,11 +13,13 @@ public class BillingApp {
 		double totalRevenue;
 		boolean validOrderID, validDate, entryFound;
 		String [] salesRevenueDate;
-		int month, year;
+		int day, month, year;
 		
 		List<Invoice> invoiceLst = new ArrayList<Invoice>();
 		List<Order> orderLst = new ArrayList<Order>();
-		List<SalesRevenue> salesRevenueLst = new ArrayList<SalesRevenue>();
+		List<SalesRevenueDay> salesRevenueDayLst = new ArrayList<SalesRevenueDay>();
+		List<SalesRevenueMonth> salesRevenueMonthLst = new ArrayList<SalesRevenueMonth>();
+		List<SalesRevenueYear> salesRevenueYearLst = new ArrayList<SalesRevenueYear>();
 		
 		Scanner sc = new Scanner(System.in);
 		do 
@@ -185,88 +185,192 @@ public class BillingApp {
 							System.out.println("\n\n\n");
 							break;
 						}
-				case 2: /*List<SalesRevenue> salesRevenueLst = DBManager.readSalesRevenue("src/SalesRevenue");
-						for(SalesRevenue salesrevenue: salesRevenueLst)
-						{
-							System.out.println(salesrevenue.getDateYear());
-							System.out.println(salesrevenue.getTotalRevenue());
-							System.out.println(salesrevenue.getInvoiceID());
-						}
-						List<Integer> invoiceId = new ArrayList<Integer>();
-						invoiceId.add(10003);
-						invoiceId.add(10004);
-						SalesRevenue salesRevenue = new SalesRevenue("022019", (double)20000, invoiceId);
-						salesRevenueLst.add(salesRevenue);*/
-						//Check for valid date (i.e. date <= currentDate)
-						do 
-						{
-							System.out.println("Enter Year(YYYY)): ");
-							year = sc.nextInt();
-							System.out.println("Enter Month(MM): ");
-							month = sc.nextInt();
-							validDate = Validation.isSalesRevenueDateValid(year,month);
-							if(!validDate)
+				case 2: List<Invoice> tempInvoiceLst;
+						do {
+							System.out.println("Print Sales Revenue By:");
+							System.out.println("1. Day");
+							System.out.println("2. Month");
+							System.out.println("3. Year");
+							choice = sc.nextInt();
+							switch(choice) 
 							{
-								System.out.println("Date entered not valid. Please try again.");
-							}
-						} while (!validDate);
-						
-						//Check the invoices of the same Date
-						invoiceLst = DBManager.readInvoice("Invoice.txt");
-						List<Invoice> tempInvoiceLst = new ArrayList<Invoice>();
-						for(Invoice invoice: invoiceLst) 
-						{
-							if(month == invoice.getDateTime().getMonthValue() && year == invoice.getDateTime().getYear())
-								tempInvoiceLst.add(invoice);
-						}
-						//Exits loop if there are no invoices in the date
-						if(tempInvoiceLst.size() <= 0)
-						{
-							System.out.println("There were no sales in " + month + "-" + year + ".");
-							break;
-						} 
-						else
-						{
-							//Check for existing entry in SalesRevenue
-							salesRevenueLst = DBManager.readSalesRevenue("SalesRevenue.txt");
-							SalesRevenue salesRevenue = new SalesRevenue();
-							if(salesRevenueLst.size() > 0)
-							{
-								for(SalesRevenue salesRev: salesRevenueLst) 
-								{
-									salesRevenueDate = salesRev.getDateYear().split("-");
-									if(Integer.parseInt(salesRevenueDate[0]) == month && Integer.parseInt(salesRevenueDate[1]) == year)
-									{
-										//updates the entry
-										salesRevenue = SalesRevenue.updateSalesRevenue(salesRev, tempInvoiceLst);
-										DBManager.saveSalesRevenue("SalesRevenue.txt", salesRevenueLst);
-										entryFound = true;
+								case 1: 
+										do 
+										{
+											System.out.println("Enter Year(YYYY)): ");
+											year = sc.nextInt();
+											System.out.println("Enter Month(MM): ");
+											month = sc.nextInt();
+											System.out.println("Enter Day(DD):");
+											day = sc.nextInt();
+											validDate = Validation.isSalesRevenueDayDateValid(year,month,day);
+											if(!validDate)
+											{
+												System.out.println("Date entered not valid. Please try again.");
+											}
+										} while (!validDate);
+										//Check the invoices of the same Date
+										invoiceLst = DBManager.readInvoice("Invoice.txt");
+										tempInvoiceLst = new ArrayList<Invoice>();
+										for(Invoice invoice: invoiceLst) 
+										{
+											if(month == invoice.getDateTime().getMonthValue() && year == invoice.getDateTime().getYear() && day == invoice.getDateTime().getDayOfMonth())
+												tempInvoiceLst.add(invoice);
+										}
+										//Exits loop if there are no invoices in the date
+										if(tempInvoiceLst.size() <= 0)
+										{
+											System.out.println("\nThere were no sales in " + day + "-" + month + "-" + year + ".\n");
+											break;
+										} 
+										else
+										{
+											//Check for existing entry in SalesRevenue
+											salesRevenueDayLst = DBManager.readSalesRevenueDay("SalesRevenueDay.txt");
+											SalesRevenueDay salesRevenue = new SalesRevenueDay();
+											if(salesRevenueDayLst.size() > 0)
+											{
+												for(SalesRevenueDay salesRev: salesRevenueDayLst) 
+												{
+													salesRevenueDate = salesRev.getDate().split("-");
+													if(Integer.parseInt(salesRevenueDate[0]) == day && Integer.parseInt(salesRevenueDate[1]) == month && Integer.parseInt(salesRevenueDate[2]) == year)
+													{
+														//updates the entry
+														salesRevenue = SalesRevenueDay.updateSalesRevenue(salesRev, tempInvoiceLst);
+														DBManager.saveSalesRevenueDay("SalesRevenueDay.txt", salesRevenueDayLst);
+														entryFound = true;
+														break;
+													}								
+												}
+											}
+											//creates a new SalesRevenue entry
+											if(!entryFound)
+											{
+												salesRevenue = SalesRevenueDay.createSalesRevenue(tempInvoiceLst,day,month,year);
+												salesRevenueDayLst.add(salesRevenue);
+												DBManager.saveSalesRevenueDay("SalesRevenueDay.txt",salesRevenueDayLst);
+											}
+											SalesRevenueDay.printSalesRevenue(salesRevenue);
+										}
 										break;
-									}								
-								}
-							}
-							//creates a new SalesRevenue entry
-							if(!entryFound)
-							{
-								salesRevenue = SalesRevenue.createSalesRevenue(tempInvoiceLst,month,year);
-								salesRevenueLst.add(salesRevenue);
-								DBManager.saveSalesRevenue("SalesRevenue.txt",salesRevenueLst);
-							}
-							SalesRevenue.printSalesRevenue(salesRevenue);
-						}
-						break;
-						/*List<SalesRevenue> salesRevenueLst = DBManager.readSalesRevenue("src/SalesRevenue.txt");
+								case 2:	do 
+										{
+											System.out.println("Enter Year(YYYY)): ");
+											year = sc.nextInt();
+											System.out.println("Enter Month(MM): ");
+											month = sc.nextInt();
+											validDate = Validation.isSalesRevenueMonthDateValid(year,month);
+											if(!validDate)
+											{
+												System.out.println("Date entered not valid. Please try again.");
+											}
+										} while (!validDate);
+										
+										//Check the invoices of the same Date
+										invoiceLst = DBManager.readInvoice("Invoice.txt");
+										tempInvoiceLst = new ArrayList<Invoice>();
+										for(Invoice invoice: invoiceLst) 
+										{
+											if(month == invoice.getDateTime().getMonthValue() && year == invoice.getDateTime().getYear())
+												tempInvoiceLst.add(invoice);
+										}
+										//Exits loop if there are no invoices in the date
+										if(tempInvoiceLst.size() <= 0)
+										{
+											System.out.println("\nThere were no sales in " + month + "-" + year + ".\n");
+											break;
+										} 
+										else
+										{
+											//Check for existing entry in SalesRevenue
+											salesRevenueMonthLst = DBManager.readSalesRevenueMonth("SalesRevenueMonth.txt");
+											SalesRevenueMonth salesRevenue = new SalesRevenueMonth();
+											if(salesRevenueMonthLst.size() > 0)
+											{
+												for(SalesRevenueMonth salesRev: salesRevenueMonthLst) 
+												{
+													salesRevenueDate = salesRev.getDateYear().split("-");
+													if(Integer.parseInt(salesRevenueDate[0]) == month && Integer.parseInt(salesRevenueDate[1]) == year)
+													{
+														//updates the entry
+														salesRevenue = SalesRevenueMonth.updateSalesRevenue(salesRev, tempInvoiceLst);
+														DBManager.saveSalesRevenueMonth("SalesRevenueMonth.txt", salesRevenueMonthLst);
+														entryFound = true;
+														break;
+													}								
+												}
+											}
+											//creates a new SalesRevenue entry
+											if(!entryFound)
+											{
+												salesRevenue = SalesRevenueMonth.createSalesRevenue(tempInvoiceLst,month,year);
+												salesRevenueMonthLst.add(salesRevenue);
+												DBManager.saveSalesRevenueMonth("SalesRevenueMonth.txt",salesRevenueMonthLst);
+											}
+											SalesRevenueMonth.printSalesRevenue(salesRevenue);
+										}
+									
+										break;
+								case 3: 
+										do{
+											System.out.println("Enter Year(YYYY)): ");
+											year = sc.nextInt();
+											validDate = Validation.isSalesRevenueYearDateValid(year);
+											if(!validDate)
+											{
+												System.out.println("Date entered not valid. Please try again.");
+											}
+										} while (!validDate);
+										invoiceLst = DBManager.readInvoice("Invoice.txt");
+										tempInvoiceLst = new ArrayList<Invoice>();
+										for(Invoice invoice: invoiceLst) 
+										{
+											if(year == invoice.getDateTime().getYear())
+												tempInvoiceLst.add(invoice);
+										}
+										if(tempInvoiceLst.size() <= 0)
+										{
+											System.out.println("There were no sales in " + year);
+											break;
+										} else 
+										{
+											//Check for existing entry in SalesRevenue
+											salesRevenueYearLst = DBManager.readSalesRevenueYear("SalesRevenueYear.txt");
+											SalesRevenueYear salesRevenue = new SalesRevenueYear();
+											if(salesRevenueYearLst.size() > 0)
+											{
+												int tempYear;
+												for(SalesRevenueYear salesRev: salesRevenueYearLst) 
+												{
+													
+													tempYear = salesRev.getYear();
+													if(tempYear == year)
+													{
+														//updates the entry
+														salesRevenue = SalesRevenueYear.updateSalesRevenue(salesRev, tempInvoiceLst);
+														DBManager.saveSalesRevenueYear("SalesRevenueYear.txt", salesRevenueYearLst);
+														entryFound = true;
+														break;
+													}								
+												}
+											}
+											//creates a new SalesRevenue entry
+											if(!entryFound)
+											{
+												salesRevenue = SalesRevenueYear.createSalesRevenue(tempInvoiceLst, year);
+												salesRevenueYearLst.add(salesRevenue);
+												DBManager.saveSalesRevenueYear("SalesRevenueYear.txt",salesRevenueYearLst);
+											}
+											SalesRevenueYear.printSalesRevenue(salesRevenue);
+										}
+										break;
+								default: System.out.println("Invalid input. Please enter again.\n");
+							} 
+						}while(choice < 1 || choice > 3);
 						
-						if(salesRevenueLst.size() <= 0)
-						{
-							System.out.println("There are no orders to bill.");
-							break;
-						}
-						break;*/
 						
-				case 0:
-				
-					break;	
+				case 0: break;
+				default: System.out.println("Invalid input. Please enter again.\n");
 			}
 			
 			

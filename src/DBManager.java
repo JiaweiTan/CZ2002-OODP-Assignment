@@ -382,7 +382,8 @@ public class DBManager {
 					}
 					write(filename,alw);
 			}
-				public static ArrayList readSalesRevenue(String filename) throws IOException {
+				
+			public static ArrayList readSalesRevenueDay(String filename) throws IOException {
 				// read String from text file
 				ArrayList stringArray = (ArrayList)read(filename);
 				ArrayList alr = new ArrayList() ;// to store Professors data
@@ -404,17 +405,63 @@ public class DBManager {
 					        }
 				        }
 						// create Professor object from file data
-						SalesRevenue salesRevenue = new SalesRevenue(dateYear, netSales, invoiceID);
+						SalesRevenueDay salesRevenue = new SalesRevenueDay(dateYear, netSales, invoiceID);
 						alr.add(salesRevenue);
 					}
 					return alr ;
 			}
-			public static void saveSalesRevenue(String filename, List al) throws IOException 
+			public static void saveSalesRevenueDay(String filename, List al) throws IOException 
 			{
 				List alw = new ArrayList() ;// to store Professors data
 
 		        for (int i = 0 ; i < al.size() ; i++) {
-						SalesRevenue salesRevenue = (SalesRevenue)al.get(i);
+						SalesRevenueDay salesRevenue = (SalesRevenueDay)al.get(i);
+						StringBuilder st =  new StringBuilder() ;
+						st.append(salesRevenue.getDate().trim());
+						st.append(SEPARATOR);
+						st.append(salesRevenue.getNetSales());
+						st.append(SEPARATOR);
+						List<Integer> invoiceIDLst = salesRevenue.getInvoiceID();
+						for (int invoiceID: invoiceIDLst)
+							st.append(invoiceID + " ");
+						st.append(SEPARATOR);
+						alw.add(st.toString()) ;
+					}
+					write(filename,alw);
+			}
+			public static ArrayList readSalesRevenueMonth(String filename) throws IOException {
+				// read String from text file
+				ArrayList stringArray = (ArrayList)read(filename);
+				ArrayList alr = new ArrayList() ;// to store Professors data
+
+		        for (int i = 0 ; i < stringArray.size() ; i++) {
+						String st = (String)stringArray.get(i);
+						// get individual 'fields' of the string separated by SEPARATOR
+						StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
+
+						
+						String dateYear = star.nextToken().trim();
+						Double netSales = Double.parseDouble(star.nextToken().trim());
+						String[] invoiceStrArr = star.nextToken().trim().split(" ");
+				        List<Integer> invoiceID = new ArrayList<Integer>();
+				        if(invoiceStrArr != null) {
+					        for (int j = 0; j < invoiceStrArr.length; j++) 
+					        { 
+					        	invoiceID.add(j, Integer.parseInt(invoiceStrArr[j]));
+					        }
+				        }
+						// create Professor object from file data
+						SalesRevenueMonth salesRevenue = new SalesRevenueMonth(dateYear, netSales, invoiceID);
+						alr.add(salesRevenue);
+					}
+					return alr ;
+			}
+			public static void saveSalesRevenueMonth(String filename, List al) throws IOException 
+			{
+				List alw = new ArrayList() ;// to store Professors data
+
+		        for (int i = 0 ; i < al.size() ; i++) {
+						SalesRevenueMonth salesRevenue = (SalesRevenueMonth)al.get(i);
 						StringBuilder st =  new StringBuilder() ;
 						st.append(salesRevenue.getDateYear().trim());
 						st.append(SEPARATOR);
@@ -428,7 +475,53 @@ public class DBManager {
 					}
 					write(filename,alw);
 			}
+			public static ArrayList readSalesRevenueYear(String filename) throws IOException {
+				// read String from text file
+				ArrayList stringArray = (ArrayList)read(filename);
+				ArrayList alr = new ArrayList() ;// to store Professors data
 
+		        for (int i = 0 ; i < stringArray.size() ; i++) {
+						String st = (String)stringArray.get(i);
+						// get individual 'fields' of the string separated by SEPARATOR
+						StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
+
+						
+						int year = Integer.parseInt(star.nextToken().trim());
+						Double netSales = Double.parseDouble(star.nextToken().trim());
+						String[] invoiceStrArr = star.nextToken().trim().split(" ");
+				        List<Integer> invoiceID = new ArrayList<Integer>();
+				        if(invoiceStrArr != null) {
+					        for (int j = 0; j < invoiceStrArr.length; j++) 
+					        { 
+					        	invoiceID.add(j, Integer.parseInt(invoiceStrArr[j]));
+					        }
+				        }
+						// create Professor object from file data
+						SalesRevenueYear salesRevenue = new SalesRevenueYear(year, netSales, invoiceID);
+						alr.add(salesRevenue);
+					}
+					return alr ;
+			}
+			public static void saveSalesRevenueYear(String filename, List al) throws IOException 
+			{
+				List alw = new ArrayList() ;// to store Professors data
+
+		        for (int i = 0 ; i < al.size() ; i++) {
+						SalesRevenueYear salesRevenue = (SalesRevenueYear)al.get(i);
+						StringBuilder st =  new StringBuilder() ;
+						st.append(salesRevenue.getYear());
+						st.append(SEPARATOR);
+						st.append(salesRevenue.getNetSales());
+						st.append(SEPARATOR);
+						List<Integer> invoiceIDLst = salesRevenue.getInvoiceID();
+						for (int invoiceID: invoiceIDLst)
+							st.append(invoiceID + " ");
+						st.append(SEPARATOR);
+						alw.add(st.toString()) ;
+					}
+					write(filename,alw);
+			}
+			
 	// READ items file
 	/*
 	 * public static ArrayList readItems(String filename) throws IOException { //
