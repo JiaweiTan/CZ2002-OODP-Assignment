@@ -10,22 +10,22 @@ import java.util.Scanner;
 
 /** skeleton of all the functions*/
 
-public class MenuApp{
+public class MenuApp {
 	
 	public static void main(String[] args) throws IOException {
 		int choice = 0;
 		MenuFunc menuFunc = new MenuFunc();
-		
+		EditRecord editRecord = new EditRecord();
 		Scanner sc = new Scanner(System.in);
 		
-		BufferedWriter bw = new BufferedWriter(new FileWriter("input.txt"));
+		//BufferedWriter bw = new BufferedWriter(new FileWriter("input.txt"));
 
 		do {
 			System.out.println("Perform the following methods:");
-			System.out.println("1: Create a new menu item. ");
+			System.out.println("1: Create a new menu item. working ");
 			System.out.println("2: Update a menu item. ");
 			System.out.println("3: Delete a menu item. ");
-			System.out.println("4: Display the full menu. ");
+			System.out.println("4: Display the full menu. working ");
 			System.out.println("5: Back");
 			System.out.print("Please enter your choice : ");
 			
@@ -33,10 +33,10 @@ public class MenuApp{
 			
 			switch (choice) {
 			case 1: 
-				System.out.print("Enter foodID to create from :");
+				/**System.out.print("Enter foodID to create from :");
 				int foodID1 = sc.nextInt();
-				sc.nextLine();
-				menuFunc.createMenu(foodID1);
+				sc.nextLine(); */
+				menuFunc.createMenu();
 				break;
 				
 			case 2: 
@@ -44,9 +44,9 @@ public class MenuApp{
 				break;
 				
 			case 3:
-				System.out.print("Enter foodID to delete from : ");
-				int foodID2 = sc.nextInt();
-				menuFunc.deleteMenu(foodID2);
+				/**System.out.print("Enter foodID to delete from : ");
+				int foodID2 = sc.nextInt();*/
+				menuFunc.deleteMenu();
 				break; 
 			
 			case 4:
@@ -59,7 +59,6 @@ public class MenuApp{
 			default:
 				System.out.println("Invalid input. Please enter again.\n");
 			}
-			
 		 } while (choice < 5);
 	
 	}
