@@ -22,10 +22,10 @@ public class MenuApp {
 
 		do {
 			System.out.println("Perform the following methods:");
-			System.out.println("1: Create a new menu item. working ");
+			System.out.println("1: Create a new menu item.");
 			System.out.println("2: Update a menu item. ");
 			System.out.println("3: Delete a menu item. ");
-			System.out.println("4: Display the full menu. working ");
+			System.out.println("4: Display the full menu.");
 			System.out.println("5: Back");
 			System.out.print("Please enter your choice : ");
 			
@@ -54,12 +54,15 @@ public class MenuApp {
 				break;
 				
 			case 5: 
-				break;
+				PromoSetApp.main();
 			
 			default:
-				System.out.println("Invalid input. Please enter again.\n");
+		    	System.out.println("=========================================================");
+				System.out.println("\tInvalid input. Please enter again!");
+		    	System.out.println("=========================================================");
+
 			}
-		 } while (choice < 5);
+		 } while (choice < 5 || choice >5);
 	
 	}
 }
