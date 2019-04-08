@@ -42,6 +42,7 @@ public class ReservationApp {
 			System.out.print("Enter session (AM/PM): ");
 			String resSession = sc.nextLine();
 			//Validate Session
+			resSession=	resSession.toUpperCase();
 			while(!(resSession.equals("AM") || resSession.equals("PM"))) {
 				System.out.println();
 				System.out.println("Invalid session, please key in a new session");

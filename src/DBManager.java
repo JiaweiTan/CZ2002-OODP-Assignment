@@ -878,6 +878,13 @@ public class DBManager {
 					System.out.println("Contact");
 					System.out.print("New value:");
 					String newContact = sc.nextLine();
+					
+					while(!(newContact.matches("^[0-9]*$") && newContact.length() >= 8)) {
+						System.out.println();
+						System.out.println("Invalid input, please key numbers & no less than 8 digits");
+						System.out.print("Enter contact: ");
+						newContact = sc.nextLine();
+					}
 					staffloop.setContact(newContact);
 					System.out.println("Contact has been updated: "+newContact);
 				}
@@ -900,6 +907,14 @@ public class DBManager {
 					System.out.println("Shift");
 					System.out.print("New value:");
 					String newShift = sc.nextLine();
+					newShift = newShift.toUpperCase();
+					//Validate Session
+					while(!(newShift.equals("AM") || newShift.equals("PM"))) {
+						System.out.println();
+						System.out.println("Invalid session, please key in a new session");
+						System.out.print("Session Format (AM/PM): ");
+						newShift = sc.nextLine();
+					}
 					staffloop.setShift(newShift);
 					System.out.println("Shift has been updated: "+newShift);
 					

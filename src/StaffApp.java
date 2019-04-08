@@ -41,10 +41,24 @@ public class StaffApp {
 			String tempName = sc.nextLine();
 
 			System.out.print("Gender(M/F):");
-			char tempGender = sc.next().charAt(0); sc.nextLine();
+			char tempGender = sc.next().toUpperCase().charAt(0); sc.nextLine();
+			
+			while(!(tempGender=='M' || tempGender=='F')) {
+				System.out.println();
+				System.out.println("Invalid input, please key in a new input");
+				System.out.print("Gender Format (M/F): ");
+				tempGender = sc.next().charAt(0); sc.nextLine();
+			}
+			
 
 			System.out.print("Contact:");
 			String tempContact = sc.nextLine();
+			while(!(tempContact.matches("^[0-9]*$") && tempContact.length() >= 8)) {
+				System.out.println();
+				System.out.println("Invalid input, please key numbers & no less than 8 digits");
+				System.out.print("Enter contact: ");
+				tempContact = sc.nextLine();
+			}
 			
 			System.out.print("Email:");
 			String tempEmail = sc.nextLine();
@@ -54,6 +68,15 @@ public class StaffApp {
 
 			System.out.print("Shift(AM/PM):");
 			String tempShift = sc.nextLine();
+			tempShift=tempShift.toUpperCase();
+			//Validate Session
+			while(!(tempShift.equals("AM") || tempShift.equals("PM"))) {
+				System.out.println();
+				System.out.println("Invalid session, please key in a new session");
+				System.out.print("Session Format (AM/PM): ");
+				tempShift = sc.nextLine();
+			}
+			
 
 			System.out.print("Job Title:");
 			String tempJobTitle = sc.nextLine();
