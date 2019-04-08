@@ -1,4 +1,5 @@
 //package rrpss;
+
 import java.io.IOException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -119,7 +120,7 @@ public class MenuFunc extends MenuApp {
 		int cont;
 		
 		System.out.println("=================================");
-        System.out.println("\t Creating Menu Item");
+        	System.out.println("\t Creating Menu Item");
 		System.out.println("=================================");
 		
 		int food_ID = indexCounter;
@@ -148,8 +149,8 @@ public class MenuFunc extends MenuApp {
 			//checks if another input is going to be required else breaks
 			
 			System.out.println("=========================================================");
-	        System.out.println("\t Item has been created successfully");
-	    	System.out.println("=========================================================");
+	       		System.out.println("\t Item has been created successfully");
+	    		System.out.println("=========================================================");
 			System.out.println("The following item has been created:");
 			System.out.println("Food ID:     " + food_ID);
 			System.out.println("Name:        " + food_name);
@@ -350,7 +351,7 @@ public class MenuFunc extends MenuApp {
 
 		public static int updateItemQuota (int itemId, int addDel) throws IOException {
 			
-			String filepath = "OutputMenu.txt";
+			String filepath = "outputMenu.txt";
 			List<Menu> mnLst = getMenu(filepath);
 			
 			for(Menu mn: mnLst) {
@@ -393,3 +394,4 @@ public class MenuFunc extends MenuApp {
 			return 0;
 		}
 }
+
