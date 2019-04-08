@@ -14,73 +14,64 @@ import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 
 public class MenuFunc extends MenuApp {
+	
+	Scanner sc = new Scanner(System.in);
 	Scanner sc = new Scanner(System.in);
 		
-	public void displayMenu()  {
-    	String filepath = "menuRecord.txt";
-    	
-        File file = new File(filepath);
-        if (file.length() == 0) {
-			System.out.println("=================================");
-            System.out.println("File is empty, please add items into the Menu");
-			System.out.println("=================================");
-        }else {
-    		getMenu(filepath);
-        }
-
-}
-
+	public static void displayMenu()  {
+    	MenuFunc menuFunc = new MenuFunc();
+    	String filename = "OutputMenu.txt" ;
+		try {
+			// read file containing Professor records.
+			ArrayList al = MenuFunc.getMenu(filename) ;
+			for (int i = 0 ; i < al.size() ; i++) {
+					Menu menuItems = (Menu)al.get(i);
+					System.out.print((i+1) +". ID:" + menuItems.getFoodID() );
+					System.out.print("  Dish:" + menuItems.getFoodName() );
+					System.out.print("  Type:" + menuItems.getFoodType() );
+					System.out.print("  Price:$" + menuItems.getFoodPrice() );
+					System.out.print("  Description:" + menuItems.getFoodDesc() );
+					System.out.print("  Quantity sold per day:" + menuItems.getFoodQuota() );
+					System.out.println("");
+			}
+		}catch (IOException e) {
+			System.out.println("IOException > " + e.getMessage());
+		}
+  }
+	
 	public static final String SEPARATOR = "|";
 	String filename = "OutputMenu.txt";
 	
     // getMenu()
-	public static void getMenu(String filepath)
-	{
-		Scanner scan = new Scanner(filepath);
-		String foodID = ""; String foodName = ""; String foodType = "";
-		String foodPrice = ""; String foodDesc = ""; String foodQuota = "";
-		
-    	System.out.println("===================================================================================================================================");
-		System.out.println("\t\t\t\t\t\t Displaying all items");
-    	System.out.println("===================================================================================================================================");
-		System.out.printf("%5s %10s %25s %10s %15s %45s %10s", "Index", "Food ID", "Name", "Price", "Type", "Description", "Quota");
-    	System.out.println("");
-    	
-    	int index = 1;
+	public static ArrayList getMenu(String filename) throws IOException {
+		// read String from text file
+		ArrayList stringArray = (ArrayList)read(filename);
+		ArrayList alr = new ArrayList() ;// to store Professors data
 
-		try 
-		{
-			scan = new Scanner(new File(filepath));
-			scan.useDelimiter("[|\n]");
-			
-			while (scan.hasNext()) {
-				foodID = scan.next();
-				foodName = scan.next();
-				foodPrice = scan.next();
-				foodType = scan.next();
-				foodDesc = scan.next();
-				foodQuota = scan.next();
+        for (int i = 0 ; i < stringArray.size() ; i++) {
+				String st = (String)stringArray.get(i);
 				
+				// get individual 'fields' of the string separated by SEPARATOR
+				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
+
+				//edit this part 
+				int foodID = Integer.parseInt(star.nextToken().trim());	// first token
+				String foodName = star.nextToken().trim();	// second token
+				String foodType = star.nextToken().trim();	// third token
+				int foodPrice = Integer.parseInt(star.nextToken().trim());	// fourth token
+				String foodDesc = star.nextToken().trim();	// fifth token
+				int foodQuota = Integer.parseInt(star.nextToken().trim());	// sixth token
 				
-				System.out.format("%1s %11s %28s %10s %15s %45s %11s", index, foodID, foodName,foodType,foodPrice, foodDesc, foodQuota);
-					index++;
-					System.out.println();
+				// create menu object from file data
+				Menu menuItems = new Menu(foodID, foodName,foodType, foodPrice, foodDesc, foodQuota);
 				
-					//System.out.print(foodID+"|"+foodName+"|"+foodType+"|"+foodPrice+"|"+foodDesc+"|"+foodQuota);
+				// add to Menu list
+				alr.add(menuItems) ;
 			}
-			scan.close();
-		}
-		catch(Exception e) {
-		JOptionPane.showMessageDialog(null,"Error");
-		}
-		
-    	System.out.println("===================================================================================================================================");
-		System.out.println("\t\t\t\t\t\t All items have been displayed!");
-    	System.out.println("===================================================================================================================================");
-
+			return alr ;
 	}
-	
-	 /** Read the contents of the given file. 
+
+	 /** Read the contents of the given file. */
 	public static List read(String fileName) throws IOException {
 			List data = new ArrayList() ;
 		    Scanner scanner = new Scanner(new FileInputStream(fileName));
@@ -94,7 +85,7 @@ public class MenuFunc extends MenuApp {
 		    }
 		    return data;
 		  }
-		  */
+
 
 	public static void createMenu() throws IOException 
 	{
