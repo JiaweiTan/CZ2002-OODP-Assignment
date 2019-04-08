@@ -16,60 +16,71 @@ import javax.swing.JOptionPane;
 public class MenuFunc extends MenuApp {
 	Scanner sc = new Scanner(System.in);
 		
-	public static void displayMenu()  {
-    	MenuFunc menuFunc = new MenuFunc();
-    	String filename = "OutputMenu.txt" ;
-		try {
-			// read file containing Professor records.
-			ArrayList al = MenuFunc.getMenu(filename) ;
-			for (int i = 0 ; i < al.size() ; i++) {
-					Menu menuItems = (Menu)al.get(i);
-					System.out.print((i+1) +". ID:" + menuItems.getFoodID() );
-					System.out.print("  Dish:" + menuItems.getFoodName() );
-					System.out.print("  Type:" + menuItems.getFoodType() );
-					System.out.print("  Price:$" + menuItems.getFoodPrice() );
-					System.out.print("  Description:" + menuItems.getFoodDesc() );
-					System.out.print("  Quantity sold per day:" + menuItems.getFoodQuota() );
-					System.out.println("");
-			}
-		}catch (IOException e) {
-			System.out.println("IOException > " + e.getMessage());
-		}
-  }
-	
+	public void displayMenu()  {
+    	String filepath = "menuRecord.txt";
+    	
+        File file = new File(filepath);
+        if (file.length() == 0) {
+			System.out.println("=================================");
+            System.out.println("File is empty, please add items into the Menu");
+			System.out.println("=================================");
+        }else {
+    		getMenu(filepath);
+        }
+
+}
+
 	public static final String SEPARATOR = "|";
 	String filename = "OutputMenu.txt";
 	
     // getMenu()
-	public static ArrayList getMenu(String filename) throws IOException {
-		// read String from text file
-		ArrayList stringArray = (ArrayList)read(filename);
-		ArrayList alr = new ArrayList() ;// to store Professors data
+	public static void getMenu(String filepath)
+	{
+		Scanner scan = new Scanner(filepath);
+		String foodID = ""; String foodName = ""; String foodType = "";
+		String foodPrice = ""; String foodDesc = ""; String foodQuota = "";
+		
+    	System.out.println("===================================================================================================================================");
+		System.out.println("\t\t\t\t\t\t Displaying all items");
+    	System.out.println("===================================================================================================================================");
+		System.out.printf("%5s %10s %25s %10s %15s %45s %10s", "Index", "Food ID", "Name", "Price", "Type", "Description", "Quota");
+    	System.out.println("");
+    	
+    	int index = 1;
 
-        for (int i = 0 ; i < stringArray.size() ; i++) {
-				String st = (String)stringArray.get(i);
+		try 
+		{
+			scan = new Scanner(new File(filepath));
+			scan.useDelimiter("[|\n]");
+			
+			while (scan.hasNext()) {
+				foodID = scan.next();
+				foodName = scan.next();
+				foodPrice = scan.next();
+				foodType = scan.next();
+				foodDesc = scan.next();
+				foodQuota = scan.next();
 				
-				// get individual 'fields' of the string separated by SEPARATOR
-				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
-
-				//edit this part 
-				int foodID = Integer.parseInt(star.nextToken().trim());	// first token
-				String foodName = star.nextToken().trim();	// second token
-				String foodType = star.nextToken().trim();	// third token
-				int foodPrice = Integer.parseInt(star.nextToken().trim());	// fourth token
-				String foodDesc = star.nextToken().trim();	// fifth token
-				int foodQuota = Integer.parseInt(star.nextToken().trim());	// sixth token
 				
-				// create menu object from file data
-				Menu menuItems = new Menu(foodID, foodName,foodType, foodPrice, foodDesc, foodQuota);
+				System.out.format("%1s %11s %28s %10s %15s %45s %11s", index, foodID, foodName,foodType,foodPrice, foodDesc, foodQuota);
+					index++;
+					System.out.println();
 				
-				// add to Menu list
-				alr.add(menuItems) ;
+					//System.out.print(foodID+"|"+foodName+"|"+foodType+"|"+foodPrice+"|"+foodDesc+"|"+foodQuota);
 			}
-			return alr ;
-	}
+			scan.close();
+		}
+		catch(Exception e) {
+		JOptionPane.showMessageDialog(null,"Error");
+		}
+		
+    	System.out.println("===================================================================================================================================");
+		System.out.println("\t\t\t\t\t\t All items have been displayed!");
+    	System.out.println("===================================================================================================================================");
 
-	 /** Read the contents of the given file. */
+	}
+	
+	 /** Read the contents of the given file. 
 	public static List read(String fileName) throws IOException {
 			List data = new ArrayList() ;
 		    Scanner scanner = new Scanner(new FileInputStream(fileName));
@@ -83,179 +94,220 @@ public class MenuFunc extends MenuApp {
 		    }
 		    return data;
 		  }
+		  */
 
-		public static void createMenu(int foodID) throws IOException {
+	public static void createMenu() throws IOException 
+	{
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("=================================");
+       		System.out.println("\t Creating Menu Item");
+		System.out.println("=================================");
+		
+		System.out.print("Enter the ID of the item: ");
+		int food_ID = sc.nextInt(); sc.nextLine(); //must do
+		
+		System.out.print("Enter the name of the item: ");
+		String food_name = sc.nextLine();
+		
+		System.out.print("Enter the price of the item: ");
+		double food_price = sc.nextInt(); sc.nextLine(); //must do
+		
+		System.out.print("Enter the type of the item: ");
+		String food_type = sc.nextLine();
+		
+		System.out.print("Enter the description of the item: ");
+		String food_desc = sc.nextLine();
+		
+		
+		System.out.print("Enter the quota of the item: ");
+		int food_quota = sc.nextInt(); sc.nextLine(); //must do
+		
+		String filepath = "menuRecord.txt";
+		
+		saveRecord(food_ID, food_name, food_price, food_type, food_desc, food_quota, filepath);
+		
+	}
+	
+	public static void saveRecord(int food_ID, String food_name, double food_price,String food_type,String food_desc,int food_quota, String filepath) throws IOException
+	{
+		Scanner sc = new Scanner(System.in);
+		int cont;
+
+		try {
+			FileWriter writer = new FileWriter(filepath,true);
+			BufferedWriter bw = new BufferedWriter(writer);
+			PrintWriter pw = new PrintWriter(bw);
 			
-			File file = new File("OutputMenu.txt");
-			FileWriter writer = new FileWriter("OutputMenu.txt",true);
-			BufferedWriter bwriter = new BufferedWriter(writer);
-			Scanner sc = new Scanner(System.in);
-			int cont;
+			pw.println(food_ID+"|"+ food_name+"|"+ food_type+"|"+ food_price+"|"+ food_desc+"|"+ food_quota);
+			pw.flush();
+			pw.close();
 			
-			do {
-			System.out.print("Enter the name of the item: ");
-			String food_name = sc.nextLine();
-			
-			System.out.print("Enter the price of the item: ");
-			int food_price = sc.nextInt();
-			sc.nextLine(); //must do 
-			
-			System.out.print("Enter the type of the item: ");
-			String food_type = sc.nextLine();
-			
-			System.out.print("Enter the description of the item: ");
-			String food_desc = sc.nextLine();
-			
-			
-			System.out.print("Enter the quota of the item: ");
-			int food_quota = sc.nextInt();
-			sc.nextLine();
-			
-			System.out.println("\nThe following item has been created: \nItemID|Name|Type|Price|Desc|Quota\n" + foodID +"|"+ food_name +"|"+ food_price +"|"+ food_type +"|"+ food_desc +"|"+ food_quota+ "\n");
-			bwriter.write(foodID +"|"+ food_name +"|"+ food_type +"|"+ food_price +"|"+ food_desc +"|"+ food_quota);
-			bwriter.newLine();
-			//checks if another input is going to be required else breaks
+			System.out.println("=========================================================");
+	        System.out.println("\t Item has been created successfully");
+	    	System.out.println("=========================================================");
+			System.out.println("The following item has been created:");
+			System.out.println("Food ID:     " + food_ID);
+			System.out.println("Name:        " + food_name);
+			System.out.println("Type:        " + food_type);
+			System.out.println("Price:      $" + food_price);
+			System.out.println("Description: " + food_desc);
+			System.out.println("Quota:       " + food_quota);
+			System.out.println("=========================================================");
 			
 			System.out.print("Do you want to write in more information? (Y-1/N-0): ");
 			cont = sc.nextInt();
-			sc.nextLine(); //must do 
+			sc.nextLine(); //must do
 			
-			}while(cont != 0);
+			if (cont == 1) {
+				createMenu();
+			}
 			
-			System.out.print("--------- Main Menu --------\n");
-			bwriter.close();
-			writer.close();
 		}
-		
-		//3. deletes an item
-		public void deleteMenu(int foodID2) {
-			String filepath = "OutputMenu.txt";
-			String removeTerm = Integer.toString(foodID2);
-			
-			removeRecord(filepath, removeTerm);
+		catch(Exception E) {
+			JOptionPane.showConfirmDialog(null, "Record not saved message");
 		}
+	}
 		
-		private static Scanner scan;
+	//3. deletes an item
+	public void deleteMenu() throws IOException {
 		
-		public static void removeRecord(String filepath, String removeTerm) {
-			String tempFile = "temp.txt";
-			File oldFile = new File(filepath);
-			File newFile = new File(tempFile);
-			String ID = ""; String name = ""; String type =""; String price = ""; String desc = ""; String quota ="";
-			
-			try {
-				FileWriter fw = new FileWriter(tempFile,true);
-				BufferedWriter bw = new BufferedWriter(fw);
-				PrintWriter pw = new PrintWriter(bw);
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter the term to remove of the item: ");
+		String removeTerm = sc.nextLine();
+		String removeTerm = "6009";
+		removeRecord(filepath,removeTerm);
+	}
+		
+	public static void removeRecord(String filepath, String removeTerm) throws IOException {
+		String tempFile = "temp.txt";
+		
+		File oldFile = new File(filepath); //original file is made old
+		File newFile = new File(tempFile); //temp file is made new
+		Scanner checker;
+		
+		String ID = ""; String name = ""; String type =""; 
+		String price = ""; String desc = ""; String quota ="";
+
+		try {
+			FileWriter fw = new FileWriter(tempFile,true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			PrintWriter pw = new PrintWriter(bw);
 				
-				scan = new Scanner(new File(filepath));//reads the file
-				scan.useDelimiter("[|\n]");
+			checker = new Scanner(new File(filepath));//reads the file
+			checker.useDelimiter("[|\n]");
 				
-				while (scan.hasNext()) {
-					ID = scan.next();
-					name = scan.next();
-					type = scan.next();
-					price = scan.next();
-					desc = scan.next();
-					quota = scan.next();
+			while (checker.hasNext()) {
+				ID = checker.next();
+				name = checker.next();
+				type = checker.next();
+				price = checker.next();
+				desc = checker.next();
+				quota = checker.next();
 					
-					if (!ID.equals(removeTerm)) {
-						pw.println(ID+"|"+name+"|"+type+"|"+price+"|"+desc+"|"+quota);
-					}
+				if (!ID.equals(removeTerm)) {
+					pw.println(ID + "|"+name+"|"+type+"|"+price+"|"+desc+"|"+quota);
+				}else {
+					System.out.println(ID + "|"+name+"|"+type+"|"+price+"|"+desc+"|"+quota);
 				}
-				
-				scan.close();
-				pw.flush();
-				pw.close();
-				oldFile.delete();
-				File dump = new File(filepath);
-				newFile.renameTo(dump);
-				
-				System.out.println("---- Item has been deleted! ----");
 			}
-			catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "Error");
-			}
+					
+			pw.flush();
+			pw.close();
+			checker.close();
+			oldFile.delete();
+			File dump = new File(filepath);
+			newFile.renameTo(dump);
+
+			System.out.println("=========================================================");
+		    System.out.println("\t Item has been deleted successfully");
+		    System.out.println("=========================================================");
+		
 		}
-		
-		//2. updates an item
-		public void updateMenu() {
-			
-			String filepath = "OutputMenu.txt";
-			
-			System.out.println("Enter the ID of the items to be updated: ");
-			String editTerm = sc.nextLine();
-			
-			System.out.println("Enter the new ID: ");
-			String newID = sc.nextLine();
-			
-			System.out.println("Enter the Name: ");
-			String newName = sc.nextLine();
-			
-			System.out.println("Enter the Type: ");
-			String newType = sc.nextLine();
-			
-			System.out.println("Enter the Price");
-			String newPrice = sc.nextLine();
-			
-			System.out.println("Enter the Description: ");
-			String newDesc = sc.nextLine();
-			
-			System.out.println("Enter the Quota");
-			String newQuota = sc.nextLine();
-			
-			editRecord(filepath, editTerm, newID, newName, newType, newPrice, newDesc, newQuota);
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error");
 		}
+	}
 		
-		public static void editRecord(String filepath,String editTerm,String newID,String newName,String newType,String newPrice, String newDesc, String newQuota) {
-			
-			String tempFile = "temp.txt";
-			File oldFile = new File(filepath);
-			File newFile = new File(tempFile);
-			String ID = ""; String name = ""; String type =""; String price = ""; String desc = ""; String quota ="";
+	public void updateMenu(){
+		String filepath = "menuRecord.txt";
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Enter the targetID of the item: ");
+		String targetTerm = sc.nextLine();
 		
-			try
-			{
+		System.out.print("Enter the name of the item: ");
+		String newName = sc.nextLine();
+		
+		System.out.print("Enter the type of the item: ");
+		String newType = sc.nextLine();
+		
+		System.out.print("Enter the price of the item: ");
+		String newPrice = sc.nextLine();
+		
+		System.out.print("Enter the description of the item: ");
+		String newDesc = sc.nextLine();
+		
+		System.out.print("Enter the quota of the item: ");
+		String newQuota = sc.nextLine();
+		
+		System.out.print("Enter the ID of the item: ");
+		String newID = sc.nextLine();
+
+		editRecord (filepath, targetTerm, newID, newType,newName,newPrice, newDesc, newQuota);
+	}
+
+	
+	public static void editRecord(String filepath, String targetTerm, String newID, String newName, String newType, String newPrice, String newDesc, String newQuota){
+		String tempFile = "temp.txt";
+		File oldFile = new File (filepath);
+		File newFile = new File (tempFile);
+		Scanner check;
+		
+		String ID = ""; String name = ""; String type = ""; String price =""; String desc =""; String quota="";
+		
+		try{
 				FileWriter fw = new FileWriter(tempFile,true);
 				BufferedWriter bw = new BufferedWriter(fw);
 				PrintWriter pw = new PrintWriter(bw);
-				
-				scan = new Scanner(new File(filepath));//reads the file
-				scan.useDelimiter("[|\n]");
-				
-				while (scan.hasNext()) {
-					ID = scan.next();
-					name = scan.next();
-					type = scan.next();
-					price = scan.next();
-					desc = scan.next();
-					quota = scan.next();
 					
-					if (!ID.equals(editTerm)) {
+				check = new Scanner(new File(filepath));//reads the file
+				check.useDelimiter("[|\n]"); 
+				
+				while (check.hasNext()) {
+					ID = check.next();
+					name = check.next();
+					type = check.next();
+					price = check.next();
+					desc = check.next();
+					quota = check.next();
 						
-						pw.println(ID+"|"+name+"|"+type+"|"+price+"|"+desc+"|"+quota);
+					if (ID.equals(targetTerm)){ 
+						pw.println(newID + "|"+newName+"|"+newType + "|"+newPrice+ "|"+ newDesc+ "|"+newQuota);
+					}else{
+						pw.println(ID + "|"+name+"|"+type+"|"+price+ "|"+desc+ "|"+quota);
 					}
-					else
-					{
-						pw.println(newID+"|"+newName+"|"+newType+"|"+newPrice+"|"+newDesc+"|"+newQuota);
-			
-					}
+						
 				}
-				scan.close();
-				pw.flush();
-				pw.close();
-				oldFile.delete();
-				File dump = new File(filepath);
-				newFile.renameTo(dump);
-				
-				System.out.println("---- Item has been updated! ----");
-			}
-			catch(Exception e)
-			{
-				JOptionPane.showMessageDialog(null, "Error");
-			}
-		}
-		
+					check.close();
+					pw.flush();
+					pw.close();
+					oldFile.delete();
+					File dump = new File(filepath);
+					newFile.renameTo(dump);
+					System.out.println("=========================================================");
+			        System.out.println("\t Item has been edited successfully");
+			    	System.out.println("=========================================================");
+
+				}
+				catch (Exception e) {
+					System.out.println("=========================================================");
+					JOptionPane.showMessageDialog(null, "\tItem was not able to update");
+					System.out.println("=========================================================");
+				}
+	}
+}
+
 		public static int updateItemQuota (int itemId, int addDel) throws IOException {
 			
 			String filepath = "OutputMenu.txt";
