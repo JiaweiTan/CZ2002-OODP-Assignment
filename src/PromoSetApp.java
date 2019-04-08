@@ -38,22 +38,28 @@ public class PromoSetApp {
 			System.out.println("\tCreating Promotion Set");
 			System.out.println("=================================");
 
-			System.out.print("Promotion set ID:");
-			System.out.print(promo.SystemGeneratedID(filename));		
-			System.out.println();
+		//	System.out.print("Promotion set ID:");
+		//  System.out.print(promo.SystemGeneratedID(filename));		
+		//	System.out.println();
 
 			System.out.print("Name:");
 			String tempName = sc.nextLine();
 
-			System.out.println("Item ID:");
-			System.out.println("Note: Use comma to separate id e.g 1001,2002,3003");
-			String tempItemID = sc.nextLine();
+			System.out.println("Item ID (Enter 0 to move next):");
+			int tempItemID = sc.nextInt();sc.nextLine();
 			ArrayList<Integer> tempItemIDList = new ArrayList<Integer>();
-			String str[] = tempItemID.split(",");
-			for (int i = 0; i < str.length; i++) {
-				tempItemIDList.add(Integer.parseInt(str[i]));
+			while(tempItemID!=0)
+			{
+				if(inputValidation.itemExistsDB(tempItemID)==1) {
+				tempItemIDList.add(tempItemID);
+				}
+				else
+				{
+					System.out.println("Invalid value");	
+				}
+				System.out.println("Item ID (Enter 0 to move next):");
+				tempItemID = sc.nextInt();sc.nextLine();
 			}
-
 			System.out.print("Price:");
 			double tempPrice = sc.nextDouble();
 			sc.nextLine();
@@ -79,10 +85,23 @@ public class PromoSetApp {
 			System.out.print("Quota:");
 			int tempQuota = sc.nextInt();
 			sc.nextLine();
+			PromoSet newitem	= new PromoSet(promo.SystemGeneratedID(filename), tempName, tempItemIDList, tempPrice, tempStartDate,tempEndDate, tempQuota);
+			promo.addPromoItems(newitem);
 			
-			promo.addPromoItems(new PromoSet(promo.SystemGeneratedID(filename), tempName, tempItemIDList, tempPrice, tempStartDate,
-					tempEndDate, tempQuota));
 			
+			System.out.println();
+			System.out.println("=========================================================");
+			System.out.println("\t     Promotion set successfully created! ");
+			System.out.println("=========================================================");
+			System.out.println("PromoSet ID: " + newitem.getPromoSetId());
+			System.out.println("Name: " + newitem.getName());
+			System.out.println("PromoSet Item List: " + newitem.getItemId());
+			System.out.println("Price: " + newitem.getPrice());
+			System.out.println("Start Data: " + newitem.getStartDate());
+			System.out.println("End Date: " + newitem.getEndDate());
+			System.out.println("Quota: " + newitem.getQuota());
+			System.out.println("=========================================================");
+			System.out.println();
 
 			PromoSetApp.main();
 			break;
@@ -168,21 +187,21 @@ public class PromoSetApp {
 			
 			resItem = promo.readPromoInfo(filename);
 			System.out.println(
-					"-------------------------------------------------------------------------------------------------------------------------------");
-			System.out.printf("%5s %10s %30s %40s %15s %15s %5s", "Index", "PromoSet ID", "Name", "PromoSet Item List",
+					"-----------------------------------------------------------------------------------------------------------------------------------------------");
+			System.out.printf("%5s %10s %30s %40s %15s %15s %15s %5s", "Index", "PromoSet ID", "Name","PromoSet Item List","Price", 
 					"Start Data", "End Date", "Quota");
 			System.out.println();
 			int index = 1;
 			for (PromoSet g : resItem) {
 
-				System.out.format("%5s %10s %30s %40s %15s %15s %5s", index, g.getPromoSetId(), g.getName(),
-						g.getItemId(), g.getEndDate(), g.getEndDate(), g.getQuota());
+				System.out.format("%5s %10s %30s %40s %15s %15s %15s %5s", index, g.getPromoSetId(), g.getName(),
+						g.getItemId(),g.getPrice(), g.getEndDate(), g.getEndDate(), g.getQuota());
 				index++;
 				System.out.println();
 
 			}
 			System.out.println(
-					"-------------------------------------------------------------------------------------------------------------------------------");
+					"-----------------------------------------------------------------------------------------------------------------------------------------------");
 			PromoSetApp.main();
 			break;
 

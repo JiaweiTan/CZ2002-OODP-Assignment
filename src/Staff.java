@@ -58,7 +58,17 @@ public class Staff extends Person {
 	public void remove(int removeID) throws IOException {
 		// TODO Auto-generated method stub
 		DBManager db = new DBManager();
-		db.deleteStaff(removeID);
+		
+		Validation v= new Validation();
+		if(v.staffExistsDB(removeID)==1)
+		{
+			db.deleteStaff(removeID);
+			System.out.println("Delete successfully");
+		}
+		else
+		{
+			System.out.println("Delete unsuccessfully");
+		}
 	}
 	public ArrayList<Staff> readStaffInfo(String filename) throws IOException {
 		// TODO Auto-generated method stub
@@ -71,7 +81,7 @@ public class Staff extends Person {
 		if(staffList.size()>0)
 			return staffList.get(staffList.size()-1).getID() + 1;
 		else
-			return 1001;
+			return 8001;
 	}
 	
 

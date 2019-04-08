@@ -97,7 +97,17 @@ public class PromoSet {
 	public void remove(int removeID) throws IOException {
 		// TODO Auto-generated method stub
 		DBManager db = new DBManager();
-		db.deletePromoSet(removeID);
+		Validation v= new Validation();
+		if(v.promoSetExistsDB(removeID)==1)
+		{
+			db.deletePromoSet(removeID);
+			System.out.println("Delete successfully");
+		}
+		else
+		{
+			System.out.println("Delete unsuccessfully");
+		}
+		
 	}
 
 	public ArrayList<PromoSet> readPromoInfo(String filename) throws IOException {
@@ -111,7 +121,7 @@ public class PromoSet {
 		if(PromoSetList.size()>0)
 			return PromoSetList.get(PromoSetList.size()-1).getPromoSetId() + 1;
 		else
-			return 1001;
+			return 7001;
 	}
 
 

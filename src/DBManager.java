@@ -556,20 +556,44 @@ public class DBManager {
 					switch (input) {
 
 					case 1:
-						System.out.print("New item:");
-						int  newItem = sc.nextInt();
-						sc.nextLine();
-						tempList.add(newItem);
+						System.out.println("Item ID (Enter 0 to move next):");
+						Validation inputValidation= new Validation();
+						int tempItemID = sc.nextInt();sc.nextLine();
+						ArrayList<Integer> tempItemIDList = new ArrayList<Integer>();
+						ArrayList<Integer> temp = new ArrayList<Integer>();
+						while(tempItemID!=0)
+						{
+							if(inputValidation.itemExistsDB(tempItemID)==1) {
+								tempList.add(tempItemID);
+								temp.add(tempItemID);
+							}
+							else
+							{
+								System.out.println("Invalid value");	
+							}
+							System.out.println("Item ID (Enter 0 to move next):");
+							tempItemID = sc.nextInt();sc.nextLine();
+						}
+						if(temp.size()!=0)
+						{
+							System.out.println("Promotion set menu:"+temp+" have been added");	
+						}
+						
 						break;
 						
 					case 2:
-						System.out.print("Input the Id to remove:");
+						System.out.print("Input the ID to remove:");
 						int  currentitem = sc.nextInt();
 						sc.nextLine();
 						for(int cur = 0; cur < tempList.size(); cur++) {
 						if(tempList.get(cur)==currentitem)
 						{
 							tempList.remove(cur);
+							System.out.println("ID: "+currentitem+" has been removed");	
+						}
+						else
+						{
+							System.out.println("Invalid ID");	
 						}
 						
 						}
@@ -587,6 +611,7 @@ public class DBManager {
 					double newPrice = sc.nextDouble();
 					sc.nextLine();
 					promoSetloop.setPrice(newPrice);
+					System.out.println("Price has been updated: "+newPrice);	
 				} else if (i == 4) {
 					
 					System.out.println("Start date Formate:DD/MM/YYYY");
@@ -600,10 +625,11 @@ public class DBManager {
 						newStartDate = sc.nextLine();
 					}
 					promoSetloop.setStartDate(newStartDate);
+					System.out.println("Start Date has been updated: "+newStartDate);	
 				} else if (i == 5) {
 					
 					
-					System.out.println("End date Formate:DD/MM/YYYY");
+					System.out.println("End date Formate:DD-MM-YYYY");
 					System.out.print("New value:");
 					String newEndDate = sc.nextLine();
 					Validation inputValidation= new Validation();
@@ -615,11 +641,13 @@ public class DBManager {
 					}
 					
 					promoSetloop.setEndDate(newEndDate);
+					System.out.println("End Date has been updated: "+newEndDate);
 				}  else if (i == 6) {
 					System.out.print("New value:");
 					int newQuota = sc.nextInt();
 					sc.nextLine();
 					promoSetloop.setQuota(newQuota);
+					System.out.println("Quota has been updated: "+newQuota);
 				}
 
 			} else {
@@ -645,8 +673,7 @@ public class DBManager {
 		}
 		write(filename, alw);
 	}
-
-	public static void deletePromoSet(int promoId) throws IOException {
+ static void deletePromoSet(int promoId) throws IOException {
 		String filename = "PromotionList.txt";
 		ArrayList<PromoSet> promoSetList = new ArrayList<PromoSet>();
 		promoSetList = readPromoSetInfo(filename);
@@ -675,6 +702,7 @@ public class DBManager {
 				alw.add(st.toString());
 			}
 		}
+		System.out.println("Promotion set successfully deleted");
 		write(filename, alw);
 
 	}
@@ -851,12 +879,14 @@ public class DBManager {
 					System.out.print("New value:");
 					String newContact = sc.nextLine();
 					staffloop.setContact(newContact);
+					System.out.println("Contact has been updated: "+newContact);
 				}
 				if (i == 2) {
 					System.out.println("Email");
 					System.out.print("New value:");
 					String newEmail = sc.nextLine();
 					staffloop.setEmail(newEmail);
+					System.out.println("Email has been updated: "+newEmail);
 
 				}
 				if (i == 3) {
@@ -864,12 +894,14 @@ public class DBManager {
 					System.out.print("New value:");
 					String newAddress = sc.nextLine();
 					staffloop.setAddress(newAddress);
+					System.out.println("Address has been updated: "+newAddress);
 					
 				}if (i == 4) {
 					System.out.println("Shift");
 					System.out.print("New value:");
 					String newShift = sc.nextLine();
 					staffloop.setShift(newShift);
+					System.out.println("Shift has been updated: "+newShift);
 					
 				}
 				else if (i == 5) {
@@ -877,6 +909,7 @@ public class DBManager {
 					System.out.print("New value:");
 					String newJobTitle = sc.nextLine();
 					staffloop.setJobTitle(newJobTitle);
+					System.out.println("Job Title has been updated: "+newJobTitle);
 				} 
 
 			} else {

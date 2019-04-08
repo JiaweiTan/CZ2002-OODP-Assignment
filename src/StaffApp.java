@@ -33,10 +33,10 @@ public class StaffApp {
 			System.out.println("\tCreating Staff");
 			System.out.println("=================================");
 
-			System.out.print("Staff ID:");
+		//	System.out.print("Staff ID:");
 			
-			System.out.print(staff.SystemGeneratedID(filename));		
-			System.out.println();
+		//	System.out.print(staff.SystemGeneratedID(filename));		
+		//	System.out.println();
 			System.out.print("Name:");
 			String tempName = sc.nextLine();
 
@@ -58,10 +58,22 @@ public class StaffApp {
 			System.out.print("Job Title:");
 			String tempJobTitle = sc.nextLine();
 			
-			
-			staff.addPromoItems(new Staff(staff.SystemGeneratedID(filename), tempName, tempGender, tempContact, tempEmail,tempAdress, tempShift, tempJobTitle));
-	
-			
+			Staff newitem=new Staff(staff.SystemGeneratedID(filename), tempName, tempGender, tempContact, tempEmail,tempAdress, tempShift, tempJobTitle);	
+			staff.addPromoItems(newitem);
+			System.out.println();
+			System.out.println("=========================================================");
+			System.out.println("\t     Staff successfully created! ");
+			System.out.println("=========================================================");
+			System.out.println("Staff ID: " + newitem.getID());
+			System.out.println("Name: " + newitem.getName());
+			System.out.println("Gender: " + newitem.getGender());
+			System.out.println("Contact: " + newitem.getContact());
+			System.out.println("Email: " + newitem.getEmail());
+			System.out.println("Adress: " + newitem.getAddress());
+			System.out.println("Shift: " + newitem.getShift());
+			System.out.println("Job Title: " + newitem.getShift());
+			System.out.println("=========================================================");
+			System.out.println();
 			StaffApp.main();
 			break;
 		case 2:
@@ -86,7 +98,7 @@ public class StaffApp {
 			
 			sc.nextLine();
 			
-			System.out.println("Promotion ID:");
+			System.out.println("Staff ID:");
 			staffId = sc.nextInt();
 			sc.nextLine();
 			switch (UpdateInput) {
@@ -137,21 +149,21 @@ public class StaffApp {
 			ArrayList<Staff> resItem = new ArrayList<Staff>();
 			resItem = staff.readStaffInfo(filename);
 			System.out.println(
-					"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+					"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			
 												
-			System.out.printf("%5s %10s %20s %10s %20s %30s  %50s %20s %10s", "Index", "Staff ID", "Name", "Gender","Contact", "Email", "Adress","Shift","Job Title");
+			System.out.printf("%5s %10s %20s %10s %20s %30s  %50s %20s %20s", "Index", "Staff ID", "Name", "Gender","Contact", "Email", "Adress","Shift","Job Title");
 			System.out.println();
 			int index = 1;
 			for (Staff g : resItem) {
 
-				System.out.format("%5s %10s %20s %10s %20s %30s %50s %20s %10s", index, g.getID(), g.getName(),g.getGender(), g.getContact(), g.getEmail(), g.getAddress(),g.getShift(),g.getJobTitle());
+				System.out.format("%5s %10s %20s %10s %20s %30s %50s %20s %20s", index, g.getID(), g.getName(),g.getGender(), g.getContact(), g.getEmail(), g.getAddress(),g.getShift(),g.getJobTitle());
 				index++;
 				System.out.println();
 
 			}
 			System.out.println(
-					"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+					"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			
 			StaffApp.main();
 			break;
