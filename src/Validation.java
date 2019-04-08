@@ -117,6 +117,22 @@ public class Validation {
 		}
 		return true;
 	}
+	
+	public static boolean isTimeValid(String timeToValidate) {
+		if (timeToValidate == null) {
+			return false;
+		}
+		String pattern = "HH:mm";
+
+		try {
+			LocalTime arrTime = LocalTime.parse(timeToValidate);
+			// System.out.println(date);
+		} catch (Exception e) {
+			// e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 	public static boolean orderExistDB (int orderId) throws IOException
 	{
 		List<Order> orderLst = DBManager.readOrders(ORDER_FILE);

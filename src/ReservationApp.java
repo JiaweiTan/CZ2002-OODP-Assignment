@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReservationApp {
@@ -106,9 +107,16 @@ public class ReservationApp {
 					System.out.print("Enter contact: ");
 					resContact = sc.nextLine();
 				}
-				System.out.print("Enter arrival time: ");
+				System.out.print("Enter arrival time (hh:mm): ");
 				String resArrival = sc.nextLine();
 				//Validate Arrival Time
+				while(!(Validation.isTimeValid(resArrival))) {
+					System.out.println();
+					System.out.println("Invalid format, please key in 24 hrs time(HH:mm) ");
+					System.out.print("Enter arrival time (hh:mm): ");
+					resArrival = sc.nextLine();		
+				}
+				
 				while((res.checkSession(resArrival) == "Invalid")) {
 					System.out.println();
 					System.out.println("Invalid time, please key in between 11:00-15:00 or 18:00-22:00");
@@ -121,7 +129,15 @@ public class ReservationApp {
 				int tablesize = tbInfo.checkTableSize(resPax);
 				int tableID = tbInfo.assignTable(tblItem, tablesize);
 				
-				int newReservationId = res.getNewReservationId();
+				
+				int newReservationId=0;
+				try {
+					newReservationId = res.getNewReservationId();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				Reservation myRes = new Reservation(newReservationId, tableID, resDate, resArrival, resPax, resName, resContact);
 				res.createReservation(myRes);
 
@@ -274,6 +290,12 @@ public class ReservationApp {
 							System.out.print("Enter arrival time: ");
 							String resArrival = sc.nextLine();
 							//Validate Arrival Time
+							while(!(Validation.isTimeValid(resArrival))) {
+								System.out.println();
+								System.out.println("Invalid format, please key in 24 hrs time(HH:mm) ");
+								System.out.print("Enter arrival time (hh:mm): ");
+								resArrival = sc.nextLine();		
+							}
 							while((res.checkSession(resArrival) == "Invalid")) {
 								System.out.println();
 								System.out.println("Invalid time, please key in between 11:00-15:00 or 18:00-22:00");

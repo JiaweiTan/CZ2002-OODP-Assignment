@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Reservation {
 	private int ReservationId;
@@ -117,21 +118,13 @@ public class Reservation {
 		}
 	}
 
-	public int getNewReservationId() {
-		ArrayList<Reservation> res = new ArrayList<Reservation>();
-		Reservation resItem = new Reservation();
-		int newid = 1;
-		try {
-			res = DBManager.readReservationInfo("Reservation.txt");
-			if(res.size() != 0) {
-				resItem = res.get(res.size() - 1);
-				newid = resItem.ReservationId + newid;	
-			}
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
-		return newid;
+	public int getNewReservationId() throws IOException
+	{	String filename= "Reservation.txt";
+		List<Reservation> PromoSetList = DBManager.readReservationInfo(filename);
+		if(PromoSetList.size()>0)
+			return PromoSetList.get(PromoSetList.size()-1).getReservationId() + 1;
+		else
+			return 3001;
 	}
 	
 	public Reservation getReservation(String contactNumber) {
