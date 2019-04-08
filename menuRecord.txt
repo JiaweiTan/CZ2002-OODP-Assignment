@@ -1,0 +1,2 @@
+6856|Sheepy Pasta|Min Course|23|Carbonara w/ sheep steak|50
+6100|type|bye|120|desc|100
