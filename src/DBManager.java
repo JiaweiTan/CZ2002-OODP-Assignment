@@ -961,7 +961,7 @@ public class DBManager {
 			if(customerLst.size()>0)
 				customer.setID(customerLst.get(customerLst.size()-1).getID() + 1);
 			else
-				customer.setID(1001);
+				customer.setID(10001);
 			customerLst.add(customer);
 		}
 		else {
