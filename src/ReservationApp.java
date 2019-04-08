@@ -269,6 +269,7 @@ public class ReservationApp {
 							}
 							updatedResItem = new Reservation(resItem.getReservationId(), resItem.getTableId(), resItem.getDate(), resItem.getArrivalTime(), resItem.getPax(), newName, resItem.getContactNumber());
 							res.updateReservation(resItem, updatedResItem);
+							System.out.println();
 							System.out.println("Name is successfully added!");
 							case2a = false;
 							break;
@@ -283,6 +284,7 @@ public class ReservationApp {
 							}
 							updatedResItem = new Reservation(resItem.getReservationId(), resItem.getTableId(), resDate, resItem.getArrivalTime(), resItem.getPax(), resItem.getName(), resItem.getContactNumber());
 							res.updateReservation(resItem, updatedResItem);
+							System.out.println();
 							System.out.println("Date is successfully added!");
 							case2a = false;
 							break;
@@ -304,6 +306,7 @@ public class ReservationApp {
 							}
 							updatedResItem = new Reservation(resItem.getReservationId(), resItem.getTableId(), resItem.getDate(), resArrival, resItem.getPax(), resItem.getName(), resItem.getContactNumber());
 							res.updateReservation(resItem, updatedResItem);
+							System.out.println();
 							System.out.println("Arrival time is successfully added!");
 							case2a = false;
 							break;
@@ -322,6 +325,7 @@ public class ReservationApp {
 							}
 							updatedResItem = new Reservation(resItem.getReservationId(), resItem.getTableId(), resItem.getDate(), resItem.getArrivalTime(), resPax, resItem.getName(), resItem.getContactNumber());
 							res.updateReservation(resItem, updatedResItem);
+							System.out.println();
 							System.out.println("Pax is successfully added!");
 							case2a = false;
 							break;
@@ -338,6 +342,7 @@ public class ReservationApp {
 							}
 							updatedResItem = new Reservation(resItem.getReservationId(), resItem.getTableId(), resItem.getDate(), resItem.getArrivalTime(), resItem.getPax(), resItem.getName(), contactNum);
 							res.updateReservation(resItem, updatedResItem);
+							System.out.println();
 							System.out.println("Contact Number is successfully added!");
 							case2a = false;
 							break;

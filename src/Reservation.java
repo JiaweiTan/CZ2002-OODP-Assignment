@@ -91,7 +91,7 @@ public class Reservation {
 		String result;
 		LocalTime session = LocalTime.parse(arrivaltime);
 
-		LocalTime amStart = LocalTime.parse("09:59");
+		LocalTime amStart = LocalTime.parse("10:59");
 
 		LocalTime amEnd = LocalTime.parse("15:01");
 

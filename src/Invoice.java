@@ -274,7 +274,7 @@ public class Invoice {
 		
 		/* Note: In order for this to work, you have to create the reservation using today date and time */
 		// As this checks for today reservation and deletes it. 
-		//Restaurant opening hours -> 10:00 to 1500 or 1800-2200
+		//Restaurant opening hours -> 11:00 to 1500 or 1800-2200
 		//Change your own computer time to test if it's over the restaurant opening hours.
 		Reservation res = new Reservation();
 		boolean isReservation = false;
