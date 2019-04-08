@@ -7,7 +7,7 @@ public class Menu {
     private int foodID;
     private String foodName;
     private String foodType;
-    private int foodPrice;
+    private double foodPrice;
     private String foodDesc;
     private int foodQuota;
     
@@ -15,11 +15,11 @@ public class Menu {
 	
 	public Menu() {};
     
-	public Menu(int id, String name, String type, int price, String desc, int quota)  {
+	public Menu(int id, String name, String type, double foodPrice2, String desc, int quota)  {
 		this.foodID = id ;
 		this.foodName = name;
 		this.foodType = type ;
-		this.foodPrice = price ;	
+		this.foodPrice = foodPrice2 ;	
 		this.foodDesc = desc ;
 		this.foodQuota = quota ;
 	}
@@ -35,7 +35,7 @@ public class Menu {
     }
     
     //@return the price of the item.
-    public int getFoodPrice(){
+    public double getFoodPrice(){
         return  foodPrice;
     }
     
@@ -56,3 +56,4 @@ public class Menu {
     }
 
 }
+
