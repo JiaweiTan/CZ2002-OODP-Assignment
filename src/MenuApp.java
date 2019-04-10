@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,23 +14,34 @@ import java.util.Scanner;
 public class MenuApp {
 	
 	public static void main(String[] args) throws IOException {
-		int choice = 0;
+		int choice = -1;
 		MenuFunc menuFunc = new MenuFunc();
-		EditRecord editRecord = new EditRecord();
+		//EditRecord editRecord = new EditRecord();
 		Scanner sc = new Scanner(System.in);
 		
 		//BufferedWriter bw = new BufferedWriter(new FileWriter("input.txt"));
 
 		do {
-			System.out.println("Perform the following methods:");
-			System.out.println("1: Create a new menu item.");
-			System.out.println("2: Update a menu item. ");
-			System.out.println("3: Delete a menu item. ");
-			System.out.println("4: Display the full menu.");
-			System.out.println("5: Back");
-			System.out.print("Please enter your choice : ");
 			
-			choice = sc.nextInt();
+			System.out.println("=================================");
+	        System.out.println("\t Menu Options");
+			System.out.println("=================================");
+			System.out.println("1) Create a new menu item.");
+			System.out.println("2) Update a menu item. ");
+			System.out.println("3) Delete a menu item. ");
+			System.out.println("4) Display the full menu.");
+			System.out.println("5) Back");
+			
+			//do {
+				//try {
+					System.out.print("Please enter your choice : ");
+					choice = sc.nextInt();
+					
+				//}catch(InputMismatchException e) {
+					//System.out.println("Please enter numbers only. ");
+				//}
+				//sc.nextLine();
+			//}while (choice == -1);
 			
 			switch (choice) {
 			case 1: 
@@ -54,7 +66,7 @@ public class MenuApp {
 				break;
 				
 			case 5: 
-				PromoSetApp.main();
+				//PromoSetApp.main();
 			
 			default:
 		    	System.out.println("=========================================================");
