@@ -3,10 +3,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SalesRevenueYear {
+public class SalesRevenueYear extends SalesRevenue{
 	private int dateYear;
-	private Double netSales;
-	private List<Integer> invoiceID;
 	
 	public SalesRevenueYear() 
 	{
@@ -16,8 +14,8 @@ public class SalesRevenueYear {
 	public SalesRevenueYear(int year, Double netSales, List<Integer> invoiceID) 
 	{
 		this.dateYear = year;
-		this.netSales = netSales;
-		this.invoiceID = invoiceID;
+		setNetSales(netSales);
+		setInvoiceID(invoiceID);
 	}
 	
 	public int getYear() {
@@ -28,21 +26,6 @@ public class SalesRevenueYear {
 		this.dateYear = dateYear;
 	}
 
-	public Double getNetSales() {
-		return netSales;
-	}
-
-	public void setNetSales(Double netSales) {
-		this.netSales = netSales;
-	}
-
-	public List<Integer> getInvoiceID() {
-		return this.invoiceID;
-	}
-
-	public void setInvoiceID(List<Integer> invoiceID) {
-		this.invoiceID = invoiceID;
-	}
 	
 	public static SalesRevenueYear createSalesRevenue(List<Invoice> invoiceLst, int year) 
 	{
@@ -53,8 +36,8 @@ public class SalesRevenueYear {
 			netSales += invoice.getFinalPrice();
 			invoiceIDLst.add(invoice.getInvoiceID());
 		}
-		SalesRevenueYear salesRevenue = new SalesRevenueYear(year, netSales, invoiceIDLst);
-		return salesRevenue;
+		SalesRevenue salesRevenue = new SalesRevenueYear(year, netSales, invoiceIDLst);
+		return (SalesRevenueYear)salesRevenue;
 	}
 	
 	public static SalesRevenueYear updateSalesRevenue(SalesRevenueYear salesRevenue, List<Invoice> invoiceLst) 

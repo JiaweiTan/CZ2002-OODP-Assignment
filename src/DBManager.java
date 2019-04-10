@@ -405,7 +405,7 @@ public class DBManager {
 					        }
 				        }
 						// create Professor object from file data
-						SalesRevenueDay salesRevenue = new SalesRevenueDay(dateYear, netSales, invoiceID);
+						SalesRevenue salesRevenue = new SalesRevenueDay(dateYear, netSales, invoiceID);
 						alr.add(salesRevenue);
 					}
 					return alr ;
@@ -451,7 +451,7 @@ public class DBManager {
 					        }
 				        }
 						// create Professor object from file data
-						SalesRevenueMonth salesRevenue = new SalesRevenueMonth(dateYear, netSales, invoiceID);
+						SalesRevenue salesRevenue = new SalesRevenueMonth(dateYear, netSales, invoiceID);
 						alr.add(salesRevenue);
 					}
 					return alr ;
@@ -497,7 +497,7 @@ public class DBManager {
 					        }
 				        }
 						// create Professor object from file data
-						SalesRevenueYear salesRevenue = new SalesRevenueYear(year, netSales, invoiceID);
+						SalesRevenue salesRevenue = new SalesRevenueYear(year, netSales, invoiceID);
 						alr.add(salesRevenue);
 					}
 					return alr ;

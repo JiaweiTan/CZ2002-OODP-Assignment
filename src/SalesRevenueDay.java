@@ -3,11 +3,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.IOException;
 
-public class SalesRevenueDay {
+public class SalesRevenueDay extends SalesRevenue{
 
 	private String date;
-	private Double netSales;
-	private List<Integer> invoiceID;
 	
 	public SalesRevenueDay() 
 	{
@@ -17,8 +15,8 @@ public class SalesRevenueDay {
 	public SalesRevenueDay(String date, Double netSales, List<Integer> invoiceID) 
 	{
 		this.date = date;
-		this.netSales = netSales;
-		this.invoiceID = invoiceID;
+		setNetSales(netSales);
+		setInvoiceID(invoiceID);
 	}
 	
 	public String getDate() {
@@ -29,21 +27,6 @@ public class SalesRevenueDay {
 		this.date = date;
 	}
 
-	public Double getNetSales() {
-		return netSales;
-	}
-
-	public void setNetSales(Double netSales) {
-		this.netSales = netSales;
-	}
-
-	public List<Integer> getInvoiceID() {
-		return this.invoiceID;
-	}
-
-	public void setInvoiceID(List<Integer> invoiceID) {
-		this.invoiceID = invoiceID;
-	}
 	 
 	public static SalesRevenueDay createSalesRevenue(List<Invoice> invoiceLst, int day, int month, int year) 
 	{
@@ -75,8 +58,8 @@ public class SalesRevenueDay {
 			netSales += invoice.getFinalPrice();
 			invoiceIDLst.add(invoice.getInvoiceID());
 		}
-		SalesRevenueDay salesRevenue = new SalesRevenueDay(date, netSales, invoiceIDLst);
-		return salesRevenue;
+		SalesRevenue salesRevenue = new SalesRevenueDay(date, netSales, invoiceIDLst);
+		return (SalesRevenueDay)salesRevenue;
 	}
 	
 	public static SalesRevenueDay updateSalesRevenue(SalesRevenueDay salesRevenue, List<Invoice> invoiceLst) 

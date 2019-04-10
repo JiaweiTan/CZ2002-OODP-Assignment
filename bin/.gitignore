@@ -15,13 +15,13 @@
 /PromoSetApp.class
 /Reservation.class
 /ReservationApp.class
-/SalesRevenue.class
+/SalesRevenueDay.class
+/SalesRevenueMonth.class
+/SalesRevenueYear.class
 /Staff.class
 /StaffApp.class
 /Table.class
 /TableApp.class
 /TableInfo.class
 /Validation.class
-/SalesRevenueDay.class
-/SalesRevenueMonth.class
-/SalesRevenueYear.class
+/SalesRevenue.class

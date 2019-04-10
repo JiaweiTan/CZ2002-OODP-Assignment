@@ -17,9 +17,7 @@ public class BillingApp {
 		
 		List<Invoice> invoiceLst = new ArrayList<Invoice>();
 		List<Order> orderLst = new ArrayList<Order>();
-		List<SalesRevenueDay> salesRevenueDayLst = new ArrayList<SalesRevenueDay>();
-		List<SalesRevenueMonth> salesRevenueMonthLst = new ArrayList<SalesRevenueMonth>();
-		List<SalesRevenueYear> salesRevenueYearLst = new ArrayList<SalesRevenueYear>();
+		List<SalesRevenue> salesRevenueLst = new ArrayList<SalesRevenue>();
 		
 		Scanner sc = new Scanner(System.in);
 		do 
@@ -226,18 +224,19 @@ public class BillingApp {
 										else
 										{
 											//Check for existing entry in SalesRevenue
-											salesRevenueDayLst = DBManager.readSalesRevenueDay("SalesRevenueDay.txt");
-											SalesRevenueDay salesRevenue = new SalesRevenueDay();
-											if(salesRevenueDayLst.size() > 0)
+											salesRevenueLst = DBManager.readSalesRevenueDay("SalesRevenueDay.txt");
+											SalesRevenue salesRevenue = new SalesRevenueDay();
+											if(salesRevenueLst.size() > 0)
 											{
-												for(SalesRevenueDay salesRev: salesRevenueDayLst) 
+												for(SalesRevenue salesRev: salesRevenueLst) 
 												{
-													salesRevenueDate = salesRev.getDate().split("-");
+													SalesRevenueDay salesRevenueDay = (SalesRevenueDay) salesRev;
+													salesRevenueDate = salesRevenueDay.getDate().split("-");
 													if(Integer.parseInt(salesRevenueDate[0]) == day && Integer.parseInt(salesRevenueDate[1]) == month && Integer.parseInt(salesRevenueDate[2]) == year)
 													{
 														//updates the entry
-														salesRevenue = SalesRevenueDay.updateSalesRevenue(salesRev, tempInvoiceLst);
-														DBManager.saveSalesRevenueDay("SalesRevenueDay.txt", salesRevenueDayLst);
+														salesRevenue = SalesRevenueDay.updateSalesRevenue(salesRevenueDay, tempInvoiceLst);
+														DBManager.saveSalesRevenueDay("SalesRevenueDay.txt", salesRevenueLst);
 														entryFound = true;
 														break;
 													}								
@@ -247,10 +246,10 @@ public class BillingApp {
 											if(!entryFound)
 											{
 												salesRevenue = SalesRevenueDay.createSalesRevenue(tempInvoiceLst,day,month,year);
-												salesRevenueDayLst.add(salesRevenue);
-												DBManager.saveSalesRevenueDay("SalesRevenueDay.txt",salesRevenueDayLst);
+												salesRevenueLst.add(salesRevenue);
+												DBManager.saveSalesRevenueDay("SalesRevenueDay.txt",salesRevenueLst);
 											}
-											SalesRevenueDay.printSalesRevenue(salesRevenue);
+											SalesRevenueDay.printSalesRevenue((SalesRevenueDay)salesRevenue);
 										}
 										break;
 								case 2:	do 
@@ -283,18 +282,19 @@ public class BillingApp {
 										else
 										{
 											//Check for existing entry in SalesRevenue
-											salesRevenueMonthLst = DBManager.readSalesRevenueMonth("SalesRevenueMonth.txt");
-											SalesRevenueMonth salesRevenue = new SalesRevenueMonth();
-											if(salesRevenueMonthLst.size() > 0)
+											salesRevenueLst = DBManager.readSalesRevenueMonth("SalesRevenueMonth.txt");
+											SalesRevenue salesRevenue = new SalesRevenueMonth();
+											if(salesRevenueLst.size() > 0)
 											{
-												for(SalesRevenueMonth salesRev: salesRevenueMonthLst) 
+												for(SalesRevenue salesRev: salesRevenueLst) 
 												{
-													salesRevenueDate = salesRev.getDateYear().split("-");
+													SalesRevenueMonth salesRevenueMonth = (SalesRevenueMonth)salesRev;
+													salesRevenueDate = salesRevenueMonth.getDateYear().split("-");
 													if(Integer.parseInt(salesRevenueDate[0]) == month && Integer.parseInt(salesRevenueDate[1]) == year)
 													{
 														//updates the entry
-														salesRevenue = SalesRevenueMonth.updateSalesRevenue(salesRev, tempInvoiceLst);
-														DBManager.saveSalesRevenueMonth("SalesRevenueMonth.txt", salesRevenueMonthLst);
+														salesRevenue = SalesRevenueMonth.updateSalesRevenue(salesRevenueMonth, tempInvoiceLst);
+														DBManager.saveSalesRevenueMonth("SalesRevenueMonth.txt", salesRevenueLst);
 														entryFound = true;
 														break;
 													}								
@@ -304,10 +304,10 @@ public class BillingApp {
 											if(!entryFound)
 											{
 												salesRevenue = SalesRevenueMonth.createSalesRevenue(tempInvoiceLst,month,year);
-												salesRevenueMonthLst.add(salesRevenue);
-												DBManager.saveSalesRevenueMonth("SalesRevenueMonth.txt",salesRevenueMonthLst);
+												salesRevenueLst.add(salesRevenue);
+												DBManager.saveSalesRevenueMonth("SalesRevenueMonth.txt",salesRevenueLst);
 											}
-											SalesRevenueMonth.printSalesRevenue(salesRevenue);
+											SalesRevenueMonth.printSalesRevenue((SalesRevenueMonth)salesRevenue);
 										}
 									
 										break;
@@ -335,20 +335,20 @@ public class BillingApp {
 										} else 
 										{
 											//Check for existing entry in SalesRevenue
-											salesRevenueYearLst = DBManager.readSalesRevenueYear("SalesRevenueYear.txt");
-											SalesRevenueYear salesRevenue = new SalesRevenueYear();
-											if(salesRevenueYearLst.size() > 0)
+											salesRevenueLst = DBManager.readSalesRevenueYear("SalesRevenueYear.txt");
+											SalesRevenue salesRevenue = new SalesRevenueYear();
+											if(salesRevenueLst.size() > 0)
 											{
 												int tempYear;
-												for(SalesRevenueYear salesRev: salesRevenueYearLst) 
+												for(SalesRevenue salesRev: salesRevenueLst) 
 												{
-													
-													tempYear = salesRev.getYear();
+													SalesRevenueYear salesRevenueYear = (SalesRevenueYear)salesRev;
+													tempYear = salesRevenueYear.getYear();
 													if(tempYear == year)
 													{
 														//updates the entry
-														salesRevenue = SalesRevenueYear.updateSalesRevenue(salesRev, tempInvoiceLst);
-														DBManager.saveSalesRevenueYear("SalesRevenueYear.txt", salesRevenueYearLst);
+														salesRevenue = SalesRevenueYear.updateSalesRevenue(salesRevenueYear, tempInvoiceLst);
+														DBManager.saveSalesRevenueYear("SalesRevenueYear.txt", salesRevenueLst);
 														entryFound = true;
 														break;
 													}								
@@ -358,10 +358,10 @@ public class BillingApp {
 											if(!entryFound)
 											{
 												salesRevenue = SalesRevenueYear.createSalesRevenue(tempInvoiceLst, year);
-												salesRevenueYearLst.add(salesRevenue);
-												DBManager.saveSalesRevenueYear("SalesRevenueYear.txt",salesRevenueYearLst);
+												salesRevenueLst.add(salesRevenue);
+												DBManager.saveSalesRevenueYear("SalesRevenueYear.txt",salesRevenueLst);
 											}
-											SalesRevenueYear.printSalesRevenue(salesRevenue);
+											SalesRevenueYear.printSalesRevenue((SalesRevenueYear)salesRevenue);
 										}
 										break;
 								default: System.out.println("Invalid input. Please enter again.\n");

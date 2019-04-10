@@ -3,11 +3,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.IOException;
 
-public class SalesRevenueMonth {
+public class SalesRevenueMonth extends SalesRevenue{
 
 	private String dateYear;
-	private Double netSales;
-	private List<Integer> invoiceID;
 	
 	public SalesRevenueMonth() 
 	{
@@ -17,8 +15,8 @@ public class SalesRevenueMonth {
 	public SalesRevenueMonth(String dateYear, Double netSales, List<Integer> invoiceID) 
 	{
 		this.dateYear = dateYear;
-		this.netSales = netSales;
-		this.invoiceID = invoiceID;
+		setNetSales(netSales);
+		setInvoiceID(invoiceID);
 	}
 	
 	public String getDateYear() {
@@ -29,22 +27,6 @@ public class SalesRevenueMonth {
 		this.dateYear = dateYear;
 	}
 
-	public Double getNetSales() {
-		return netSales;
-	}
-
-	public void setNetSales(Double netSales) {
-		this.netSales = netSales;
-	}
-
-	public List<Integer> getInvoiceID() {
-		return this.invoiceID;
-	}
-
-	public void setInvoiceID(List<Integer> invoiceID) {
-		this.invoiceID = invoiceID;
-	}
-	
 	public static SalesRevenueMonth createSalesRevenue(List<Invoice> invoiceLst, int month, int year) 
 	{
 		String dateYear = "";
@@ -66,8 +48,8 @@ public class SalesRevenueMonth {
 			netSales += invoice.getFinalPrice();
 			invoiceIDLst.add(invoice.getInvoiceID());
 		}
-		SalesRevenueMonth salesRevenue = new SalesRevenueMonth(dateYear, netSales, invoiceIDLst);
-		return salesRevenue;
+		SalesRevenue salesRevenue = new SalesRevenueMonth(dateYear, netSales, invoiceIDLst);
+		return (SalesRevenueMonth)salesRevenue;
 	}
 	
 	public static SalesRevenueMonth updateSalesRevenue(SalesRevenueMonth salesRevenue, List<Invoice> invoiceLst) 
