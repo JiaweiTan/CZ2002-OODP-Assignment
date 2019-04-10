@@ -195,7 +195,7 @@ public class Invoice {
 		List<Integer> itemLst = order.getItemId();
 		Collections.sort(itemLst);
 		int multiplier = 1;
-		int price = 0;
+		double price = 0;
 		boolean print;
 		int i = 0;
 		for(int item: itemLst) 
