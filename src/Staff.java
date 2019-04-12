@@ -52,7 +52,7 @@ public class Staff extends Person {
 	public void updateInfo(int staffId, int i) throws IOException {
 		// TODO Auto-generated method stub
 		DBManager db = new DBManager();
-		db.UpdateStaffItem(staffId, i);
+		db.updateStaffItem(staffId, i);
 		
 	}
 	public void remove(int removeID) throws IOException {

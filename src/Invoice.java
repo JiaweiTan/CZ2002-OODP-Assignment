@@ -279,7 +279,7 @@ public class Invoice {
 		Reservation res = new Reservation();
 		boolean isReservation = false;
 		//Get current date, session and tableid
-		int tableid = order.getTableId();
+		int tableId = order.getTableId();
 		String orderdate = order.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		String ordertime = order.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
 		ArrayList<Reservation> resList = new ArrayList<Reservation>();
@@ -287,11 +287,11 @@ public class Invoice {
 		//Find reservation by table id
 		resList = res.getTodayReservation(orderdate, res.checkSession(ordertime));
 		Reservation resv = new Reservation();
-		for(Reservation resitem: resList)
+		for(Reservation resItem: resList)
 		{
-			if(resitem.getTableId() == tableid) {
+			if(resItem.getTableId() == tableId) {
 				isReservation = true;
-				resv = resitem;
+				resv = resItem;
 			}
 		}
 		//If yes, delete reservation and release table space
