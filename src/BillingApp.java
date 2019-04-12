@@ -172,7 +172,9 @@ public class BillingApp {
 											System.out.println("Invalid Reservation ID.");
 										}
 									} while (invalid);
-									Customer.viewCustomer(DBManager.saveCustomerDetails(cst));;
+									int membershipId = DBManager.saveCustomerDetails(cst);
+									System.out.println("\tMembership ID\t: " + membershipId);
+									System.out.println("=======================================================");
 									order.setIsMember(true);
 								}
 							}

@@ -20,7 +20,7 @@ public class TableApp {
 		System.out.println("\tCurrent Table Availability");
 		System.out.println("=============================");
 		for(int i = 0; i < curTb.size(); i++) {
-			System.out.println("Table Id: " + curTb.get(i).TableId + " Status : " + tb.statusText(curTb.get(i).getStatus()) + " Capacity: "+ curTb.get(i).getCapacity());
+			System.out.println("Table Id: " + curTb.get(i).tableId + " Status : " + tb.statusText(curTb.get(i).getStatus()) + " Capacity: "+ curTb.get(i).getCapacity());
 			System.out.println("-----------------------------");
 		}
 	}

@@ -70,7 +70,7 @@ public class MenuFunc extends MenuApp {
 	public static ArrayList getMenu(String filename) throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(filename);
-		ArrayList alr = new ArrayList() ;// to store Professors data
+		ArrayList arrayLst = new ArrayList() ;// to store Professors data
 
         for (int i = 0 ; i < stringArray.size() ; i++) {
 				String st = (String)stringArray.get(i);
@@ -90,9 +90,9 @@ public class MenuFunc extends MenuApp {
 				Menu menuItems = new Menu(foodID, foodName,foodType, foodPrice, foodDesc, foodQuota);
 				
 				// add to Menu list
-				alr.add(menuItems) ;
+				arrayLst.add(menuItems) ;
 			}
-			return alr ;
+			return arrayLst ;
 	}
 
    	 /** Read the contents of the given file. */

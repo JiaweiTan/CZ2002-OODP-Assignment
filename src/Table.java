@@ -4,42 +4,42 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Table {
-	public int TableId;
-	private int Capacity;
-	private int Status;
+	public int tableId;
+	private int capacity;
+	private int status;
 	
 	public Table() {
 		
 	}
 	
-	public Table(int TableId, int Capacity, int Status) {
-		this.TableId = TableId;
-		this.Capacity = Capacity;
-		this.Status = Status;
+	public Table(int tableId, int capacity, int status) {
+		this.tableId = tableId;
+		this.capacity = capacity;
+		this.status = status;
 	}
 	
 	public int getTableId() {
-		return TableId;
+		return tableId;
 	}
 
 	public void setTableId(int tableId) {
-		TableId = tableId;
+		this.tableId = tableId;
 	}
 	
 	public int getCapacity() {
-		return Capacity;
+		return capacity;
 	}
 
 	public void setCapacity(int capacity) {
-		Capacity = capacity;
+		this.capacity = capacity;
 	}
 
 	public int getStatus() {
-		return Status;
+		return status;
 	}
 
 	public void setStatus(int status) {
-		Status = status;
+		this.status = status;
 	}
 	
 	public String statusText(int status) {
@@ -56,30 +56,30 @@ public class Table {
 			int tableid = i + 1;
 			if(tableid <= 10) {
 				Table twoseater = new Table();
-				twoseater.TableId = tableid;
-				twoseater.Capacity = 2;
-				twoseater.Status = 0;
+				twoseater.tableId = tableid;
+				twoseater.capacity = 2;
+				twoseater.status = 0;
 				tbList.add(twoseater);
 			}
 			else if(tableid > 10 && tableid <= 20) {
 				Table fourseater = new Table();
-				fourseater.TableId = tableid;
-				fourseater.Capacity = 4;
-				fourseater.Status = 0;
+				fourseater.tableId = tableid;
+				fourseater.capacity = 4;
+				fourseater.status = 0;
 				tbList.add(fourseater);
 			}
 			else if(tableid > 20 && tableid <= 25) {
 				Table eightseater = new Table();
-				eightseater.TableId = tableid;
-				eightseater.Capacity = 8;
-				eightseater.Status = 0;
+				eightseater.tableId = tableid;
+				eightseater.capacity = 8;
+				eightseater.status = 0;
 				tbList.add(eightseater);
 			}
 			else if(tableid > 25 && tableid <= 30) {
 				Table tenseater = new Table();
-				tenseater.TableId = tableid;
-				tenseater.Capacity = 10;
-				tenseater.Status = 0;
+				tenseater.tableId = tableid;
+				tenseater.capacity = 10;
+				tenseater.status = 0;
 				tbList.add(tenseater);				
 			}
 		}
@@ -110,8 +110,8 @@ public class Table {
 		if(updatedResList.size() > 0) {
 			for(int i = 0; i < updatedResList.size(); i++) {
 				for(int j = 0; j < tbList.size(); j++) {
-					if(updatedResList.get(i).getTableId() == tbList.get(j).TableId) {
-						tbList.get(j).Status = 1;
+					if(updatedResList.get(i).getTableId() == tbList.get(j).tableId) {
+						tbList.get(j).status = 1;
 					}
 				}
 			}

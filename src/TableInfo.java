@@ -4,83 +4,83 @@ import java.text.*;
 
 public class TableInfo {
 
-	private String Date;
-	private String Session;
-	private int TenSeater = 5;
-	private int EightSeater = 5;
-	private int FourSeater = 10;
-	private int TwoSeater = 10;
-	private int TotalCount;
+	private String date;
+	private String session;
+	private int tenSeater = 5;
+	private int eightSeater = 5;
+	private int fourSeater = 10;
+	private int twoSeater = 10;
+	private int totalCount;
 
 	public TableInfo() {
 
 	}
 
-	public TableInfo(String Date, String Session, int TenSeater, int EightSeater, int FourSeater, int TwoSeater,
-			int TotalCount) {
-		this.Date = Date;
-		this.Session = Session;
-		this.TenSeater = TenSeater;
-		this.EightSeater = EightSeater;
-		this.FourSeater = FourSeater;
-		this.TwoSeater = TwoSeater;
-		this.TotalCount = TotalCount;
+	public TableInfo(String date, String session, int tenSeater, int eightSeater, int fourSeater, int twoSeater,
+			int totalCount) {
+		this.date = date;
+		this.session = session;
+		this.tenSeater = tenSeater;
+		this.eightSeater = eightSeater;
+		this.fourSeater = fourSeater;
+		this.twoSeater = twoSeater;
+		this.totalCount = totalCount;
 	}
 
 	public String getDate() {
-		return Date;
+		return date;
 	}
 
 	public void setDate(String date) {
-		Date = date;
+		this.date = date;
 	}
 
 	public String getSession() {
-		return Session;
+		return session;
 	}
 
 	public void setSession(String session) {
-		Session = session;
+		this.session = session;
 	}
 
 	public int getTenSeater() {
-		return TenSeater;
+		return tenSeater;
 	}
 
 	public void setTenSeater(int tenSeater) {
-		TenSeater = tenSeater;
+		this.tenSeater = tenSeater;
 	}
 
 	public int getEightSeater() {
-		return EightSeater;
+		return eightSeater;
 	}
 
 	public void setEightSeater(int eightSeater) {
-		EightSeater = eightSeater;
+		this.eightSeater = eightSeater;
 	}
 
 	public int getFourSeater() {
-		return FourSeater;
+		return fourSeater;
 	}
 
 	public void setFourSeater(int fourSeater) {
-		FourSeater = fourSeater;
+		this.fourSeater = fourSeater;
 	}
 
 	public int getTwoSeater() {
-		return TwoSeater;
+		return twoSeater;
 	}
 
 	public void setTwoSeater(int twoSeater) {
-		TwoSeater = twoSeater;
+		this.twoSeater = twoSeater;
 	}
 
 	public int getTotalCount() {
-		return TotalCount;
+		return totalCount;
 	}
 
 	public void setTotalCount(int totalCount) {
-		TotalCount = totalCount;
+		this.totalCount = totalCount;
 	}
 
 	public void createTableSession(TableInfo item) {
@@ -93,7 +93,7 @@ public class TableInfo {
 
 	public TableInfo getTableSession(String resDate, String resSession) {
 		TableInfo tblItem = new TableInfo();
-		boolean recordExist = false;
+		boolean recordExist = false, createSession = false;
 		TableInfo item = new TableInfo(resDate, resSession, 5, 5, 10, 10, 30);
 		ArrayList<TableInfo> tbInfo = new ArrayList<TableInfo>();
 
@@ -105,8 +105,8 @@ public class TableInfo {
 					try {
 						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 						Date resvDate = format.parse(resDate);
-						Date sesDate = format.parse(tbl.Date);
-						if (sesDate.compareTo(resvDate) == 0 && (tbl.Session).equals(resSession)) {
+						Date sesDate = format.parse(tbl.date);
+						if (sesDate.compareTo(resvDate) == 0 && (tbl.session).equals(resSession)) {
 							tblItem = tbl;
 							recordExist = true;
 							return tblItem;
@@ -119,12 +119,20 @@ public class TableInfo {
 				}
 				if (recordExist == false) {
 					// Default Session
-					createTableSession(item);
+					//createTableSession(item);
+					createSession = true;
 				}
-			} else {
+			} 
+			else {
 				// Default Session
+				//createTableSession(item);
+				createSession = true;
+			}
+			
+			if(createSession) {
 				createTableSession(item);
 			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -154,13 +162,13 @@ public class TableInfo {
 		int tablesize = checkTableSize(resPax);
 		switch (tablesize) {
 		case 2:
-			result = tbl.TwoSeater > 0 ? true : false;
+			result = tbl.twoSeater > 0 ? true : false;
 		case 4:
-			result = tbl.FourSeater > 0 ? true : false;
+			result = tbl.fourSeater > 0 ? true : false;
 		case 8:
-			result = tbl.EightSeater > 0 ? true : false;
+			result = tbl.eightSeater > 0 ? true : false;
 		case 10:
-			result = tbl.TenSeater > 0 ? true : false;
+			result = tbl.tenSeater > 0 ? true : false;
 		}
 		return result;
 	}
@@ -178,31 +186,31 @@ public class TableInfo {
 		int tableID = 0;
 
 		if (tablesize == 2) {
-			if (tblItem.TwoSeater > 0) {
-				tableID = 11 - tblItem.TwoSeater;
-				tblItem.TwoSeater = tblItem.TwoSeater - 1;
+			if (tblItem.twoSeater > 0) {
+				tableID = 11 - tblItem.twoSeater;
+				tblItem.twoSeater = tblItem.twoSeater - 1;
 			}
 		} else if (tablesize == 4) {
-			if (tblItem.FourSeater > 0) {
-				tableID = 21 - tblItem.FourSeater;
-				tblItem.FourSeater = tblItem.FourSeater - 1;
+			if (tblItem.fourSeater > 0) {
+				tableID = 21 - tblItem.fourSeater;
+				tblItem.fourSeater = tblItem.fourSeater - 1;
 			}
 		}
 
 		else if (tablesize == 8) {
-			if (tblItem.EightSeater > 0) {
-				tableID = 26 - tblItem.EightSeater;
-				tblItem.EightSeater = tblItem.EightSeater - 1;
+			if (tblItem.eightSeater > 0) {
+				tableID = 26 - tblItem.eightSeater;
+				tblItem.eightSeater = tblItem.eightSeater - 1;
 			}
 		} else if (tablesize == 10) {
-			if (tblItem.TenSeater > 0) {
-				tableID = 31 - tblItem.TenSeater;
-				tblItem.TenSeater = tblItem.TenSeater - 1;
+			if (tblItem.tenSeater > 0) {
+				tableID = 31 - tblItem.tenSeater;
+				tblItem.tenSeater = tblItem.tenSeater - 1;
 			}
 		}
 
 		if(tblItem.getTotalCount() > 0) {
-			tblItem.setTotalCount(tblItem.TotalCount - 1);			
+			tblItem.setTotalCount(tblItem.totalCount - 1);			
 		}
 		
 		try {
@@ -214,31 +222,31 @@ public class TableInfo {
 		return tableID;
 	}
 
-	public void releaseTable(TableInfo tblItem, int tablesize) {
+	public void releaseTable(TableInfo tblItem, int tableSize) {
 		// Find out which seater table to release
 
-		if (tablesize == 2) {
-			if (tblItem.TwoSeater < 10) {
-				tblItem.TwoSeater = tblItem.TwoSeater + 1;
+		if (tableSize == 2) {
+			if (tblItem.twoSeater < 10) {
+				tblItem.twoSeater = tblItem.twoSeater + 1;
 			}
-		} else if (tablesize == 4) {
-			if (tblItem.FourSeater < 10) {
-				tblItem.FourSeater = tblItem.FourSeater + 1;
+		} else if (tableSize == 4) {
+			if (tblItem.fourSeater < 10) {
+				tblItem.fourSeater = tblItem.fourSeater + 1;
 			}
 		}
 
-		else if (tablesize == 8) {
-			if (tblItem.EightSeater < 5) {
-				tblItem.EightSeater = tblItem.EightSeater + 1;
+		else if (tableSize == 8) {
+			if (tblItem.eightSeater < 5) {
+				tblItem.eightSeater = tblItem.eightSeater + 1;
 			}
-		} else if (tablesize == 10) {
-			if (tblItem.TenSeater < 5) {
-				tblItem.TenSeater = tblItem.TenSeater + 1;
+		} else if (tableSize == 10) {
+			if (tblItem.tenSeater < 5) {
+				tblItem.tenSeater = tblItem.tenSeater + 1;
 			}
 		}
 
 		if(tblItem.getTotalCount() < 30) {
-			tblItem.setTotalCount(tblItem.TotalCount + 1);		
+			tblItem.setTotalCount(tblItem.totalCount + 1);		
 		}
 
 		try {

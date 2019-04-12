@@ -5,9 +5,9 @@ import java.util.List;
 
 public class PromoSet {
 
-	private int PromoSetId, quota;
+	private int promoSetId, quota;
 	private ArrayList<Integer> itemId;
-	private double Price;
+	private double price;
 	private String startDate, endDate,name;
 
 	public PromoSet()
@@ -15,13 +15,13 @@ public class PromoSet {
 		
 	}
 	
-	public PromoSet(int PromoSetId,String name, ArrayList<Integer> itemId, double Price, String startDate, String endDate,
+	public PromoSet(int promoSetId,String name, ArrayList<Integer> itemId, double price, String startDate, String endDate,
 			int quota) {
 		// TODO Auto-generated constructor stub
-		this.PromoSetId = PromoSetId;
+		this.promoSetId = promoSetId;
 		this.itemId = itemId;
 		this.name= name;
-		this.Price = Price;
+		this.price = price;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.quota = quota;
@@ -29,7 +29,7 @@ public class PromoSet {
 	}
 
 	public int getPromoSetId() {
-		return PromoSetId;
+		return promoSetId;
 	}
 
 
@@ -42,11 +42,11 @@ public class PromoSet {
 	}
 
 	public double getPrice() {
-		return Price;
+		return price;
 	}
 
 	public void setPrice(double price) {
-		Price = price;
+		this.price = price;
 	}
 
 	public String getStartDate() {
@@ -91,7 +91,7 @@ public class PromoSet {
 	public void updateInfo(int promoId, int i) throws IOException, ParseException {
 		// TODO Auto-generated method stub
 		DBManager db = new DBManager();
-		db.UpdatePromoItem(promoId, i);
+		db.updatePromoItem(promoId, i);
 	}
 
 	public void remove(int removeID) throws IOException {
@@ -115,6 +115,7 @@ public class PromoSet {
 		DBManager db = new DBManager();
 		return  db.readPromoSetInfo(filename);
 	}
+	
 	public int SystemGeneratedID(String filename) throws IOException
 	{
 		List<PromoSet> PromoSetList = DBManager.readPromoSetInfo(filename);

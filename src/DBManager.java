@@ -16,9 +16,9 @@ public class DBManager {
 	public static final String SEPARATOR = "|";
 
 	/** Read the contents of the given file. */
-	public static List read(String fileName) throws IOException {
+	public static List read(String filename) throws IOException {
 		List data = new ArrayList();
-		Scanner scanner = new Scanner(new FileInputStream(fileName));
+		Scanner scanner = new Scanner(new FileInputStream(filename));
 		try {
 			while (scanner.hasNextLine()) {
 				data.add(scanner.nextLine());
@@ -29,8 +29,8 @@ public class DBManager {
 		return data;
 	}
 
-	public static void write(String fileName, List data) throws IOException {
-		PrintWriter out = new PrintWriter(new FileWriter(fileName));
+	public static void write(String filename, List data) throws IOException {
+		PrintWriter out = new PrintWriter(new FileWriter(filename));
 
 		try {
 			for (int i = 0; i < data.size(); i++) {
@@ -44,21 +44,21 @@ public class DBManager {
 	public static ArrayList<TableInfo> readTableInfo(String filename) throws IOException {
 		ArrayList stringArray = (ArrayList) read(filename);
 		
-		ArrayList<TableInfo> alr = new ArrayList<TableInfo>();
+		ArrayList<TableInfo> arrayLst = new ArrayList<TableInfo>();
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR);
-			String Date = star.nextToken().trim();
-			String Session = star.nextToken().trim();
-			int TenSeater = Integer.parseInt(star.nextToken().trim());
-			int EightSeater = Integer.parseInt(star.nextToken().trim());
-			int FourSeater = Integer.parseInt(star.nextToken().trim());
-			int TwoSeater = Integer.parseInt(star.nextToken().trim());
-			int TotalCount = Integer.parseInt(star.nextToken().trim());
-			TableInfo tbInfo = new TableInfo(Date, Session, TenSeater, EightSeater, FourSeater, TwoSeater, TotalCount);
-			alr.add(tbInfo);
+			String date = star.nextToken().trim();
+			String session = star.nextToken().trim();
+			int tenSeater = Integer.parseInt(star.nextToken().trim());
+			int eightSeater = Integer.parseInt(star.nextToken().trim());
+			int fourSeater = Integer.parseInt(star.nextToken().trim());
+			int twoSeater = Integer.parseInt(star.nextToken().trim());
+			int totalCount = Integer.parseInt(star.nextToken().trim());
+			TableInfo tbInfo = new TableInfo(date, session, tenSeater, eightSeater, fourSeater, twoSeater, totalCount);
+			arrayLst.add(tbInfo);
 		}
-		return alr;
+		return arrayLst;
 	}
 	
 	public static void saveNewTableSession(TableInfo tbl) throws IOException {
@@ -128,26 +128,26 @@ public class DBManager {
 	
 	
 	public static ArrayList<Reservation> readReservationInfo(String filename) throws IOException {
-		ArrayList stringArray = (ArrayList) read(filename);
+		ArrayList stringArray = (ArrayList) read(filename); 
 		
-		ArrayList<Reservation> alr = new ArrayList<Reservation>();
+		ArrayList<Reservation> arrayLst = new ArrayList<Reservation>();
 		
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR);
-			int ReservationId = Integer.parseInt(star.nextToken().trim());
-			int TableId = Integer.parseInt(star.nextToken().trim());
-			String Date = star.nextToken().trim();
-			String ArrivalTime = star.nextToken().trim();
-			int Pax = Integer.parseInt(star.nextToken().trim());
-			String Name = star.nextToken().trim();
-			String ContactNumber = star.nextToken().trim();
+			int reservationId = Integer.parseInt(star.nextToken().trim());
+			int tableId = Integer.parseInt(star.nextToken().trim());
+			String date = star.nextToken().trim();
+			String arrivalTime = star.nextToken().trim();
+			int pax = Integer.parseInt(star.nextToken().trim());
+			String name = star.nextToken().trim();
+			String contactNumber = star.nextToken().trim();
 
-			Reservation resInfo = new Reservation(ReservationId, TableId, Date, ArrivalTime, Pax, Name, ContactNumber);
+			Reservation resInfo = new Reservation(reservationId, tableId, date, arrivalTime, pax, name, contactNumber);
 
-			alr.add(resInfo);
+			arrayLst.add(resInfo);
 		}
-		return alr;
+		return arrayLst;
 	}
 	
 	public static void saveNewReservation(Reservation res) throws IOException {
@@ -246,7 +246,7 @@ public class DBManager {
 	public static ArrayList readOrders(String filename) throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList) read(filename);
-		ArrayList alr = new ArrayList();// to store Professors data
+		ArrayList arrayLst = new ArrayList();// to store Professors data
 
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
@@ -284,9 +284,9 @@ public class DBManager {
 			// create Order object from file data
 			Order od = new Order(orderId, tableId, staffId, itemId, promoSetId, price, comment, dateTime);
 			// add to Orders list
-			alr.add(od);
+			arrayLst.add(od);
 		}
-		return alr;
+		return arrayLst;
 	}
 
 	// SAVE to orders file
@@ -327,7 +327,7 @@ public class DBManager {
 	public static ArrayList readInvoice(String filename) throws IOException {
 				// read String from text file
 				ArrayList stringArray = (ArrayList)read(filename);
-				ArrayList alr = new ArrayList() ;// to store Professors data
+				ArrayList arrayLst = new ArrayList() ;// to store Professors data
 
 		        for (int i = 0 ; i < stringArray.size() ; i++) {
 						String st = (String)stringArray.get(i);
@@ -347,9 +347,9 @@ public class DBManager {
 						// create Professor object from file data
 
 						Invoice invoice = new Invoice(invoiceID, paymentType, orderID, originalPrice, finalPrice, GST, serviceCharge, 0, remarks ,dateTime);
-						alr.add(invoice) ;
+						arrayLst.add(invoice) ;
 					}
-					return alr ;
+					return arrayLst ;
 			}
 
 		  // an example of saving
@@ -386,7 +386,7 @@ public class DBManager {
 			public static ArrayList readSalesRevenueDay(String filename) throws IOException {
 				// read String from text file
 				ArrayList stringArray = (ArrayList)read(filename);
-				ArrayList alr = new ArrayList() ;// to store Professors data
+				ArrayList arrayLst = new ArrayList() ;// to store Professors data
 
 		        for (int i = 0 ; i < stringArray.size() ; i++) {
 						String st = (String)stringArray.get(i);
@@ -406,9 +406,9 @@ public class DBManager {
 				        }
 						// create Professor object from file data
 						SalesRevenue salesRevenue = new SalesRevenueDay(dateYear, netSales, invoiceID);
-						alr.add(salesRevenue);
+						arrayLst.add(salesRevenue);
 					}
-					return alr ;
+					return arrayLst ;
 			}
 			public static void saveSalesRevenueDay(String filename, List al) throws IOException 
 			{
@@ -432,7 +432,7 @@ public class DBManager {
 			public static ArrayList readSalesRevenueMonth(String filename) throws IOException {
 				// read String from text file
 				ArrayList stringArray = (ArrayList)read(filename);
-				ArrayList alr = new ArrayList() ;// to store Professors data
+				ArrayList arrayLst = new ArrayList() ;// to store Professors data
 
 		        for (int i = 0 ; i < stringArray.size() ; i++) {
 						String st = (String)stringArray.get(i);
@@ -452,9 +452,9 @@ public class DBManager {
 				        }
 						// create Professor object from file data
 						SalesRevenue salesRevenue = new SalesRevenueMonth(dateYear, netSales, invoiceID);
-						alr.add(salesRevenue);
+						arrayLst.add(salesRevenue);
 					}
-					return alr ;
+					return arrayLst ;
 			}
 			public static void saveSalesRevenueMonth(String filename, List al) throws IOException 
 			{
@@ -478,7 +478,7 @@ public class DBManager {
 			public static ArrayList readSalesRevenueYear(String filename) throws IOException {
 				// read String from text file
 				ArrayList stringArray = (ArrayList)read(filename);
-				ArrayList alr = new ArrayList() ;// to store Professors data
+				ArrayList arrayLst = new ArrayList() ;// to store Professors data
 
 		        for (int i = 0 ; i < stringArray.size() ; i++) {
 						String st = (String)stringArray.get(i);
@@ -498,9 +498,9 @@ public class DBManager {
 				        }
 						// create Professor object from file data
 						SalesRevenue salesRevenue = new SalesRevenueYear(year, netSales, invoiceID);
-						alr.add(salesRevenue);
+						arrayLst.add(salesRevenue);
 					}
-					return alr ;
+					return arrayLst ;
 			}
 			public static void saveSalesRevenueYear(String filename, List al) throws IOException 
 			{
@@ -526,7 +526,7 @@ public class DBManager {
 	/*
 	 * public static ArrayList readItems(String filename) throws IOException { //
 	 * read String from text file ArrayList stringArray = (ArrayList)read(filename);
-	 * ArrayList alr = new ArrayList() ;// to store Professors data
+	 * ArrayList arrayLst = new ArrayList() ;// to store Professors data
 	 * 
 	 * for (int i = 0 ; i < stringArray.size() ; i++) { String st =
 	 * (String)stringArray.get(i); // get individual 'fields' of the string
@@ -540,19 +540,19 @@ public class DBManager {
 	 * Integer.parseInt(star.nextToken().trim());
 	 * 
 	 * // create Item object from file data Menu mn = new Menu(itemId, name, type,
-	 * price, desc, quota); // add to Items list alr.add(mn); } return alr; }
+	 * price, desc, quota); // add to Items list arrayLst.add(mn); } return arrayLst; }
 	 */
 
 	public static ArrayList<PromoSet> readPromoSetInfo(String filename) throws IOException {
 		ArrayList stringArray = (ArrayList) read(filename);
 
-		ArrayList<PromoSet> alr = new ArrayList<PromoSet>();
+		ArrayList<PromoSet> arrayLst = new ArrayList<PromoSet>();
 
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR);
 
-			int PromoSetId = Integer.parseInt(star.nextToken().trim());
+			int promoSetId = Integer.parseInt(star.nextToken().trim());
 
 			ArrayList<Integer> itemId = new ArrayList<Integer>();
 			String temp = star.nextToken().replace('[', ' ');
@@ -571,11 +571,11 @@ public class DBManager {
 			String endDate = star.nextToken().trim();
 			int quota = Integer.parseInt(star.nextToken().trim());
 
-			PromoSet PromoSetInfo = new PromoSet(PromoSetId, name, itemId, price, startDate, endDate, quota);
+			PromoSet promoSetInfo = new PromoSet(promoSetId, name, itemId, price, startDate, endDate, quota);
 
-			alr.add(PromoSetInfo);
+			arrayLst.add(promoSetInfo);
 		}
-		return alr;
+		return arrayLst;
 	}
 
 	public static void savePromoItems(PromoSet promoSetItemData) throws IOException {
@@ -607,17 +607,17 @@ public class DBManager {
 		write(filename, alw);
 	}
 
-	public static void UpdatePromoItem(int promoId, int i) throws IOException, ParseException {
+	public static void updatePromoItem(int promoId, int i) throws IOException, ParseException {
 		Scanner sc = new Scanner(System.in);
 		String filename = "PromotionList.txt";
 		List alw = new ArrayList();
 		ArrayList<PromoSet> promoSetList = new ArrayList<PromoSet>();
 		promoSetList = readPromoSetInfo(filename);
 
-		PromoSet updatedtbl = new PromoSet();
+		PromoSet updatedTbl = new PromoSet();
 		for (PromoSet promoSetloop : promoSetList) {
 			if (promoSetloop.getPromoSetId() == promoId) {
-				updatedtbl = promoSetloop;
+				updatedTbl = promoSetloop;
 				if (i == 1) {
 					System.out.println("Name");
 					System.out.print("New value:");
@@ -744,24 +744,24 @@ public class DBManager {
 				}
 
 			} else {
-				updatedtbl = promoSetloop;
+				updatedTbl = promoSetloop;
 			}
 
 			StringBuilder st = new StringBuilder();
 
-			st.append(updatedtbl.getPromoSetId());
+			st.append(updatedTbl.getPromoSetId());
 			st.append(SEPARATOR);
-			st.append(updatedtbl.getItemId());
+			st.append(updatedTbl.getItemId());
 			st.append(SEPARATOR);
-			st.append(updatedtbl.getName());
+			st.append(updatedTbl.getName());
 			st.append(SEPARATOR);
-			st.append(updatedtbl.getPrice());
+			st.append(updatedTbl.getPrice());
 			st.append(SEPARATOR);
-			st.append(updatedtbl.getStartDate());
+			st.append(updatedTbl.getStartDate());
 			st.append(SEPARATOR);
-			st.append(updatedtbl.getEndDate());
+			st.append(updatedTbl.getEndDate());
 			st.append(SEPARATOR);
-			st.append(updatedtbl.getQuota());
+			st.append(updatedTbl.getQuota());
 			alw.add(st.toString());
 		}
 		write(filename, alw);
@@ -856,7 +856,7 @@ public class DBManager {
 			String st = (String) stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR);
 
-			int StaffId = Integer.parseInt(star.nextToken().trim());
+			int staffId = Integer.parseInt(star.nextToken().trim());
 			String name = star.nextToken().trim();
 			char gender = star.nextToken().trim().charAt(0);
 			String contact = star.nextToken().trim();
@@ -865,9 +865,9 @@ public class DBManager {
 			String shift = star.nextToken().trim();
 			String jobTitle = star.nextToken().trim();
 			
-			Staff StaffInfo = new Staff(StaffId, name, gender, contact, email,address, shift, jobTitle);
+			Staff staffInfo = new Staff(staffId, name, gender, contact, email, address, shift, jobTitle);
 
-			staffSetList.add(StaffInfo);
+			staffSetList.add(staffInfo);
 		}
 		return staffSetList;
 	}
@@ -956,7 +956,7 @@ public class DBManager {
 
 	}
 	
-	public static void UpdateStaffItem(int staffId, int i) throws IOException {
+	public static void updateStaffItem(int staffId, int i) throws IOException {
 		Scanner sc = new Scanner(System.in);
 		String filename = "StaffList.txt";
 		List alw = new ArrayList();

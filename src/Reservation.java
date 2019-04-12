@@ -7,82 +7,82 @@ import java.util.Date;
 import java.util.List;
 
 public class Reservation {
-	private int ReservationId;
-	private int TableId;
-	private String Date;
-	private String ArrivalTime;
-	private int Pax;
-	private String Name;
-	private String ContactNumber;
+	private int reservationId;
+	private int tableId;
+	private String date;
+	private String arrivalTime;
+	private int pax;
+	private String name;
+	private String contactNumber;
 
 	public Reservation() {
 
 	}
 
-	public Reservation(int ReservationId, int TableId, String Date, String ArrivalTime, int Pax, String Name, String ContactNumber) {
-		this.ReservationId = ReservationId;
-		this.TableId = TableId;
-		this.Date = Date;
-		this.ArrivalTime = ArrivalTime;
-		this.Pax = Pax;
-		this.Name = Name;
-		this.ContactNumber = ContactNumber;
+	public Reservation(int reservationId, int tableI, String date, String arrivalTime, int pax, String name, String contactNumber) {
+		this.reservationId = reservationId;
+		this.tableId = tableI;
+		this.date = date;
+		this.arrivalTime = arrivalTime;
+		this.pax = pax;
+		this.name = name;
+		this.contactNumber = contactNumber;
 	}
 
 	public int getReservationId() {
-		return ReservationId;
+		return reservationId;
 	}
 
 	public void setReservationId(int reservationId) {
-		ReservationId = reservationId;
+		this.reservationId = reservationId;
 	}
 
 	public int getTableId() {
-		return TableId;
+		return tableId;
 	}
 
 	public void setTableId(int tableId) {
-		TableId = tableId;
+		this.tableId = tableId;
 	}
 
 	public String getDate() {
-		return Date;
+		return date;
 	}
 
 	public void setDate(String date) {
-		Date = date;
+		this.date = date;
 	}
 
 	public String getArrivalTime() {
-		return ArrivalTime;
+		return arrivalTime;
 	}
 
 	public void setArrivalTime(String arrivalTime) {
-		ArrivalTime = arrivalTime;
+		this.arrivalTime = arrivalTime;
 	}
 
 	public int getPax() {
-		return Pax;
+		return pax;
 	}
 
 	public void setPax(int pax) {
-		Pax = pax;
+		this.pax = pax;
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	public String getContactNumber() {
-		return ContactNumber;
+		return contactNumber;
 	}
 
 	public void setContactNumber(String contactNumber) {
-		ContactNumber = contactNumber;
+		this.contactNumber = contactNumber;
 	}
 	
 	public String checkSession(String arrivaltime) {
@@ -133,7 +133,7 @@ public class Reservation {
 		try {
 			res = DBManager.readReservationInfo("Reservation.txt");
 			for (Reservation item : res) {
-				if ((item.ContactNumber).equals(contactNumber)) {
+				if ((item.contactNumber).equals(contactNumber)) {
 					resItem = item;
 					return resItem;
 				}
@@ -155,13 +155,13 @@ public class Reservation {
 		return resTb;
 	}
 	
-	public ArrayList<Reservation> getTodayReservation(String todaydate, String session) {
+	public ArrayList<Reservation> getTodayReservation(String todayDate, String session) {
 		ArrayList<Reservation> resTb = new ArrayList<Reservation>();
 		ArrayList<Reservation> todayResTb = new ArrayList<Reservation>();
 		try {
 			resTb = DBManager.readReservationInfo("Reservation.txt");
 			for(Reservation item: resTb) {
-				if(((item.Date).equals(todaydate)) && ((item.checkSession(item.ArrivalTime)).equals(session))) {
+				if(((item.date).equals(todayDate)) && ((item.checkSession(item.arrivalTime)).equals(session))) {
 					todayResTb.add(item);
 				}
 			}
@@ -177,12 +177,12 @@ public class Reservation {
 			TableInfo tb = new TableInfo();
 			Date oldresDate;
 			try {
-				oldresDate = format.parse(oldres.Date);
-				Date newresDate = format.parse(newres.Date);
+				oldresDate = format.parse(oldres.date);
+				Date newresDate = format.parse(newres.date);
 				String oldSession = oldres.checkSession(oldres.getArrivalTime());
 				String newSession = newres.checkSession(newres.getArrivalTime());
-				int oldTableSize = tb.checkTableSize(oldres.Pax);
-				int newTableSize = tb.checkTableSize(newres.Pax);
+				int oldTableSize = tb.checkTableSize(oldres.pax);
+				int newTableSize = tb.checkTableSize(newres.pax);
 				// #To handle
 				// User change dates
 				// User change session
@@ -191,7 +191,7 @@ public class Reservation {
 				// Just update the database immediately!
 
 				if (oldresDate.compareTo(newresDate) == 0 && oldSession == newSession && oldTableSize == newTableSize) {
-					DBManager.saveExistingReservation(newres, oldres.ContactNumber);
+					DBManager.saveExistingReservation(newres, oldres.contactNumber);
 				} else {
 					// If Session & Date is different, the data will be in a different row
 					int newTableCount = 0;
@@ -201,21 +201,21 @@ public class Reservation {
 						// Assign table - Decrement count & tableseater by 1
 						// Update the reservation table id
 						TableInfo tbItem = new TableInfo();
-						tbItem = tb.getTableSession(oldres.Date, oldSession);
+						tbItem = tb.getTableSession(oldres.date, oldSession);
 						tb.releaseTable(tbItem, oldTableSize);
 						TableInfo tbNewItem = new TableInfo();
-						tbNewItem = tb.getTableSession(newres.Date, newSession);
+						tbNewItem = tb.getTableSession(newres.date, newSession);
 						newTableCount = tb.assignTable(tbNewItem, newTableSize);
 					}
 					else if(oldTableSize != newTableSize) {
 						//Update the pax count only
 						TableInfo tbItem = new TableInfo();
-						tbItem = tb.getTableSession(oldres.Date, oldSession);
+						tbItem = tb.getTableSession(oldres.date, oldSession);
 						tb.releaseTable(tbItem, oldTableSize);
 						newTableCount = tb.assignTable(tbItem, newTableSize);				
 					}
-					newres.TableId = newTableCount;				
-					DBManager.saveExistingReservation(newres, oldres.ContactNumber);
+					newres.tableId = newTableCount;				
+					DBManager.saveExistingReservation(newres, oldres.contactNumber);
 				}
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -233,8 +233,8 @@ public class Reservation {
 			DBManager.deleteReservation(res);
 			TableInfo tb = new TableInfo();
 			TableInfo tbItem = new TableInfo();
-			tbItem = tb.getTableSession(res.Date, checkSession(res.ArrivalTime));
-			tb.releaseTable(tbItem, tb.checkTableSize(res.Pax));
+			tbItem = tb.getTableSession(res.date, checkSession(res.arrivalTime));
+			tb.releaseTable(tbItem, tb.checkTableSize(res.pax));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -136,9 +136,9 @@ public class Validation {
 	public static boolean orderExistDB (int orderId) throws IOException
 	{
 		List<Order> orderLst = DBManager.readOrders(ORDER_FILE);
-		for(Order ord: orderLst)
+		for(Order od: orderLst)
 		{
-			if(ord.getOrderId() == orderId)
+			if(od.getOrderId() == orderId)
 				return true;
 		}
 		return false;
