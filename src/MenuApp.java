@@ -74,7 +74,7 @@ public class MenuApp {
 				break;
 				
 			case 5: 
-				//MenuApp.main();
+				MenuApp.main();
 				break;
 			
 			default:
