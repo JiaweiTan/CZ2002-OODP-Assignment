@@ -1,26 +1,23 @@
 //package rrpss;
 
-import java.io.IOException;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.Scanner;
-import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
 import java.util.StringTokenizer;
-import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
 public class MenuFunc extends MenuApp {
 	Scanner sc = new Scanner(System.in);
-	static int indexCounter = 6000;
+	static int indexCounter = 6011;
 		
 	public void displayMenu()  {
     	String filepath = "outputMenu.txt";
@@ -32,7 +29,7 @@ public class MenuFunc extends MenuApp {
             System.out.println("File is empty, please add items into the Menu");
 			System.out.println("=================================");
         }else {
-        	MenuFunc menuFunc = new MenuFunc();
+        	new MenuFunc();
         	int index = 1;
     		try {
 			    System.out.println("===================================================================================================================================");
@@ -66,11 +63,10 @@ public class MenuFunc extends MenuApp {
 	public static final String SEPARATOR = "|";
 	String filename = "menuRecord.txt";
 	
-    // getMenu()
 	public static ArrayList getMenu(String filename) throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(filename);
-		ArrayList arrayLst = new ArrayList() ;// to store Professors data
+		ArrayList alr = new ArrayList() ;// to store Professors data
 
         for (int i = 0 ; i < stringArray.size() ; i++) {
 				String st = (String)stringArray.get(i);
@@ -90,9 +86,9 @@ public class MenuFunc extends MenuApp {
 				Menu menuItems = new Menu(foodID, foodName,foodType, foodPrice, foodDesc, foodQuota);
 				
 				// add to Menu list
-				arrayLst.add(menuItems) ;
+				alr.add(menuItems) ;
 			}
-			return arrayLst ;
+			return alr ;
 	}
 
    	 /** Read the contents of the given file. */
@@ -111,13 +107,13 @@ public class MenuFunc extends MenuApp {
     		  }
         
  
-    	public static void createMenu() throws IOException, InputMismatchException
+    	public static void createMenu() throws IOException
 	{
 		Scanner sc = new Scanner(System.in);
-		File file = new File("outputMenu.txt");
-		FileWriter writer = new FileWriter("outputMenu.txt",true);
+		new File("menuRecord.txt");
+		FileWriter writer = new FileWriter("menuRecord.txt",true);
 		BufferedWriter bwriter = new BufferedWriter(writer);
-		Menu newitem = new Menu();
+		new Menu();
 		
 		int cont;
 		
@@ -126,40 +122,82 @@ public class MenuFunc extends MenuApp {
 		System.out.println("=================================");
 		
 		int food_ID = indexCounter;
-		indexCounter++;
 
 		do {
-			System.out.print("Enter the name of the item :");
+			System.out.print("Enter the name of the item: ");
 			String food_name = sc.nextLine();			
 			
 			double food_price = 0;
 			do {
 				try {
-					System.out.print("Enter the price of the item:$");
+					System.out.print("Enter the price of the item: $");
 					food_price = sc.nextDouble();//must do
 					
 				}catch(InputMismatchException e) {
-					System.out.println("Invalid price has been entered. Please enter numbers only. ");
+					System.out.println("=================================");
+					System.out.println("Invalid price has been entered.");
+					System.out.println("Please enter numbers only. ");
+					System.out.println("=================================");
 				}
 				sc.nextLine();
 			}while (food_price == 0);
 			
-			System.out.print("Enter the type of the item :");
-			String food_type = sc.nextLine();
+			int type_choice = -1;		
+			String food_type = null;
+			do {
+				try {
+					System.out.println("Enter the type of the item : ");
+					System.out.println("1) Main Course ");
+					System.out.println("2) Drinks ");
+					System.out.println("3) Desserts ");
+					System.out.print("Option selected: ");
+					type_choice = sc.nextInt();
+					
+					switch(type_choice) {
+					case 1: 
+						food_type = "Main Course";
+						break;
+					case 2:
+						food_type = "Drinks";
+						break;
+					case 3: 
+						food_type = "Desserts";
+						break;
+					default:
+						System.out.println("=================================");
+						System.out.println("Invalid Entry has been entered. ");
+						System.out.println("Please enter 1/2/3 only. ");
+						System.out.println("=================================");
+					}
+					
+				}catch(InputMismatchException e) {
+					//System.out.println("");
+					System.out.println("=================================");
+					System.out.println("Invalid quantity has been entered. ");
+					System.out.println("Please enter 1/2/3 only. ");
+					System.out.println("=================================");
+					System.out.println("");
+				}
+				sc.nextLine();
+			}while (type_choice == -1 ||type_choice >3);
 			
 			System.out.print("Enter the description of the item: ");
 			String food_desc = sc.nextLine();
 			
+
+			
 			int food_quota = -1;		
 				do {
 					try {
-						System.out.print("Enter the quota of the item:       ");
+						System.out.print("Enter the quota of the item: ");
 						food_quota = sc.nextInt();
 						
 					}catch(InputMismatchException e) {
 						//System.out.println("");
-						System.out.println("Invalid quantity has been entered. Please enter numbers only. ");
-						System.out.println("");
+						System.out.println("=================================");
+						System.out.println("Invalid quantity has been entered. ");
+						System.out.println("Please enter numbers only. ");
+						System.out.println("=================================");
 					}
 					sc.nextLine();
 				}while (food_quota == -1);
@@ -184,21 +222,116 @@ public class MenuFunc extends MenuApp {
 			System.out.print("Do you want to write in more information? (Y-1/N-0): ");
 			cont = sc.nextInt();
 			sc.nextLine(); //must do 
+			indexCounter++; //increases the value of the index
+			food_ID++;
 			
 			}while(cont != 0);
 
 			bwriter.close();
 			writer.close();
+			
+	        Scanner file1;
+	        PrintWriter writer1;
+
+	        try {
+
+	            file1 = new Scanner(new File("menuRecord.txt"));
+	            writer1 = new PrintWriter("outputMenu.txt");
+
+	            while (file1.hasNext()) {
+	                String line = file1.nextLine();
+	                if (!line.isEmpty()) {
+	                    writer1.write(line);
+	                    writer1.println("");
+	                }
+	            }
+
+	            file1.close();
+	            writer1.close();
+
+	        } catch (FileNotFoundException ex) {
+				JOptionPane.showMessageDialog(null, "\tItem was not able to update");
+	        }
+	    	
+
 		}
+			
 
 	public void deleteMenu() throws IOException {
-		
+		String filesearch = "outputMenu.txt";
 		System.out.print("Enter the targetID of the item: ");
 		String removeTerm = sc.nextLine();
-		//String removeTerm = "6001";
-		String filepath = "menuRecord.txt";
-		removeRecord(filepath,removeTerm);
+
+		Scanner checker;
+		
+		String ID = ""; String name = ""; String type =""; 
+		String price = ""; String desc = ""; String quota ="";
+		
+		boolean found = false;
+		int confirmation = -1;
+		
+		try {
+			checker = new Scanner(new File(filesearch));//reads the file
+			checker.useDelimiter("[|\n]");
+				
+			while (checker.hasNext()) {
+				ID = checker.next();
+				name = checker.next();
+				type = checker.next();
+				price = checker.next();
+				desc = checker.next();
+				quota = checker.next();
+					
+				if (!ID.equals(removeTerm)) {
+					continue;
+				}else {
+					found = true;
+
+					do {
+						try {
+							System.out.print("Are you sure you want to delete "+ removeTerm +"? (Y-1/N-0): ");
+							confirmation = sc.nextInt();
+
+						}catch(InputMismatchException e) {
+							//System.out.println("");
+							System.out.println("=================================");
+							System.out.println("Invalid Entry has been entered. ");
+							System.out.println("Please enter (1 - Yes / 0 - No) only. ");
+							System.out.println("=================================");
+							System.out.print("Are you sure you want to delete "+removeTerm+"? (Y-1/N-0): ");
+							System.out.println("");
+						}
+						sc.nextLine();
+						
+						switch(confirmation) {
+						
+						case 1: 
+							String filepath = "menuRecord.txt";
+							removeRecord(filepath,removeTerm);
+							break;
+						case 2:
+							break;
+						default:
+							System.out.println("=================================");
+							System.out.println("Invalid Entry has been entered. ");
+							System.out.println("Please enter (1 - Yes / 0 - No) only. ");
+							System.out.println("=================================");
+						}
+						
+					}while (confirmation == -1);
+				}
+			}
+			System.out.println("=================================");
+			System.out.println("Record does not exist.");
+			System.out.println("Please enter a valid ID. ");
+			//System.out.println("=================================");
+
+			checker.close();
+		}catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "\tError");
+		}
 	}
+	
 	
 	public static void removeRecord(String filepath, String removeTerm) throws IOException {
 		String tempFile = "temp.txt";
@@ -230,71 +363,111 @@ public class MenuFunc extends MenuApp {
 					pw.println(ID + "|"+name+"|"+type+"|"+price+"|"+desc+"|"+quota);
 				}
 			}
-					
-			pw.flush(); pw.close(); checker.close();
-			oldFile.delete();
-			File dump = new File(filepath);
-			newFile.renameTo(dump);
 			
-	        Scanner file;
-	        PrintWriter writer;
-
-	        try {
-
-	            file = new Scanner(new File("menuRecord.txt"));
-	            writer = new PrintWriter("outputMenu.txt");
-
-	            while (file.hasNext()) {
-	                String line = file.nextLine();
-	                if (!line.isEmpty()) {
-	                    writer.write(line);
-	                    writer.println("");
-	                }
-	            }
-	            
-	            file.close();
-	            writer.close();
-	            
-				System.out.println("=========================================================");
-		        System.out.println("\t Item has been deleted successfully");
-		    	System.out.println("=========================================================");
-		    	
-
-	        } catch (FileNotFoundException ex) {
-				JOptionPane.showMessageDialog(null, "\tItem was not able to update");
-	        }
+			pw.flush(); 
+			pw.close(); 
+			checker.close();
+		}catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "\tIThere is no item with the ID: removeTerm in the database");
 		}
-		catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error");
-		}
+		
+		oldFile.delete();
+		File dump = new File(filepath);
+		newFile.renameTo(dump);
+		
+        Scanner file;
+        PrintWriter writer;
+
+        try {
+
+            file = new Scanner(new File("menuRecord.txt"));
+            writer = new PrintWriter("outputMenu.txt");
+
+            while (file.hasNext()) {
+                String line = file.nextLine();
+                if (!line.isEmpty()) {
+                    writer.write(line);
+                    writer.println("");
+                }
+            }
+            
+            file.close();
+            writer.close();
+            
+			System.out.println("=========================================================");
+	        System.out.println("\t Item has been deleted successfully");
+	    	System.out.println("=========================================================");
+	    	
+
+        } catch (FileNotFoundException ex) {
+			JOptionPane.showMessageDialog(null, "\tItem was not able to delete");
+        }
 	}
+		
 
 	public void updateMenu(){
 		String filepath = "menuRecord.txt";
 		Scanner sc = new Scanner(System.in);
+		
+		String ID = ""; String name = ""; String type =""; 
+		String price = ""; String desc = ""; String quota ="";
+		String filesearch = "outputMenu.txt";
+		Scanner checker;
+		String targetTerm = null;
+		boolean found = false;
+		
+		do {
+		try {
+			checker = new Scanner(new File(filesearch));//reads the file
+			checker.useDelimiter("[|\n]");
+			
+			System.out.print("Enter the targetID of the item: ");
+			targetTerm = sc.nextLine();
+			
+			while (checker.hasNext() && !found) {
+				
+				ID = checker.next();
+				name = checker.next();
+				type = checker.next();
+				price = checker.next();
+				desc = checker.next();
+				quota = checker.next();
+					
+				if (!ID.equals(targetTerm)) {
+					continue;
+				}else {
+					found = true;
+					System.out.print("Enter the name of the item: ");
+					String newName = sc.nextLine();
+					System.out.print("Enter the type of the item: ");
+					String newType = sc.nextLine();
+					
+					System.out.print("Enter the price of the item: $");
+					String newPrice = sc.nextLine();
+					
+					System.out.print("Enter the description of the item: ");
+					String newDesc = sc.nextLine();
+					
+					System.out.print("Enter the quota of the item: ");
+					String newQuota = sc.nextLine();
+					
+					System.out.print("Enter the ID of the item: ");
+					String newID = sc.nextLine();
 
-		System.out.print("Enter the targetID of the item: ");
-		String targetTerm = sc.nextLine();
-		
-		System.out.print("Enter the name of the item: ");
-		String newName = sc.nextLine();
-		
-		System.out.print("Enter the type of the item: ");
-		String newType = sc.nextLine();
-		
-		System.out.print("Enter the price of the item: ");
-		String newPrice = sc.nextLine();
-		
-		System.out.print("Enter the description of the item: ");
-		String newDesc = sc.nextLine();
-		
-		System.out.print("Enter the quota of the item: ");
-		String newQuota = sc.nextLine();
-		
-		System.out.print("Enter the ID of the item: ");
-		String newID = sc.nextLine();
+					editRecord (filepath, targetTerm, newID, newType,newName,newPrice, newDesc, newQuota);
+				}
 
-		editRecord (filepath, targetTerm, newID, newType,newName,newPrice, newDesc, newQuota);
+			}
+			System.out.println("=================================");
+			System.out.println("Record does not exist.");
+			System.out.println("Please enter a valid ID. ");
+			System.out.println("=================================");
+
+			checker.close();
+			}catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "\tError");
+			}
+		}while(found != false);
 	}
 
 	
@@ -303,7 +476,7 @@ public class MenuFunc extends MenuApp {
 		File oldFile = new File (filepath);
 		File newFile = new File (tempFile);
 		Scanner check;
-		
+
 		String ID = ""; String name = ""; String type = ""; String price =""; String desc =""; String quota="";
 		
 		try{
@@ -335,8 +508,10 @@ public class MenuFunc extends MenuApp {
 					oldFile.delete();
 					File dump = new File(filepath);
 					newFile.renameTo(dump);
+					
+					
 					System.out.println("=========================================================");
-			        System.out.println("\t Item has been edited successfully");
+			        System.out.println("\t Item has been updated successfully");
 			    	System.out.println("=========================================================");
 			    	
 			        Scanner file;
