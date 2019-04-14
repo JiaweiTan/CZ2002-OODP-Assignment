@@ -1,5 +1,4 @@
 //package rrpss;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -16,33 +15,42 @@ public class MenuApp {
 	public static void main(String[] args) throws IOException {
 		int choice = -1;
 		MenuFunc menuFunc = new MenuFunc();
-		//EditRecord editRecord = new EditRecord();
 		Scanner sc = new Scanner(System.in);
 		
-		//BufferedWriter bw = new BufferedWriter(new FileWriter("input.txt"));
-
 		do {
+		System.out.println("=================================");
+        System.out.println("\t Menu Options");
+		System.out.println("=================================");
+		System.out.println("1) Create a new menu item.");
+		System.out.println("2) Update a menu item. ");
+		System.out.println("3) Delete a menu item. ");
+		System.out.println("4) Display the full menu.");
+		System.out.println("5) Back");
 			
-			System.out.println("=================================");
-	        System.out.println("\t Menu Options");
-			System.out.println("=================================");
-			System.out.println("1) Create a new menu item.");
-			System.out.println("2) Update a menu item. ");
-			System.out.println("3) Delete a menu item. ");
-			System.out.println("4) Display the full menu.");
-			System.out.println("5) Back");
-			
-			//do {
-				//try {
+			do {
+				try {
 					System.out.print("Please enter your choice : ");
 					choice = sc.nextInt();
 					
-				//}catch(InputMismatchException e) {
-					//System.out.println("Please enter numbers only. ");
-				//}
-				//sc.nextLine();
-			//}while (choice == -1);
-			
+				}catch(InputMismatchException e) {
+					//System.out.println("");
+					System.out.println("=================================");
+					System.out.println("Invalid Entry has been entered. ");
+					System.out.println("Please enter numbers only. ");
+					System.out.println("=================================");
+			        System.out.println("\t Menu Options");
+					System.out.println("=================================");
+					System.out.println("1) Create a new menu item.");
+					System.out.println("2) Update a menu item. ");
+					System.out.println("3) Delete a menu item. ");
+					System.out.println("4) Display the full menu.");
+					System.out.println("5) Back");
+					System.out.println("");
+				}
+				sc.nextLine();
+			}while (choice == -1);
+
+
 			switch (choice) {
 			case 1: 
 				/**System.out.print("Enter foodID to create from :");
@@ -66,7 +74,8 @@ public class MenuApp {
 				break;
 				
 			case 5: 
-				//PromoSetApp.main();
+				//MenuApp.main();
+				break;
 			
 			default:
 		    	System.out.println("=========================================================");
@@ -74,7 +83,6 @@ public class MenuApp {
 		    	System.out.println("=========================================================");
 
 			}
-		 } while (choice < 5 || choice >5);
-	
+		}while (choice <5||choice>5);
 	}
 }
