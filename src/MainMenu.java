@@ -54,6 +54,8 @@ public class MainMenu {
 				case 5:
 					TableApp.menu();
 					break;
+				case 6:
+				MenuApp.main(null);
 				case 7:
 					PromoSetApp.main();
 					break;

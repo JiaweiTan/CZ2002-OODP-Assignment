@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Scanner;
 
 public class MenuApp {
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParseException {
 		int choice = -1;
 		MenuFunc menuFunc = new MenuFunc();
 		Scanner sc = new Scanner(System.in);
@@ -60,12 +61,18 @@ public class MenuApp {
 				break;
 				
 			case 2: 
+				System.out.println("=================================");
+		        System.out.println("\t Update Menu");
+				System.out.println("=================================");
 				menuFunc.updateMenu();
 				break;
 				
 			case 3:
 				/**System.out.print("Enter foodID to delete from : ");
 				int foodID2 = sc.nextInt();*/
+				System.out.println("=================================");
+		        System.out.println("\t Delete Menu");
+				System.out.println("=================================");
 				menuFunc.deleteMenu();
 				break; 
 			
@@ -74,7 +81,7 @@ public class MenuApp {
 				break;
 				
 			case 5: 
-				MenuApp.main();
+				MainMenu.main(null);
 				break;
 			
 			default:
