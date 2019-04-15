@@ -66,7 +66,7 @@ public class MenuFunc extends MenuApp {
 	public static ArrayList getMenu(String filename) throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(filename);
-		ArrayList arrayLst = new ArrayList() ;// to store Professors data
+		ArrayList alr = new ArrayList() ;// to store Professors data
 
         for (int i = 0 ; i < stringArray.size() ; i++) {
 				String st = (String)stringArray.get(i);
@@ -86,9 +86,9 @@ public class MenuFunc extends MenuApp {
 				Menu menuItems = new Menu(foodID, foodName,foodType, foodPrice, foodDesc, foodQuota);
 				
 				// add to Menu list
-				arrayLst.add(menuItems) ;
+				alr.add(menuItems) ;
 			}
-			return arrayLst ;
+			return alr ;
 	}
 
    	 /** Read the contents of the given file. */
@@ -439,11 +439,49 @@ public class MenuFunc extends MenuApp {
 					found = true;
 					System.out.print("Enter the name of the item: ");
 					String newName = sc.nextLine();
-					System.out.print("Enter the type of the item: ");
-					String newType = sc.nextLine();
 					
+					int type_choice = -1;		
+					String newType = null;
+					do {
+						try {
+							System.out.println("Enter the type of the item : ");
+							System.out.println("1) Main Course ");
+							System.out.println("2) Drinks ");
+							System.out.println("3) Desserts ");
+							System.out.print("Option selected: ");
+							type_choice = sc.nextInt();
+							
+							switch(type_choice) {
+							case 1: 
+								newType = "Main Course";
+								break;
+							case 2:
+								newType = "Drinks";
+								break;
+							case 3: 
+								newType = "Desserts";
+								break;
+							default:
+								System.out.println("=================================");
+								System.out.println("Invalid Entry has been entered. ");
+								System.out.println("Please enter 1/2/3 only. ");
+								System.out.println("=================================");
+							}
+							
+						}catch(InputMismatchException e) {
+							//System.out.println("");
+							System.out.println("=================================");
+							System.out.println("Invalid quantity has been entered. ");
+							System.out.println("Please enter 1/2/3 only. ");
+							System.out.println("=================================");
+							System.out.println("");
+						}
+						sc.nextLine();
+					}while (type_choice == -1 ||type_choice >3);
+
 					System.out.print("Enter the price of the item: $");
 					String newPrice = sc.nextLine();
+
 					
 					System.out.print("Enter the description of the item: ");
 					String newDesc = sc.nextLine();
@@ -511,7 +549,7 @@ public class MenuFunc extends MenuApp {
 					
 					
 					System.out.println("=========================================================");
-			        System.out.println("\t Item has been updated successfully");
+			        System.out.println("\t Item has been edited successfully");
 			    	System.out.println("=========================================================");
 			    	
 			        Scanner file;
@@ -592,4 +630,3 @@ public class MenuFunc extends MenuApp {
 		}
 		
 }
-
