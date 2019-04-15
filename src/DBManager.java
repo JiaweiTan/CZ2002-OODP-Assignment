@@ -623,6 +623,7 @@ public class DBManager {
 					System.out.print("New value:");
 					String newName = sc.nextLine();
 					promoSetloop.setName(newName);
+					System.out.println("Name has been updated: "+newName);
 				}
 				if (i == 2) {
 					

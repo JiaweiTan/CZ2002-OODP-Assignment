@@ -124,6 +124,10 @@ public class StaffApp {
 			System.out.println("Staff ID:");
 			staffId = sc.nextInt();
 			sc.nextLine();
+			if(UpdateInput==0)
+			{
+				StaffApp.main();
+			}
 			switch (UpdateInput) {
 
 			case 1:

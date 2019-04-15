@@ -125,7 +125,10 @@ public class PromoSetApp {
 			UpdateInput = sc.nextInt();
 			int promoId = 0;
 			sc.nextLine();
-			
+			if(UpdateInput==0)
+			{
+				PromoSetApp.main();
+			}
 			System.out.println("Promotion ID:");
 			promoId = sc.nextInt();
 			sc.nextLine();
