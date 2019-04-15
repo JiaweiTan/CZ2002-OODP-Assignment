@@ -479,18 +479,65 @@ public class MenuFunc extends MenuApp {
 						sc.nextLine();
 					}while (type_choice == -1 ||type_choice >3);
 
-					System.out.print("Enter the price of the item: $");
-					String newPrice = sc.nextLine();
 
-					
+					String newPrice = null;
+			        boolean numeric = true;
+			        
+			        while (numeric) {
+						System.out.print("Enter the price of the item: $");
+						newPrice = sc.nextLine();
+						
+				        try {
+				            Double num = Double.parseDouble(newPrice);
+				            numeric = false;
+				        } catch (NumberFormatException e) {
+				            numeric = true;
+							System.out.println("=================================");
+							System.out.println("Invalid quantity has been entered. ");
+							System.out.println("Please enter number only. ");
+							System.out.println("=================================");
+				        }
+			        }
+
 					System.out.print("Enter the description of the item: ");
 					String newDesc = sc.nextLine();
 					
-					System.out.print("Enter the quota of the item: ");
-					String newQuota = sc.nextLine();
+					String newQuota = null;
+			        boolean number = true;
+			        while (number) {
+						System.out.print("Enter the quota of the item: ");						
+						newQuota = sc.nextLine();
+						
+				        try {
+				            Double num = Double.parseDouble(newQuota);
+				            number = false;
+				        } catch (NumberFormatException e) {
+				            number = true;
+							System.out.println("=================================");
+							System.out.println("Invalid quantity has been entered. ");
+							System.out.println("Please enter number only. ");
+							System.out.println("=================================");
+				        }
+			        }
+
+					String newID = null;
+			        boolean valid = true;
+			        while (valid) {
+						System.out.print("Enter the ID of the item: ");						
+						newID = sc.nextLine();
+						
+				        try {
+				            Double num = Double.parseDouble(newQuota);
+				            valid = false;
+				        } catch (NumberFormatException e) {
+				            valid = true;
+							System.out.println("=================================");
+							System.out.println("Invalid quantity has been entered. ");
+							System.out.println("Please enter number only. ");
+							System.out.println("=================================");
+				        }
+			        }
 					
-					System.out.print("Enter the ID of the item: ");
-					String newID = sc.nextLine();
 
 					editRecord (filepath, targetTerm, newID, newType,newName,newPrice, newDesc, newQuota);
 				}
@@ -630,3 +677,4 @@ public class MenuFunc extends MenuApp {
 		}
 		
 }
+
