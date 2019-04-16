@@ -1,10 +1,9 @@
-6001|Carbonara|Main Course|12|Creamy pasta served with basil|20
-6002|Bacon Pizza|Main Course|10|Crispy bacon and Mozzarella Cheese|20
-6003|Pepsi|Drinks|5|Thirst quenching soda beverage|100
-6004|Tea|Drinks|4|Freshly brewed Ceylon tea|100
-6005|Brownies w/ Ice cream|Dessert|7|Chocolaty brownies with vanilla ice cream|15
-6006|Cheesecake|Dessert|9|Rich cheese on graham crackers|20
-6007|Pepsi Zero|Drinks|5.0|Zero Calorie Pepsi|300
-6008|Pepperoni Pizza|Main Course|22.5|Beef Pepperoni|150
-6009|Chicken Rice|Main Course|12.9|Chicken with Sauce|200
-6010|Ice Cream|Desserts|9.9|Choose Vanilla or Matcha|100
+6001|Carbonara|Main Course|12|Creamy pasta served with basil|200
+6002|Bacon Pizza|Main Course|10|Crispy bacon and Mozzarella Cheese|200
+6003|Chicken Rice|Main Course|12.9|Chicken with Sauce|200
+6101|Brownies w/ Ice cream|Dessert|7|Chocolaty brownies with vanilla ice cream|150
+6102|Cheesecake|Dessert|9|Rich cheese on graham crackers|20
+6103|Ice Cream|Dessert|9.9|Choose Vanilla or Matcha|100
+6201|Coca cola|Drinks|12.9|Refreshing vanilla soda|200
+6202|Spirte|Drinks|9.9|Ice cold lemon soda|100
+6203|Milk tea|Drinks|9.9|Earl Grey Milk Tea|100
