@@ -18,7 +18,8 @@ import javax.swing.JOptionPane;
 public class MenuFunc extends MenuApp {
 	Scanner sc = new Scanner(System.in);
 	static int indexCounter = 6004;	
-	
+	static int dessertindexCounter = 6104;
+	static int drinksindexCounter = 6204;
 	public void displayMenu()  {
     	String filepath = "outputMenu.txt";
     	
@@ -107,17 +108,15 @@ public class MenuFunc extends MenuApp {
         
  
 	public static void createMenu() throws IOException{
-		int indexCounter = 6004;
+	//	int indexCounter = 6004;
 		Scanner sc = new Scanner(System.in);
 		boolean create = true;
-
+		int food_ID =0;
 		int cont = 0;
 		
 		System.out.println("=================================");
 			System.out.println("\t Creating Menu Item");
 		System.out.println("=================================");
-
-		int food_ID = indexCounter;
 
 		//do {
 			System.out.print("Enter the name of the item: ");
@@ -152,14 +151,19 @@ public class MenuFunc extends MenuApp {
 					switch(type_choice) {
 					case 1: 
 						food_type = "Main Course";
+						food_ID = indexCounter;
+						indexCounter++;
 						break;
 					case 2:
 						food_type = "Drinks";
-						food_ID +=200;
+						food_ID = drinksindexCounter;
+						drinksindexCounter++;
+
 						break;
 					case 3: 
 						food_type = "Desserts";
-						food_ID +=100;
+						food_ID = dessertindexCounter;
+						dessertindexCounter++;
 						break;
 					default:
 						System.out.println("=================================");
@@ -281,7 +285,7 @@ public class MenuFunc extends MenuApp {
 				System.out.println("Description: " + food_desc);
 				System.out.println("Quota:       " + food_quota);
 				
-				indexCounter++; //increases the value of the index
+				//indexCounter++; //increases the value of the index
 				}
 
 
