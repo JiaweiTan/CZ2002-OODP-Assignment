@@ -13,12 +13,8 @@ MainMenu.java is the main user interface hence, everything should start running 
 
 ## Input text files 
 
-All input text files, CustomerList.txt, Invoice.txt, Orders.txt etc. are set to a default as to when an employee interacts with the system
+All input text files, CustomerList.txt, Invoice.txt, Orders.txt etc. are set to a default as to when an employee interacts with the system.
 
 ## Report 
 
 Contains our class diagram, sequence diagram, and possible test cases for reference. 
-
-## Video Recording
-
-If the quality is not ideal for your viewing please view it via this private link below.
