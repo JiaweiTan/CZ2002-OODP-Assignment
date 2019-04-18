@@ -650,7 +650,8 @@ public class DBManager {
 					switch (input) {
 
 					case 1:
-						System.out.println("Item ID (Enter 0 to move next):");
+						System.out.println("Item ID (Main Course:6001-6299)(Dessert:6300-6599)(Drink:6600-7000): ");
+						System.out.println("Enter 0 to move next");
 						Validation inputValidation= new Validation();
 						int tempItemID = sc.nextInt();sc.nextLine();
 						ArrayList<Integer> tempItemIDList = new ArrayList<Integer>();
@@ -665,7 +666,8 @@ public class DBManager {
 							{
 								System.out.println("Invalid value");	
 							}
-							System.out.println("Item ID (Enter 0 to move next):");
+							System.out.println("Item ID (Main Course:6001-6299)(Dessert:6300-6599)(Drink:6600-7000): ");
+							System.out.println("Enter 0 to move next");
 							tempItemID = sc.nextInt();sc.nextLine();
 						}
 						if(temp.size()!=0)
