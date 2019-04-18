@@ -189,7 +189,7 @@ public class Invoice {
 		System.out.println("   Invoice ID\t\t\t" + invoice.getInvoiceID());
 		System.out.println("   Order ID\t\t\t" + invoice.getOrderID());
 		System.out.println("   Table\t\t\t" + order.getTableId());
-		System.out.println("   DateTime"+ invoice.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+		System.out.println("   DateTime\t "+ invoice.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 		System.out.println("========================================");
 		System.out.println(" Qty\tItem\n");
 		List<Integer> itemLst = order.getItemId();

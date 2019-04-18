@@ -113,7 +113,7 @@ public class SalesRevenueMonth extends SalesRevenue{
 		Collections.sort(promoItemLst);
 		System.out.println("========================================");
 		System.out.println("\tSales Revenue Report");
-		System.out.println("\t     (Daily)");
+		System.out.println("\t     (Monthly)");
 		System.out.println("\t      " + salesRevenue.getDateYear());
 		System.out.println("========================================");
 	
