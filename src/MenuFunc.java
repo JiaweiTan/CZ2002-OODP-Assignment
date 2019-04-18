@@ -341,7 +341,7 @@ public class MenuFunc extends MenuApp {
 							String filepath = "menuRecord.txt";
 							removeRecord(filepath,removeTerm);
 							break;
-						case 2:
+						case 0:
 							break;
 						default:
 							System.out.println("=================================");
@@ -623,7 +623,7 @@ public class MenuFunc extends MenuApp {
 					quota = check.next();
 						
 					if (ID.equals(targetTerm)){ 
-						pw.println(newID + "|"+newType+"|"+newName + "|"+newPrice+ "|"+ newDesc+ "|"+newQuota);
+						pw.println(newID + "|"+newName"|"+newType + "|"+newPrice+ "|"+ newDesc+ "|"+newQuota);
 					}else{
 						pw.println(ID + "|"+name+"|"+type+"|"+price+ "|"+desc+ "|"+quota);
 					}
