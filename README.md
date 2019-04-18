@@ -18,3 +18,7 @@ All input text files, CustomerList.txt, Invoice.txt, Orders.txt etc. are set to 
 ## Report 
 
 Contains our class diagram, sequence diagram, and possible test cases for reference. 
+
+## Video Recording
+
+If the quality is not ideal for your viewing please view it via this private link below.
