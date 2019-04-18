@@ -19,6 +19,15 @@ public class TableApp {
 		System.out.println("=============================");
 		System.out.println("\tCurrent Table Availability");
 		System.out.println("=============================");
+		//
+		TableInfo tbInfoItem = new TableInfo();
+		tbInfoItem = tbInfo.getTableSession(date, session);
+		System.out.println("-----------------------------");
+		System.out.println("Remaining table count: ");
+		System.out.println("Ten Seater: " + tbInfoItem.getTenSeater() + " , " + "Eight Seater: " + tbInfoItem.getEightSeater());
+		System.out.println("Four Seater: " + tbInfoItem.getFourSeater() + " , " + "Two Seater: " + tbInfoItem.getTwoSeater());
+		System.out.println("-----------------------------");
+		//
 		for(int i = 0; i < curTb.size(); i++) {
 			System.out.println("Table Id: " + curTb.get(i).tableId + " Status : " + tb.statusText(curTb.get(i).getStatus()) + " Capacity: "+ curTb.get(i).getCapacity());
 			System.out.println("-----------------------------");
