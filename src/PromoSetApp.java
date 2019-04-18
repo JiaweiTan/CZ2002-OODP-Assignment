@@ -18,7 +18,7 @@ public class PromoSetApp {
 		System.out.println();
 		System.out.println();
 		System.out.println("=============================");
-		System.out.println("\t Promtion Set Menu");
+		System.out.println("\t Promotion Set Menu");
 		System.out.println("=============================");
 		System.out.println("1) Create new promotion item");
 		System.out.println("2) Update promotion item");
