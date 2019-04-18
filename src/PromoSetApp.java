@@ -128,12 +128,12 @@ public class PromoSetApp {
 			if(UpdateInput==0)
 			{
 				PromoSetApp.main();
+				break;
 			}
 			System.out.println("Promotion ID:");
 			promoId = sc.nextInt();
 			sc.nextLine();
 			switch (UpdateInput) {
-
 			case 1:
 				promo.updateInfo(promoId, 1);
 				

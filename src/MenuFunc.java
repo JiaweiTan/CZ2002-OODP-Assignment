@@ -18,8 +18,8 @@ import javax.swing.JOptionPane;
 public class MenuFunc extends MenuApp {
 	Scanner sc = new Scanner(System.in);
 	static int indexCounter = 6004;	
-	static int dessertindexCounter = 6104;
-	static int drinksindexCounter = 6204;
+	static int dessertindexCounter = 6304;
+	static int drinksindexCounter = 6604;
 	public void displayMenu()  {
     	String filepath = "outputMenu.txt";
     	
@@ -86,9 +86,9 @@ public class MenuFunc extends MenuApp {
 				Menu menuItems = new Menu(foodID, foodName,foodType, foodPrice, foodDesc, foodQuota);
 				
 				// add to Menu list
-				arrayLst.add(menuItems) ;
+				arryLst.add(menuItems) ;
 			}
-			return arrayLst ;
+			return arryLst ;
 	}
 
    	 /** Read the contents of the given file. */
@@ -161,7 +161,7 @@ public class MenuFunc extends MenuApp {
 
 						break;
 					case 3: 
-						food_type = "Desserts";
+						food_type = "Dessert";
 						food_ID = dessertindexCounter;
 						dessertindexCounter++;
 						break;
@@ -228,7 +228,7 @@ public class MenuFunc extends MenuApp {
 						desc = checker.next();
 						quota = checker.next();
 							
-						System.out.println(Integer.valueOf(ID));
+						//System.out.println(Integer.valueOf(ID));
 						//Integer.valueOf(ID) == food_ID-1
 						if(type.equals(food_type) && Integer.valueOf(ID) == food_ID-1) {
 							pw.println(ID + "|"+name+"|"+type+"|"+price+ "|"+desc+ "|"+quota);
