@@ -473,6 +473,9 @@ public class MenuFunc extends MenuApp {
 					found = false;
 					continue;
 				}else {
+					System.out.println("=================================");
+					System.out.println("\t Updating Menu Item");
+					System.out.println("=================================");
 					System.out.print("Enter the name of the item: ");
 					String newName = sc.nextLine();
 					
