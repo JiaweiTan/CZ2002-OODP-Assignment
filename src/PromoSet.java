@@ -91,7 +91,17 @@ public class PromoSet {
 	public void updateInfo(int promoId, int i) throws IOException, ParseException {
 		// TODO Auto-generated method stub
 		DBManager db = new DBManager();
-		db.updatePromoItem(promoId, i);
+		Validation v= new Validation();
+		if(v.promoSetExistsDB(promoId)==1)
+		{
+			db.updatePromoItem(promoId, i);
+			
+		}
+		else
+		{
+			System.out.println("invalid ID");
+		}
+		
 	}
 
 	public void remove(int removeID) throws IOException {

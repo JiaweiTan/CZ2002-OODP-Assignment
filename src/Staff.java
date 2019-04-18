@@ -52,7 +52,17 @@ public class Staff extends Person {
 	public void updateInfo(int staffId, int i) throws IOException {
 		// TODO Auto-generated method stub
 		DBManager db = new DBManager();
-		db.updateStaffItem(staffId, i);
+		Validation v= new Validation();
+		if(v.staffExistsDB(staffId)==1)
+		{
+			db.updateStaffItem(staffId, i);
+			
+		}
+		else
+		{
+			System.out.println("invalid ID");
+		}
+		
 		
 	}
 	public void remove(int removeID) throws IOException {
