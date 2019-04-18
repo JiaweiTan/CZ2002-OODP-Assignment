@@ -6,9 +6,10 @@ orders and displaying of sale records. It will be solely used by the restaurant 
 The restaurant operates in 2 sessions (AM : 11am – 3pm, PM : 6pm – 10pm). 
 
 
-## MainMenu.java
+## src
 
-Main user interface hence, everything should start running from here. 
+All the classes and code is saved in this folder.
+MainMenu.java is the main user interface hence, everything should start running from here. 
 
 ## Input text files 
 
