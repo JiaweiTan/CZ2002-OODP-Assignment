@@ -86,9 +86,9 @@ public class MenuFunc extends MenuApp {
 				Menu menuItems = new Menu(foodID, foodName,foodType, foodPrice, foodDesc, foodQuota);
 				
 				// add to Menu list
-				arryLst.add(menuItems) ;
+				arrayLst.add(menuItems) ;
 			}
-			return arryLst ;
+			return arrayLst ;
 	}
 
    	 /** Read the contents of the given file. */
