@@ -44,7 +44,7 @@ public class CustomerApp {
 						System.out.print("Name\t\t: ");
 						cs.setName(sc.next());
 						System.out.print("Contact Number\t: ");
-						cs.setName(sc.next());
+						cs.setContact(sc.next());
 						DBManager.saveCustomerDetails(cs);
 						System.out.print("Member's details successfully updated!");
 					}
