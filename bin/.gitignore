@@ -15,6 +15,7 @@
 /PromoSetApp.class
 /Reservation.class
 /ReservationApp.class
+/SalesRevenue.class
 /SalesRevenueDay.class
 /SalesRevenueMonth.class
 /SalesRevenueYear.class
@@ -24,4 +25,3 @@
 /TableApp.class
 /TableInfo.class
 /Validation.class
-/SalesRevenue.class

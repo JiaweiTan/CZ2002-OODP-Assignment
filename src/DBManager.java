@@ -677,6 +677,8 @@ public class DBManager {
 						
 					case 2:
 						System.out.print("Input the ID to remove:");
+						int check=tempList.size();
+						
 						int  currentitem = sc.nextInt();
 						sc.nextLine();
 						for(int cur = 0; cur < tempList.size(); cur++) {
@@ -685,12 +687,13 @@ public class DBManager {
 							tempList.remove(cur);
 							System.out.println("ID: "+currentitem+" has been removed");	
 						}
-						else
+						}
+						 if(check==tempList.size())
 						{
 							System.out.println("Invalid ID");	
 						}
 						
-						}
+						
 						break;
 					default:
 
@@ -796,7 +799,7 @@ public class DBManager {
 				alw.add(st.toString());
 			}
 		}
-		System.out.println("Promotion set successfully deleted");
+		
 		write(filename, alw);
 
 	}

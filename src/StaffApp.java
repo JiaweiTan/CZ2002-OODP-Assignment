@@ -92,7 +92,7 @@ public class StaffApp {
 			System.out.println("Gender: " + newitem.getGender());
 			System.out.println("Contact: " + newitem.getContact());
 			System.out.println("Email: " + newitem.getEmail());
-			System.out.println("Adress: " + newitem.getAddress());
+			System.out.println("Address: " + newitem.getAddress());
 			System.out.println("Shift: " + newitem.getShift());
 			System.out.println("Job Title: " + newitem.getShift());
 			System.out.println("=========================================================");
@@ -120,14 +120,15 @@ public class StaffApp {
 			UpdateInput = sc.nextInt();
 			
 			sc.nextLine();
-			
-			System.out.println("Staff ID:");
-			staffId = sc.nextInt();
-			sc.nextLine();
 			if(UpdateInput==0)
 			{
 				StaffApp.main();
+				break;
 			}
+			System.out.println("Staff ID:");
+			staffId = sc.nextInt();
+			sc.nextLine();
+			
 			switch (UpdateInput) {
 
 			case 1:
@@ -179,7 +180,7 @@ public class StaffApp {
 					"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			
 												
-			System.out.printf("%5s %10s %20s %10s %20s %30s  %50s %20s %20s", "Index", "Staff ID", "Name", "Gender","Contact", "Email", "Adress","Shift","Job Title");
+			System.out.printf("%5s %10s %20s %10s %20s %30s  %50s %20s %20s", "Index", "Staff ID", "Name", "Gender","Contact", "Email", "Address","Shift","Job Title");
 			System.out.println();
 			int index = 1;
 			for (Staff g : resItem) {
