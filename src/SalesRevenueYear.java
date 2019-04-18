@@ -161,7 +161,7 @@ public class SalesRevenueYear extends SalesRevenue{
 			i++;
 		}
 		System.out.println("========================================");
-		System.out.println(" Total\t\t\t\t" + totalPrice);
+		System.out.println(" Total\t\t\t\t" + String.format("%.2f",totalPrice));
 		System.out.println(" Net Sales\t\t\t" + String.format("%.2f", salesRevenue.getNetSales()));
 		System.out.println("========================================\n\n");
 	}
