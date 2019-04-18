@@ -626,7 +626,7 @@ public class MenuFunc extends MenuApp {
 					quota = check.next();
 						
 					if (ID.equals(targetTerm)){ 
-						pw.println(newID + "|"+newName"|"+newType + "|"+newPrice+ "|"+ newDesc+ "|"+newQuota);
+						pw.println(newID + "|"+ newName +"|"+ newType + "|"+newPrice+ "|"+ newDesc+ "|"+newQuota);
 					}else{
 						pw.println(ID + "|"+name+"|"+type+"|"+price+ "|"+desc+ "|"+quota);
 					}
