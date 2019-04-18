@@ -99,6 +99,7 @@ public class Invoice {
 			System.out.println("3. Visa");
 			System.out.println("4. MasterCard");
 			choice = sc.nextInt();
+			sc.nextLine();
 			switch(choice)
 			{
 				case 1: paymentType = "Cash";
@@ -128,7 +129,7 @@ public class Invoice {
 		{
 		System.out.println("Remarks with maximum 35 characters:");
 		System.out.println("(Enter 0 to skip)");
-		remarks = sc.next();
+		remarks = sc.nextLine();
 		if(remarks.length() > 35)
 			System.out.println("Too many characters. Please try again.");
 		} while(remarks.length() > 35);
