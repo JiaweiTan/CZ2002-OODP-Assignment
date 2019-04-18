@@ -141,7 +141,7 @@ public class BillingApp {
 											System.out.print("Enter Contact No.\t: ");
 											String contact = sc.nextLine();
 											cst.setContact(contact);
-											cst.setExpiry(LocalDate.now().toString());
+											cst.setExpiry(LocalDate.now().plusYears(1).toString());
 											System.out.println();
 											System.out.println("=======================================================");
 											System.out.println("\tMembership created successfully!");
@@ -156,7 +156,7 @@ public class BillingApp {
 													cst.setID(0);
 													cst.setName(rs.getName());
 													cst.setContact(rs.getContactNumber());
-													cst.setExpiry(LocalDate.now().toString());
+													cst.setExpiry(LocalDate.now().plusYears(1).toString());
 													System.out.println("Name\t\t: " + cst.getName());
 													System.out.println("Contact No.\t: " + cst.getContact());
 													System.out.println();

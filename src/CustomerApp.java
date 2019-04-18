@@ -61,6 +61,7 @@ public class CustomerApp {
 						String yn = sc.next();
 						if(yn.equalsIgnoreCase("y")) {
 							cs.setExpiry(LocalDate.now().minusDays(1).toString());
+							DBManager.saveCustomerDetails(cs);
 							System.out.print("Member " + memId + " has been terminated!");
 						}
 						else if (!yn.equalsIgnoreCase("n")) {
