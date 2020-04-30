@@ -18,3 +18,11 @@ All input text files, CustomerList.txt, Invoice.txt, Orders.txt etc. are set to 
 ## Report 
 
 Contains our class diagram, sequence diagram, and possible test cases for reference. 
+
+## Credits
+
+- [Tan Jia Wei](https://github.com/JiaweiTan/)
+- [Yuxuan Ooi](https://github.com/yuxuan123/)
+- [Wong Chun Foong](https://github.com/chunfoong/)
+- [Serene Quek](https://github.com/serenequacked/)
+- [Isaac](https://github.com/istudyaac/)
